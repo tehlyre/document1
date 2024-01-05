@@ -1,0 +1,51 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1703371154
+icon.svg::CompressedTexture2D::7399799570421521073::1697560144::1697560181::1::::<><>::
+::res://assets/::1698077233
+::res://assets/textures/::1699497743
+bullet.png::CompressedTexture2D::446595315770855593::1699497729::1699497743::1::::<><>::
+duuuururrurrdan.png::CompressedTexture2D::8629978761662258568::1698077297::1698528447::1::::<><>::
+enieamy.png::CompressedTexture2D::2594524527183642969::1698528294::1698528297::1::::<><>::
+neutral special.png::CompressedTexture2D::6518507749241808614::1699123414::1699123416::1::::<><>::
+::res://document1/::1703304870
+README.md::TextFile::-1::1703304870::0::1::::<><>::
+::res://scenes/::1703370767
+main.tscn::PackedScene::1436345888032593477::1703370767::0::1::::<><>::res://scripts/game.gd<>uid://b4rpkbb7pbeqj::::res://scenes/Levels/container.tscn<>uid://ckaa3ih3v8cyl::::res://scenes/UI/pausemenu.tscn<>uid://uvj7iu2qje8l::::res://scenes/UI/deathmenu.tscn<>res://scripts/UI/deathmenu.gd<>uid://c0hig8yqsr4ak::::res://scenes/UI/optionsmenuoverlay.tscn<>res://scripts/UI/optionsmenuoverlay.gd
+valuepackpolygon.tscn::PackedScene::4006942054709759457::1703370767::0::1::::<><>::
+::res://scenes/Characters/::1703371154
+durdan.tscn::PackedScene::3935021291853927780::1703370767::0::1::::<><>::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn
+enemigo.tscn::PackedScene::1070424029647662094::1703371182::0::1::::<><>::res://scripts/enemy.gd<>res://scripts/ee.gd<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn<>uid://bc72o7r0pj7fx::::res://assets/textures/enieamy.png<>res://scripts/enemybody.gd<>res://scripts/enemyraycast.gd<>res://scripts/PlayerRayCast.gd<>uid://cy4u4ua4i5vhu::::res://assets/textures/neutral special.png
+::res://scenes/Hazards and Helps/::1703370767
+goo.tscn::PackedScene::3293155290536947191::1703370767::0::1::::<><>::res://scripts/goo.gd
+wall.tscn::PackedScene::9066024934117485811::1703093504::0::1::::<><>::
+::res://scenes/Levels/::1703370767
+container.tscn::PackedScene::4457920239387779953::1703370767::0::1::::<><>::uid://bwcfhw8ni6iky::::res://scenes/Characters/durdan.tscn<>uid://piryy33ucw4m::::res://scenes/Characters/enemigo.tscn<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://bm6h10gtdvvdf::::res://scenes/Hazards and Helps/goo.tscn<>uid://d2fwduwibxhtj::::res://scenes/Hazards and Helps/wall.tscn<>res://scripts/wall.gd<>res://scripts/Enemies.gd
+::res://scenes/Other Things/::1703370767
+bullet.tscn::PackedScene::6987748190088326131::1703370767::0::1::::<><>::uid://gmlmhx2tod4d::::res://assets/textures/bullet.png<>res://scripts/bullet.gd
+neutral_special.tscn::PackedScene::324242721580421956::1702489639::0::1::::<><>::uid://cy4u4ua4i5vhu
+::res://scenes/UI/::1703370767
+deathmenu.tscn::PackedScene::1447732856267144613::1702825600::0::1::::<><>::
+hud.tscn::PackedScene::7713038601948674268::1703370767::0::1::::<><>::res://scripts/UI/hud.gd
+optionsmenu.tscn::PackedScene::4206558272162581974::1702825732::0::1::::<><>::res://scripts/UI/optionsmenu.gd
+optionsmenuoverlay.tscn::PackedScene::6542511324418574502::1702825732::0::1::::<><>::res://scripts/UI/optionsmenu.gd
+pausemenu.tscn::PackedScene::5474780238297850203::1702825732::0::1::::<><>::res://scripts/UI/pausemenu.gd
+startmenu.tscn::PackedScene::2749788625872300548::1702825732::0::1::::<><>::res://scripts/UI/startmenu.gd
+::res://scripts/::1703371154
+bullet.gd::GDScript::-1::1702836756::0::1::::<>Area2D<>::
+durdan.gd::GDScript::-1::1703209485::0::1::::Player<>CharacterBody2D<>::
+ee.gd::GDScript::-1::1703371154::0::1::::<>Node2D<>::
+Enemies.gd::GDScript::-1::1703369986::0::1::::<>Node2D<>::
+enemy.gd::GDScript::-1::1703371154::0::1::::<>Node2D<>::
+enemybody.gd::GDScript::-1::1703370767::0::1::::<>CharacterBody2D<>::
+enemyraycast.gd::GDScript::-1::1703212680::0::1::::<>RayCast2D<>::
+game.gd::GDScript::-1::1702836157::0::1::::GameManager<>Node2D<>::
+goo.gd::GDScript::-1::1703104802::0::1::::<>Area2D<>::
+PlayerRayCast.gd::GDScript::-1::1703370383::0::1::::<>RayCast2D<>::
+wall.gd::GDScript::-1::1703104802::0::1::::<>StaticBody2D<>::
+::res://scripts/UI/::1702840112
+deathmenu.gd::GDScript::-1::1702838860::0::1::::<>Control<>::
+hud.gd::GDScript::-1::1702839027::0::1::::<>Control<>::
+optionsmenu.gd::GDScript::-1::1702839706::0::1::::<>Control<>::
+optionsmenuoverlay.gd::GDScript::-1::1702839711::0::1::::<>Control<>::
+pausemenu.gd::GDScript::-1::1702838128::0::1::::<>Control<>::
+startmenu.gd::GDScript::-1::1702840112::0::1::::<>Control<>::

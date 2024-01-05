@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3 uid="uid://up1n3nybh4y0"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_cg0fy"]
+[ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
+[ext_resource type="PackedScene" uid="uid://ckaa3ih3v8cyl" path="res://scenes/UI/pausemenu.tscn" id="3_o527g"]
+[ext_resource type="PackedScene" uid="uid://uvj7iu2qje8l" path="res://scenes/UI/deathmenu.tscn" id="4_utxhm"]
+[ext_resource type="Script" path="res://scripts/UI/deathmenu.gd" id="5_ghli0"]
+[ext_resource type="PackedScene" uid="uid://c0hig8yqsr4ak" path="res://scenes/UI/optionsmenuoverlay.tscn" id="6_ukfdh"]
+[ext_resource type="Script" path="res://scripts/UI/optionsmenuoverlay.gd" id="7_jb57r"]
+
+[node name="Game" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_cg0fy")
+
+[node name="container" parent="." instance=ExtResource("2_crrdk")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="CanvasLayer" node_paths=PackedStringArray("game", "level", "options_menu") instance=ExtResource("3_o527g")]
+process_mode = 2
+game = NodePath("../..")
+level = NodePath("../../container")
+options_menu = NodePath("../Options")
+
+[node name="Death" parent="CanvasLayer" node_paths=PackedStringArray("container") instance=ExtResource("4_utxhm")]
+script = ExtResource("5_ghli0")
+container = NodePath("../../container")
+
+[node name="Options" parent="CanvasLayer" node_paths=PackedStringArray("pause_menu") instance=ExtResource("6_ukfdh")]
+script = ExtResource("7_jb57r")
+pause_menu = NodePath("../Pause")

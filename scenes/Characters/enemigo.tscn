@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://piryy33ucw4m"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_jpdw6"]
+[ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="2_4kvev"]
+[ext_resource type="Texture2D" uid="uid://bc72o7r0pj7fx" path="res://assets/textures/enieamy.png" id="2_lc6c0"]
+[ext_resource type="Script" path="res://scripts/enemybody.gd" id="2_q4b0a"]
+[ext_resource type="Script" path="res://scripts/enemyraycast.gd" id="4_powj8"]
+[ext_resource type="Script" path="res://scripts/enemysoul.gd" id="5_djjsf"]
+[ext_resource type="Script" path="res://scripts/PlayerRayCast.gd" id="5_h1j0j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkui6"]
+size = Vector2(24, 24)
+
+[node name="Enemy" type="Node2D" groups=["enemies"]]
+script = ExtResource("1_jpdw6")
+
+[node name="EnemyBody" type="CharacterBody2D" parent="." groups=["enemies"]]
+script = ExtResource("2_q4b0a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody"]
+shape = SubResource("RectangleShape2D_tkui6")
+
+[node name="healthbar" type="ProgressBar" parent="EnemyBody"]
+modulate = Color(0.929412, 0, 0.121569, 1)
+offset_left = -8.0
+offset_top = 17.0
+offset_right = 9.0
+offset_bottom = 22.0
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyBody"]
+scale = Vector2(0.063, 0.063)
+texture = ExtResource("2_lc6c0")
+
+[node name="NeutralSpecial" parent="EnemyBody" instance=ExtResource("2_4kvev")]
+position = Vector2(32, 20)
+scale = Vector2(0.100358, 0.0882353)
+
+[node name="gunner" type="Marker2D" parent="EnemyBody"]
+position = Vector2(47, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyBody/gunner"]
+scale = Vector2(-0.00271003, -0.00271003)
+texture = ExtResource("2_lc6c0")
+
+[node name="EnemySoul" type="Node2D" parent="."]
+script = ExtResource("5_djjsf")
+
+[node name="RayCasts" type="Node2D" parent="EnemySoul"]
+
+[node name="PrimaryRayCast" type="RayCast2D" parent="EnemySoul/RayCasts"]
+position = Vector2(1, 0)
+target_position = Vector2(84, 0)
+script = ExtResource("4_powj8")
+
+[node name="PlayerRayCast" type="RayCast2D" parent="EnemySoul/RayCasts"]
+target_position = Vector2(0, 131)
+script = ExtResource("5_h1j0j")

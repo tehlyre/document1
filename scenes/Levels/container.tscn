@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4rpkbb7pbeqj"]
+
+[ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
+[ext_resource type="PackedScene" uid="uid://piryy33ucw4m" path="res://scenes/Characters/enemigo.tscn" id="2_7us87"]
+[ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="3_p3x1j"]
+[ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards and Helps/goo.tscn" id="4_m1f8i"]
+[ext_resource type="PackedScene" uid="uid://d2fwduwibxhtj" path="res://scenes/Hazards and Helps/wall.tscn" id="4_o0u8o"]
+[ext_resource type="Script" path="res://scripts/wall.gd" id="5_kpox7"]
+[ext_resource type="Script" path="res://scripts/Enemies.gd" id="6_ycroc"]
+
+[node name="container" type="Node2D"]
+process_mode = 1
+
+[node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
+position = Vector2(345, 221)
+
+[node name="Camera" type="Camera2D" parent="Durdan"]
+position = Vector2(-184, 168)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.5
+drag_top_margin = 0.5
+drag_right_margin = 0.5
+drag_bottom_margin = 0.5
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("3_p3x1j")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 1
+grow_vertical = 1
+player = NodePath("../../Durdan")
+metadata/_edit_use_anchors_ = true
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Goo" parent="Level" instance=ExtResource("4_m1f8i")]
+z_index = -2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Goo"]
+polygon = PackedVector2Array(48, 214, 256, 368, 46, 366)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Level/Goo"]
+polygon = PackedVector2Array(-269, 257, -152, 378, -365, 389)
+
+[node name="Wall" parent="Level" instance=ExtResource("4_o0u8o")]
+script = ExtResource("5_kpox7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Wall"]
+polygon = PackedVector2Array(-9, 159, -2, 462, -49, 465, -35, 156)
+
+[node name="EnemyHandles" type="Node2D" parent="Level"]
+
+[node name="Marker2D" type="Marker2D" parent="Level/EnemyHandles"]
+position = Vector2(35, 130)
+
+[node name="Marker2D2" type="Marker2D" parent="Level/EnemyHandles"]
+position = Vector2(-86, 126)
+
+[node name="Marker2D3" type="Marker2D" parent="Level/EnemyHandles"]
+position = Vector2(-112, 508)
+
+[node name="Marker2D4" type="Marker2D" parent="Level/EnemyHandles"]
+position = Vector2(36, 510)
+
+[node name="Enemies" type="Node2D" parent="Level" node_paths=PackedStringArray("player", "EnemyHandles")]
+script = ExtResource("6_ycroc")
+player = NodePath("../../Durdan")
+EnemyHandles = NodePath("../EnemyHandles")
+
+[node name="Enemy" parent="Level/Enemies" instance=ExtResource("2_7us87")]
+position = Vector2(445, 48)
+
+[node name="Enemy2" parent="Level/Enemies" instance=ExtResource("2_7us87")]
+position = Vector2(35.9187, -37.5)
+
+[node name="Enemy3" parent="Level/Enemies" instance=ExtResource("2_7us87")]
+position = Vector2(281, -57)

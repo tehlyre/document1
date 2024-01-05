@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwcfhw8ni6iky"]
+
+[ext_resource type="Script" path="res://scripts/durdan.gd" id="1_bxvgu"]
+[ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
+[ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="3_qlc2s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ju5nh"]
+size = Vector2(368, 368)
+
+[node name="Durdan" type="CharacterBody2D" groups=["player"]]
+scale = Vector2(0.125, 0.125)
+collision_mask = 3
+script = ExtResource("1_bxvgu")
+
+[node name="durdansexy69" type="Sprite2D" parent="."]
+texture = ExtResource("2_ovms2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ju5nh")
+
+[node name="gunner" type="Marker2D" parent="."]
+position = Vector2(640, 328)
+scale = Vector2(5, 5)
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("3_qlc2s")]
+position = Vector2(448, 320)

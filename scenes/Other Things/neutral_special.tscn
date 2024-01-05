@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://evch3f3ad4o3"]
+
+[ext_resource type="Texture2D" uid="uid://cy4u4ua4i5vhu" path="res://assets/textures/neutral special.png" id="1_iylq5"]
+
+[node name="NeutralSpecial" type="Sprite2D"]
+position = Vector2(1, 0)
+texture = ExtResource("1_iylq5")
