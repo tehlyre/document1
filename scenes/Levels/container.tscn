@@ -11,8 +11,9 @@
 [node name="container" type="Node2D"]
 process_mode = 1
 
-[node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
+[node name="Durdan" parent="." node_paths=PackedStringArray("Goo") instance=ExtResource("1_snkv6")]
 position = Vector2(345, 221)
+Goo = NodePath("../Level/Goo")
 
 [node name="Camera" type="Camera2D" parent="Durdan"]
 position = Vector2(-184, 168)
@@ -49,6 +50,9 @@ polygon = PackedVector2Array(48, 214, 256, 368, 46, 366)
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Level/Goo"]
 polygon = PackedVector2Array(-269, 257, -152, 378, -365, 389)
 
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Level/Goo"]
+polygon = PackedVector2Array(659, 34, 1130, 333, 442, 575)
+
 [node name="Wall" parent="Level" instance=ExtResource("4_o0u8o")]
 script = ExtResource("5_kpox7")
 
@@ -74,11 +78,6 @@ script = ExtResource("6_ycroc")
 player = NodePath("../../Durdan")
 EnemyHandles = NodePath("../EnemyHandles")
 
-[node name="Enemy" parent="Level/Enemies" instance=ExtResource("2_7us87")]
-position = Vector2(445, 48)
-
 [node name="Enemy2" parent="Level/Enemies" instance=ExtResource("2_7us87")]
 position = Vector2(35.9187, -37.5)
-
-[node name="Enemy3" parent="Level/Enemies" instance=ExtResource("2_7us87")]
-position = Vector2(281, -57)
+rotation = 1.63285

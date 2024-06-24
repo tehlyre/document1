@@ -32,7 +32,7 @@ func _physics_process(_delta : float):
 # Function on_body_entered(Node2D body)
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
 func on_body_entered(body : Node2D):
-	print(get_parent())
+	
 	if(body.is_in_group("enemies")):
 		body.damage_thingy(10*1/body.scle)
 	elif(body.is_in_group("player")):

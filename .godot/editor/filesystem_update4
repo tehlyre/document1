@@ -1,5 +1,4 @@
 res://scenes/main.tscn
-res://scripts/ee.gd
 res://scenes/UI/hud.tscn
 res://scenes/Levels/container.tscn
 res://scenes/Other Things/bullet.tscn
@@ -7,11 +6,4 @@ res://scenes/Hazards and Helps/goo.tscn
 res://scenes/Characters/enemigo.tscn
 res://scenes/Characters/durdan.tscn
 res://scenes/valuepackpolygon.tscn
-res://scripts/enemigo.gd
-res://scripts/Enemies.gd
-res://scripts/PlayerRayCast.gd
-res://scripts/enemy.gd
-res://scripts/enemysoul.gd
-res://scripts/enemybody.gd
-res://scripts/enemyraycast.gd
-res://scripts/bullet.gd
+res://scripts/durdan.gd

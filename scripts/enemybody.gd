@@ -99,13 +99,14 @@ func dist(x : float, y : float):
 # is negated (i.e. backwards). This direction is then returned.
 func accel_thingy():
 	var distance = dist(self.global_position.x-target.global_position.x, self.global_position.y-target.global_position.y)
-	var dir = (target.global_position - self.global_position).normalized()*speed if target == player else (target.global_position - self.global_position).normalized()*speed*2
-	if distance <= stoppingdist and distance >= stoppingdist-5 and target == player:
-		return Vector2(0,0)
-	elif distance < stoppingdist-5 and target == player:
-		return -dir
-	else:
-		return dir
+	var dir = (target.global_position - self.global_position).normalized()*speed
+#	var dir = (target.global_position - self.global_position).normalized()*speed if target == player else (target.global_position - self.global_position).normalized()*speed*2
+#	if distance <= stoppingdist and distance >= stoppingdist-5 and target == player:
+#		return Vector2(0,0)
+#	elif distance < stoppingdist-5 and target == player:
+#		return -dir
+#	else:
+#		return dir
 		
 # Function void gunner_thingy(float delta)
 # Functions nearly the same as the player gunner_thingy script. Shoots to where the gun is pointing, i.e. Durdan.
@@ -154,7 +155,7 @@ func go_around():
 # of the player for the next frame.
 func _physics_process(delta):
 	framecount += 1
-	look_at(target.position)
+	look_at(target.global_position)
 	the_important_stuff(delta)
 	
 	

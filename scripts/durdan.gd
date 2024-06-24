@@ -44,6 +44,7 @@ class_name Player
 # _physics_process(float delta): Moves and rotates Durdan properly and fires his bullets.
 
 @export var Bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
+@export var Goo : Area2D
 
 @export var game_manager : GameManager
 
@@ -54,7 +55,8 @@ var maxspeed = maxsped
 
 var deltatime : float = 0
 var framecount : int = 0
-var rldu = [0,0,0,0]
+var rldu = [0.0,0.0,0.0,0.0]
+var last_frame = [0,0,0,0]
 var inputstrings = ["right", "left", "down", "up"]
 var velocitymultiplier = [1, -1, 1, -1]
 var firing : bool = false
@@ -66,6 +68,9 @@ var in_goo : bool = false
 var exit_goo : bool = false
 
 signal you_died(deded : bool)
+
+func _ready():
+	Goo.body_exited.connect(on_Goo_body_exited)
 
 # Function Vector2 cart_to_polar_from_object(Vector2 coords, Vector2 obj)
 # Reoriginizes obj to be the origin
@@ -97,6 +102,9 @@ func cart_to_polar(coords: Vector2):
 		coordphi = coordphi+2*PI
 	
 	return Vector2(coordr, coordphi)
+	
+func quadratic_formula(a : float, b : float, c : float):
+	return (-b+sqrt(b*b-4*a*c))/(2*a)
 
 # Function Vector2 polar_rad_to_deg(Vector2 rads)
 # Returns Vector2 with same polar coords and converted phi rads into degrees
@@ -115,9 +123,10 @@ func flick_stick():
 # Velocity function v(x) = -(b/m^2)x^2 + (b/m)x (kinda just a magic function lol)
 # Produces upside down parabola with vertex at (maxveltime, maxspeed) and zeros at (0,0) and (1*maxveltime, 0)
 func vel(x: float):
-	var a = -maxspeed/pow(maxveltime,2)
+	var a = -maxspeed/(maxveltime*maxveltime)
 	var b = maxspeed/maxveltime
 	return a*pow(x,2) + 2*b*x
+	
 
 # Function void float do_the_delta_input_thing(float delta)
 # Sets global variabl rldu[i] based on previous values and the total time delta.
@@ -126,29 +135,43 @@ func vel(x: float):
 # Once input is released, rdlu[i] is multiplied by -1 and progressively added to until zero.
 # This is for deacceleration purposes.
 func do_the_delta_input_thing(delta):
+	if in_goo and not exit_goo:
+		maxspeed = maxsped*0.25
+	elif exit_goo:
+		maxspeed = maxsped
 	for i in 4:
+		if exit_goo:
+#				if rldu[i] < 1 and rldu[i] > 0:
+#					rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), maxspeed/maxveltime, -666.66*pow(rldu[i], 2)+1000*rldu[i])
+#				elif rldu[i] >= 1:
+#					inputvel.x += maxspeed * velocitymultiplier[i]
+			print(":)")#quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4), ":)")
+			rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4)
+			if (rldu[i]<delta and rldu[i]>-delta):
+				rldu[i] = 0.0
+#		
 		if Input.get_action_strength(inputstrings[i]) == 1:
-			if (rldu[i] > 1):
-				rldu[i] = 1
-			elif (rldu[i] < 1):
+			if (rldu[i] > maxveltime):
+				rldu[i] = maxveltime
+			elif (rldu[i] < maxveltime):
 				rldu[i] += delta
 		elif Input.get_action_strength(inputstrings[i]) == 0:
 			# If not depressed or deacc last frame, continue not doing anything
-			if rldu[i] == 0:
-				rldu[i] = 0
+			if rldu[i] == 0.0:
+				rldu[i] = 0.0
 			# magic equation that fixed the problem of r weirdly equaling r-2*maxveltime+delta
 			# (-0.0667 bug thingy)
 			# The stopping thing
 			elif vel(rldu[i]+2*maxveltime+delta) == 0:
-				rldu[i] = 0
+				rldu[i] = 0.0
 			# If moving, commence deacceleration (see above)
 			elif rldu[i] > 0:
-				rldu[i] = rldu[i]*-1
+				rldu[i] = rldu[i]*-1.0
 			# If deaccelerating, continue
 			elif rldu[i] < -0.01666666666667:
 				rldu[i] += delta
 			elif (abs(rldu[i]-(-delta)) <= 0.01):
-				rldu[i] = 0
+				rldu[i] = 0.0
 	if rldu[0] != 0 and rldu[1] != 0:
 		rldu[0] = 0
 		rldu[1] = 0
@@ -161,6 +184,7 @@ func do_the_delta_input_thing(delta):
 		firing = false
 	if Input.is_action_just_pressed("neutral special"):
 		moment_firing = framecount
+	exit_goo = false
 
 # Function Vector2 accel_thingy()
 # returns proper velocity for Durdan (not acceleration lmfao)
@@ -178,20 +202,21 @@ func accel_thingy():
 	var inputvel = Vector2(0,0)
 	# X axis/Right and Left
 	for i in 2:
-		if rldu[i] < 1 and rldu[i] > 0:
+		if rldu[i] < maxveltime and rldu[i] > 0:
 			inputvel.x += vel(rldu[i]) * velocitymultiplier[i]
-		elif rldu[i] >= 1:
+		elif rldu[i] >= maxveltime:
 			inputvel.x += maxspeed * velocitymultiplier[i]
 		elif rldu[i] < 0:
 			inputvel.x += vel(rldu[i]+2*maxveltime) * velocitymultiplier[i]
 	# Y axis/Up and Down
 	for i in 2:
-		if rldu[i+2] < 1 and rldu[i+2] > 0:
+		if rldu[i+2] < maxveltime and rldu[i+2] > 0:
 			inputvel.y += vel(rldu[i+2]) * velocitymultiplier[i+2]
-		elif rldu[i+2] >= 1:
+		elif rldu[i+2] >= maxveltime:
 			inputvel.y += maxspeed * velocitymultiplier[i]
 		elif rldu[i+2] < 0:
 			inputvel.y += vel(rldu[i+2]+2*maxveltime) * velocitymultiplier[i+2]
+		
 	
 	return inputvel
 
@@ -216,11 +241,16 @@ func damage_thingy(damage):
 		health = 0
 		emit_signal("you_died", true)
 
-func hazard_thingy():
-	if in_goo:
-		maxspeed = maxsped*0.5
-	elif !in_goo:
-		maxspeed = maxsped
+#func hazard_thingy():
+#	if in_goo:
+#		maxspeed = maxsped*0.5
+#	elif !in_goo:
+#		maxspeed = maxsped
+		
+func on_Goo_body_exited(body : Node2D):
+	if body != self:
+		return
+	exit_goo = true
 
 # Function void _input(InputEvent event)
 # Called every time an input occurs. Here it is used to detect if the keyboard and mouse or controller
@@ -242,6 +272,7 @@ func _input(event : InputEvent):
 # flick_stick(). If this value is nan, the rotation stays the same as the previous
 # frame. The current rotation is then stored in previous_rotation.
 func _physics_process(delta):
+	print(rldu)
 	deltatime += delta
 	framecount += 1
 	
@@ -253,7 +284,7 @@ func _physics_process(delta):
 	var objrotation = self.get_rotation_degrees()
 	var mousepolar = polar_rad_to_deg(cart_to_polar_from_object(mousepos, objposition))
 	
-	hazard_thingy()
+#	hazard_thingy()
 	if using_mouse:
 		look_at(get_global_mouse_position())
 	elif !using_mouse:
