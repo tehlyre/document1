@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=6 format=3 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
-[ext_resource type="PackedScene" uid="uid://piryy33ucw4m" path="res://scenes/Characters/enemigo.tscn" id="2_7us87"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="3_p3x1j"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards and Helps/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://d2fwduwibxhtj" path="res://scenes/Hazards and Helps/wall.tscn" id="4_o0u8o"]
 [ext_resource type="Script" path="res://scripts/wall.gd" id="5_kpox7"]
-[ext_resource type="Script" path="res://scripts/Enemies.gd" id="6_ycroc"]
 
 [node name="container" type="Node2D"]
 process_mode = 1
@@ -14,6 +12,7 @@ process_mode = 1
 [node name="Durdan" parent="." node_paths=PackedStringArray("Goo") instance=ExtResource("1_snkv6")]
 position = Vector2(345, 221)
 Goo = NodePath("../Level/Goo")
+acceleration = 30.0
 
 [node name="Camera" type="Camera2D" parent="Durdan"]
 position = Vector2(-184, 168)
@@ -72,12 +71,3 @@ position = Vector2(-112, 508)
 
 [node name="Marker2D4" type="Marker2D" parent="Level/EnemyHandles"]
 position = Vector2(36, 510)
-
-[node name="Enemies" type="Node2D" parent="Level" node_paths=PackedStringArray("player", "EnemyHandles")]
-script = ExtResource("6_ycroc")
-player = NodePath("../../Durdan")
-EnemyHandles = NodePath("../EnemyHandles")
-
-[node name="Enemy2" parent="Level/Enemies" instance=ExtResource("2_7us87")]
-position = Vector2(35.9187, -37.5)
-rotation = 1.63285

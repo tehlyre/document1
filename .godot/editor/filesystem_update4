@@ -1,4 +1,5 @@
 res://scenes/main.tscn
+res://scripts/durdan.gd
 res://scenes/UI/hud.tscn
 res://scenes/Levels/container.tscn
 res://scenes/Other Things/bullet.tscn
@@ -6,4 +7,3 @@ res://scenes/Hazards and Helps/goo.tscn
 res://scenes/Characters/enemigo.tscn
 res://scenes/Characters/durdan.tscn
 res://scenes/valuepackpolygon.tscn
-res://scripts/durdan.gd

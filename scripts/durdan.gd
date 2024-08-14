@@ -48,10 +48,12 @@ class_name Player
 
 @export var game_manager : GameManager
 
-@export var maxsped : float = 750 # b
+@export var maxspeed : float = 750 # b
 @export var maxveltime : float = 0.75 # m
 
-var maxspeed = maxsped
+@export var acceleration : float = 2
+var initial_acceleration : float = -2*maxspeed/maxveltime
+var jerk : float = -2*maxspeed/pow(maxveltime,2)
 
 var deltatime : float = 0
 var framecount : int = 0
@@ -59,6 +61,8 @@ var rldu = [0.0,0.0,0.0,0.0]
 var last_frame = [0,0,0,0]
 var inputstrings = ["right", "left", "down", "up"]
 var velocitymultiplier = [1, -1, 1, -1]
+var velocityarray = [0.0,0.0,0.0,0.0]
+var accelarray = [0.0,0.0,0.0,0.0]
 var firing : bool = false
 var moment_firing : int = 0
 var health : int = 100
@@ -135,49 +139,70 @@ func vel(x: float):
 # Once input is released, rdlu[i] is multiplied by -1 and progressively added to until zero.
 # This is for deacceleration purposes.
 func do_the_delta_input_thing(delta):
-	if in_goo and not exit_goo:
-		maxspeed = maxsped*0.25
-	elif exit_goo:
-		maxspeed = maxsped
+#	if in_goo and not exit_goo:
+#		maxspeed = maxsped*0.25
+#	elif exit_goo:
+#		maxspeed = maxsped
 	for i in 4:
-		if exit_goo:
-#				if rldu[i] < 1 and rldu[i] > 0:
-#					rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), maxspeed/maxveltime, -666.66*pow(rldu[i], 2)+1000*rldu[i])
-#				elif rldu[i] >= 1:
-#					inputvel.x += maxspeed * velocitymultiplier[i]
-			print(":)")#quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4), ":)")
-			rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4)
-			if (rldu[i]<delta and rldu[i]>-delta):
-				rldu[i] = 0.0
-#		
+#		if exit_goo:
+##				if rldu[i] < 1 and rldu[i] > 0:
+##					rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), maxspeed/maxveltime, -666.66*pow(rldu[i], 2)+1000*rldu[i])
+##				elif rldu[i] >= 1:
+##					inputvel.x += maxspeed * velocitymultiplier[i]
+#			print(":)")#quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4), ":)")
+#			rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4)
+#			if (rldu[i]<delta or rldu[i]>-delta):
+#				rldu[i] = 0.0
+		if abs(velocityarray[i] - 0.0) < 0.01:
+			print(abs(velocityarray[i] - 0.0))
+##		
 		if Input.get_action_strength(inputstrings[i]) == 1:
-			if (rldu[i] > maxveltime):
-				rldu[i] = maxveltime
-			elif (rldu[i] < maxveltime):
-				rldu[i] += delta
+			if abs(velocityarray[i] - 0.0) < 0.01:
+				accelarray[i] = initial_acceleration
+			elif velocityarray[i] != 0.0:
+				if abs(accelarray[i] - 0.0) <= 0.01:
+					accelarray[i] == 0.0
+				elif accelarray[i] != 0.0:
+					if accelarray[i] - 0.0 < -0.01:
+						accelarray[i] = -(accelarray[i])+jerk*delta
+					elif accelarray[i] - 0.0 > 0.01:
+						accelarray[i] = accelarray[i]+jerk*delta
 		elif Input.get_action_strength(inputstrings[i]) == 0:
-			# If not depressed or deacc last frame, continue not doing anything
-			if rldu[i] == 0.0:
-				rldu[i] = 0.0
-			# magic equation that fixed the problem of r weirdly equaling r-2*maxveltime+delta
-			# (-0.0667 bug thingy)
-			# The stopping thing
-			elif vel(rldu[i]+2*maxveltime+delta) == 0:
-				rldu[i] = 0.0
-			# If moving, commence deacceleration (see above)
-			elif rldu[i] > 0:
-				rldu[i] = rldu[i]*-1.0
-			# If deaccelerating, continue
-			elif rldu[i] < -0.01666666666667:
-				rldu[i] += delta
-			elif (abs(rldu[i]-(-delta)) <= 0.01):
-				rldu[i] = 0.0
-	if rldu[0] != 0 and rldu[1] != 0:
-		rldu[0] = 0
-		rldu[1] = 0
-	if rldu[2] != 0 and rldu[3] != 0:
-		rldu[2] = 0
-		rldu[3] = 0
+			if abs(velocityarray[i] - 0.0) < 1:
+				velocityarray[i] = 0.0
+				accelarray[i] = 0.0
+			elif velocityarray[i] != 0.0:
+#				if accelarray[i] >= 0.0:
+				accelarray[i] = accelarray[i]+jerk*delta
+#				elif accelarray[i] < 0.0:
+#					accelarray[i] = -accelarray[i]+jerk*delta
+		
+		
+		velocityarray[i] = velocityarray[i] + accelarray[i]*delta
+			
+#		elif Input.get_action_strength(inputstrings[i]) == 0:
+#			# If not depressed or deacc last frame, continue not doing anything
+#			if rldu[i] == 0.0:
+#				rldu[i] = 0.0
+#			# magic equation that fixed the problem of r weirdly equaling r-2*maxveltime+delta
+#			# (-0.0667 bug thingy)
+#			# The stopping thing
+#			elif vel(rldu[i]+2*maxveltime+delta) == 0:
+#				rldu[i] = 0.0
+#			# If moving, commence deacceleration (see above)
+#			elif rldu[i] > 0:
+#				rldu[i] = rldu[i]*-1.0
+#			# If deaccelerating, continue
+#			elif rldu[i] < -0.01666666666667:
+#				rldu[i] += delta
+#			elif (abs(rldu[i]-(-delta)) <= 0.01):
+#				rldu[i] = 0.0
+#	if rldu[0] != 0 and rldu[1] != 0:
+#		rldu[0] = 0
+#		rldu[1] = 0
+#	if rldu[2] != 0 and rldu[3] != 0:
+#		rldu[2] = 0
+#		rldu[3] = 0
 	if Input.get_action_strength("neutral special"):
 		firing = true
 	else:
@@ -197,28 +222,28 @@ func do_the_delta_input_thing(delta):
 # v(rldu+(2*maxveltime)). This works because deacceleration in the velocity function is equal to values
 # greater than maxveltime, and adding 2*maxveltime to the deacceleration delta is the perfect number for
 # deacceleration.
-func accel_thingy():
-	# Initiation variable
-	var inputvel = Vector2(0,0)
-	# X axis/Right and Left
-	for i in 2:
-		if rldu[i] < maxveltime and rldu[i] > 0:
-			inputvel.x += vel(rldu[i]) * velocitymultiplier[i]
-		elif rldu[i] >= maxveltime:
-			inputvel.x += maxspeed * velocitymultiplier[i]
-		elif rldu[i] < 0:
-			inputvel.x += vel(rldu[i]+2*maxveltime) * velocitymultiplier[i]
-	# Y axis/Up and Down
-	for i in 2:
-		if rldu[i+2] < maxveltime and rldu[i+2] > 0:
-			inputvel.y += vel(rldu[i+2]) * velocitymultiplier[i+2]
-		elif rldu[i+2] >= maxveltime:
-			inputvel.y += maxspeed * velocitymultiplier[i]
-		elif rldu[i+2] < 0:
-			inputvel.y += vel(rldu[i+2]+2*maxveltime) * velocitymultiplier[i+2]
-		
-	
-	return inputvel
+#func accel_thingy():
+#	# Initiation variable
+#	var inputvel = Vector2(0,0)
+#	# X axis/Right and Left
+#	for i in 2:
+#		if rldu[i] < maxveltime and rldu[i] > 0:
+#			inputvel.x += vel(rldu[i]) * velocitymultiplier[i]
+#		elif rldu[i] >= maxveltime:
+#			inputvel.x += maxspeed * velocitymultiplier[i]
+#		elif rldu[i] < 0:
+#			inputvel.x += vel(rldu[i]+2*maxveltime) * velocitymultiplier[i]
+#	# Y axis/Up and Down
+#	for i in 2:
+#		if rldu[i+2] < maxveltime and rldu[i+2] > 0:
+#			inputvel.y += vel(rldu[i+2]) * velocitymultiplier[i+2]
+#		elif rldu[i+2] >= maxveltime:
+#			inputvel.y += maxspeed * velocitymultiplier[i]
+#		elif rldu[i+2] < 0:
+#			inputvel.y += vel(rldu[i+2]+2*maxveltime) * velocitymultiplier[i+2]
+#
+#
+#	return inputvel
 
 # Function void gunner_thingy()
 # Currently fires bullets at a rate of four times per second. fps variable is the frames per second, derived
@@ -272,7 +297,7 @@ func _input(event : InputEvent):
 # flick_stick(). If this value is nan, the rotation stays the same as the previous
 # frame. The current rotation is then stored in previous_rotation.
 func _physics_process(delta):
-	print(rldu)
+	print(accelarray)
 	deltatime += delta
 	framecount += 1
 	
@@ -292,7 +317,7 @@ func _physics_process(delta):
 			self.set_rotation_degrees(previous_rotation)
 		else:
 			self.set_rotation_degrees(polar_rad_to_deg(flick_stick()).y)
-	velocity = accel_thingy()
+	velocity = Vector2(velocityarray[0]-velocityarray[1], velocityarray[2]-velocityarray[3])
 	move_and_slide()
 	gunner_thingy(delta)
 	previous_rotation = rotation_degrees
