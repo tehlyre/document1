@@ -51,8 +51,8 @@ class_name Player
 @export var maxspeed : float = 750 # b
 @export var maxveltime : float = 0.75 # m
 
-@export var acceleration : float = 2
-var initial_acceleration : float = -2*maxspeed/maxveltime
+var acceleration : Vector2 = Vector2(0,0)
+var initial_acceleration : float = 2*maxspeed/maxveltime
 var jerk : float = -2*maxspeed/pow(maxveltime,2)
 
 var deltatime : float = 0
@@ -144,65 +144,35 @@ func do_the_delta_input_thing(delta):
 #	elif exit_goo:
 #		maxspeed = maxsped
 	for i in 4:
-#		if exit_goo:
-##				if rldu[i] < 1 and rldu[i] > 0:
-##					rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), maxspeed/maxveltime, -666.66*pow(rldu[i], 2)+1000*rldu[i])
-##				elif rldu[i] >= 1:
-##					inputvel.x += maxspeed * velocitymultiplier[i]
-#			print(":)")#quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4), ":)")
-#			rldu[i] = quadratic_formula(-maxspeed/pow(maxveltime,2), 2*(maxspeed/maxveltime), -vel(rldu[i])/4)
-#			if (rldu[i]<delta or rldu[i]>-delta):
-#				rldu[i] = 0.0
-		if abs(velocityarray[i] - 0.0) < 0.01:
-			print(abs(velocityarray[i] - 0.0))
+		if abs(velocityarray[i]) < 0.01:
+			print(abs(velocityarray[i]))
 ##		
 		if Input.get_action_strength(inputstrings[i]) == 1:
-			if abs(velocityarray[i] - 0.0) < 0.01:
+			if abs(velocityarray[i]) < 0.01:
 				accelarray[i] = initial_acceleration
 			elif velocityarray[i] != 0.0:
-				if abs(accelarray[i] - 0.0) <= 0.01:
-					accelarray[i] == 0.0
+				if abs(accelarray[i]) <= 0.01:
+					accelarray[i] = 0.0
 				elif accelarray[i] != 0.0:
-					if accelarray[i] - 0.0 < -0.01:
+					if accelarray[i] < -2000:
+						accelarray[i] = 0
+					elif accelarray[i] < -0.01:
 						accelarray[i] = -(accelarray[i])+jerk*delta
-					elif accelarray[i] - 0.0 > 0.01:
+					elif accelarray[i] > 0.01:
 						accelarray[i] = accelarray[i]+jerk*delta
 		elif Input.get_action_strength(inputstrings[i]) == 0:
-			if abs(velocityarray[i] - 0.0) < 1:
+			if abs(velocityarray[i]) < 30:
 				velocityarray[i] = 0.0
 				accelarray[i] = 0.0
 			elif velocityarray[i] != 0.0:
-#				if accelarray[i] >= 0.0:
-				accelarray[i] = accelarray[i]+jerk*delta
-#				elif accelarray[i] < 0.0:
-#					accelarray[i] = -accelarray[i]+jerk*delta
+				if accelarray[i] < -1900:
+					accelarray[i] = 0.0
+				else:
+					accelarray[i] = accelarray[i]+jerk*delta
+					print("a")
 		
-		
-		velocityarray[i] = velocityarray[i] + accelarray[i]*delta
-			
-#		elif Input.get_action_strength(inputstrings[i]) == 0:
-#			# If not depressed or deacc last frame, continue not doing anything
-#			if rldu[i] == 0.0:
-#				rldu[i] = 0.0
-#			# magic equation that fixed the problem of r weirdly equaling r-2*maxveltime+delta
-#			# (-0.0667 bug thingy)
-#			# The stopping thing
-#			elif vel(rldu[i]+2*maxveltime+delta) == 0:
-#				rldu[i] = 0.0
-#			# If moving, commence deacceleration (see above)
-#			elif rldu[i] > 0:
-#				rldu[i] = rldu[i]*-1.0
-#			# If deaccelerating, continue
-#			elif rldu[i] < -0.01666666666667:
-#				rldu[i] += delta
-#			elif (abs(rldu[i]-(-delta)) <= 0.01):
-#				rldu[i] = 0.0
-#	if rldu[0] != 0 and rldu[1] != 0:
-#		rldu[0] = 0
-#		rldu[1] = 0
-#	if rldu[2] != 0 and rldu[3] != 0:
-#		rldu[2] = 0
-#		rldu[3] = 0
+		acceleration = cirp(accelarray[0]-accelarray[1], accelarray[2]-accelarray[3])*delta
+		velocityarray[i] += accelarray[i]
 	if Input.get_action_strength("neutral special"):
 		firing = true
 	else:
@@ -210,6 +180,10 @@ func do_the_delta_input_thing(delta):
 	if Input.is_action_just_pressed("neutral special"):
 		moment_firing = framecount
 	exit_goo = false
+	
+func cirp(x : float,y : float):
+	var circle_radius = max(abs(x), abs(y))
+	return circle_radius*Vector2(x,y).normalized()
 
 # Function Vector2 accel_thingy()
 # returns proper velocity for Durdan (not acceleration lmfao)
@@ -297,7 +271,12 @@ func _input(event : InputEvent):
 # flick_stick(). If this value is nan, the rotation stays the same as the previous
 # frame. The current rotation is then stored in previous_rotation.
 func _physics_process(delta):
+	print(acceleration)
 	print(accelarray)
+	print(velocity)
+	
+	print(cirp(7,2))
+	
 	deltatime += delta
 	framecount += 1
 	
@@ -317,7 +296,7 @@ func _physics_process(delta):
 			self.set_rotation_degrees(previous_rotation)
 		else:
 			self.set_rotation_degrees(polar_rad_to_deg(flick_stick()).y)
-	velocity = Vector2(velocityarray[0]-velocityarray[1], velocityarray[2]-velocityarray[3])
+	velocity += acceleration
 	move_and_slide()
 	gunner_thingy(delta)
 	previous_rotation = rotation_degrees

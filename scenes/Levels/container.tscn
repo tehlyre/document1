@@ -12,7 +12,6 @@ process_mode = 1
 [node name="Durdan" parent="." node_paths=PackedStringArray("Goo") instance=ExtResource("1_snkv6")]
 position = Vector2(345, 221)
 Goo = NodePath("../Level/Goo")
-acceleration = 30.0
 
 [node name="Camera" type="Camera2D" parent="Durdan"]
 position = Vector2(-184, 168)
