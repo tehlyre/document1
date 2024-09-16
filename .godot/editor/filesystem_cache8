@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1725973277
+::res://::1726448883
 icon.svg::CompressedTexture2D::7399799570421521073::1697563746::1697563782::1::::<><>::
 ::res://assets/::1723774419
 ::res://assets/textures/::1723774419
@@ -9,30 +9,30 @@ enieamy.png::CompressedTexture2D::2594524527183642969::1698531896::1698531898::1
 neutral special.png::CompressedTexture2D::6518507749241808614::1699127016::1699127018::1::::<><>::
 ::res://document1/::1723774419
 README.md::TextFile::-1::1703308472::0::1::::<><>::
-::res://scenes/::1725912219
-main.tscn::PackedScene::1436345888032593477::1725912219::0::1::::<><>::res://scripts/game.gd<>uid://b4rpkbb7pbeqj::::res://scenes/Levels/container.tscn<>uid://ckaa3ih3v8cyl::::res://scenes/UI/pausemenu.tscn<>uid://uvj7iu2qje8l::::res://scenes/UI/deathmenu.tscn<>res://scripts/UI/deathmenu.gd<>uid://c0hig8yqsr4ak::::res://scenes/UI/optionsmenuoverlay.tscn<>res://scripts/UI/optionsmenuoverlay.gd
-valuepackpolygon.tscn::PackedScene::4006942054709759457::1725912219::0::1::::<><>::
-::res://scenes/Characters/::1725912219
-durdan.tscn::PackedScene::3935021291853927780::1725912219::0::1::::<><>::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn
-enemigo.tscn::PackedScene::1070424029647662094::1725912219::0::1::::<><>::res://scripts/enemy.gd<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn<>res://scripts/newnintendoenemydsxl.gd<>uid://bc72o7r0pj7fx::::res://assets/textures/enieamy.png<>res://scripts/enemysoul.gd
-::res://scenes/Hazards and Helps/::1725912219
-goo.tscn::PackedScene::3293155290536947191::1725912219::0::1::::<><>::res://scripts/goo.gd
+::res://scenes/::1726020198
+main.tscn::PackedScene::1436345888032593477::1726020197::0::1::::<><>::res://scripts/game.gd<>uid://b4rpkbb7pbeqj::::res://scenes/Levels/container.tscn<>uid://ckaa3ih3v8cyl::::res://scenes/UI/pausemenu.tscn<>uid://uvj7iu2qje8l::::res://scenes/UI/deathmenu.tscn<>res://scripts/UI/deathmenu.gd<>uid://c0hig8yqsr4ak::::res://scenes/UI/optionsmenuoverlay.tscn<>res://scripts/UI/optionsmenuoverlay.gd
+valuepackpolygon.tscn::PackedScene::4006942054709759457::1726020198::0::1::::<><>::
+::res://scenes/Characters/::1726020198
+durdan.tscn::PackedScene::3935021291853927780::1726020198::0::1::::<><>::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn
+enemigo.tscn::PackedScene::1070424029647662094::1726020198::0::1::::<><>::res://scripts/enemy.gd<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn<>res://scripts/newnintendoenemydsxl.gd<>uid://bc72o7r0pj7fx::::res://assets/textures/enieamy.png<>res://scripts/enemysoul.gd
+::res://scenes/Hazards and Helps/::1726020198
+goo.tscn::PackedScene::3293155290536947191::1726020198::0::1::::<><>::res://scripts/goo.gd
 wall.tscn::PackedScene::9066024934117485811::1703097106::0::1::::<><>::
-::res://scenes/Levels/::1725912219
-container.tscn::PackedScene::4457920239387779953::1725912219::0::1::::<><>::uid://bwcfhw8ni6iky::::res://scenes/Characters/durdan.tscn<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://bm6h10gtdvvdf::::res://scenes/Hazards and Helps/goo.tscn<>uid://d2fwduwibxhtj::::res://scenes/Hazards and Helps/wall.tscn<>res://scripts/wall.gd
-::res://scenes/Other Things/::1725912219
-bullet.tscn::PackedScene::6987748190088326131::1725912219::0::1::::<><>::uid://gmlmhx2tod4d::::res://assets/textures/bullet.png<>res://scripts/bullet.gd
+::res://scenes/Levels/::1726020198
+container.tscn::PackedScene::4457920239387779953::1726020198::0::1::::<><>::uid://bwcfhw8ni6iky::::res://scenes/Characters/durdan.tscn<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://bm6h10gtdvvdf::::res://scenes/Hazards and Helps/goo.tscn<>uid://d2fwduwibxhtj::::res://scenes/Hazards and Helps/wall.tscn<>res://scripts/wall.gd
+::res://scenes/Other Things/::1726020198
+bullet.tscn::PackedScene::6987748190088326131::1726020198::0::1::::<><>::uid://gmlmhx2tod4d::::res://assets/textures/bullet.png<>res://scripts/bullet.gd
 neutral_special.tscn::PackedScene::324242721580421956::1702493240::0::1::::<><>::uid://cy4u4ua4i5vhu
-::res://scenes/UI/::1725912219
+::res://scenes/UI/::1726020198
 deathmenu.tscn::PackedScene::1447732856267144613::1702829202::0::1::::<><>::
-hud.tscn::PackedScene::7713038601948674268::1725912219::0::1::::<><>::res://scripts/UI/hud.gd
+hud.tscn::PackedScene::7713038601948674268::1726020198::0::1::::<><>::res://scripts/UI/hud.gd
 optionsmenu.tscn::PackedScene::4206558272162581974::1702829334::0::1::::<><>::res://scripts/UI/optionsmenu.gd
 optionsmenuoverlay.tscn::PackedScene::6542511324418574502::1702829334::0::1::::<><>::res://scripts/UI/optionsmenu.gd
 pausemenu.tscn::PackedScene::5474780238297850203::1702829334::0::1::::<><>::res://scripts/UI/pausemenu.gd
 startmenu.tscn::PackedScene::2749788625872300548::1702829334::0::1::::<><>::res://scripts/UI/startmenu.gd
-::res://scripts/::1725912219
+::res://scripts/::1726020198
 bullet.gd::GDScript::-1::1718507320::0::1::::<>Area2D<>::
-durdan.gd::GDScript::-1::1725912219::0::1::::Player<>CharacterBody2D<>::
+durdan.gd::GDScript::-1::1726020198::0::1::::Player<>CharacterBody2D<>::
 Enemies.gd::GDScript::-1::1703376106::0::1::::<>Node2D<>::
 enemy.gd::GDScript::-1::1704911666::0::1::::<>Node2D<>::
 enemybody.gd::GDScript::-1::1717123854::0::1::::<>CharacterBody2D<>::

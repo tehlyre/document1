@@ -51,7 +51,7 @@ class_name Player
 @export var maxspeed : float = 750 # b
 @export var maxveltime : float = 0.75 # m
 
-var acceleration : Vector2 = Vector2(0,0)
+var acceleration : float = 3000
 var initial_acceleration : float = 2*maxspeed/maxveltime
 var jerk : float = -2*maxspeed/pow(maxveltime,2)
 
@@ -70,6 +70,7 @@ var using_mouse : bool = true
 var previous_rotation : float = 0
 var in_goo : bool = false
 var exit_goo : bool = false
+var inputvec : Vector2 = Vector2(0,0)
 
 signal you_died(deded : bool)
 
@@ -132,6 +133,14 @@ func vel(x: float):
 	return a*pow(x,2) + 2*b*x
 	
 
+func fortitude(four : int, vector : Vector2):
+	if four == 0 or four == 1:
+		return vector.x
+	elif four == 2 or four == 3:
+		return vector.y
+	else:
+		return "you're gay"
+
 # Function void float do_the_delta_input_thing(float delta)
 # Sets global variabl rldu[i] based on previous values and the total time delta.
 # If input is depressed, rldu[i] is set to the amount of seconds since the beginning of depression,
@@ -139,40 +148,18 @@ func vel(x: float):
 # Once input is released, rdlu[i] is multiplied by -1 and progressively added to until zero.
 # This is for deacceleration purposes.
 func do_the_delta_input_thing(delta):
-#	if in_goo and not exit_goo:
-#		maxspeed = maxsped*0.25
-#	elif exit_goo:
-#		maxspeed = maxsped
-	for i in 4:
-		if abs(velocityarray[i]) < 0.01:
-			print(abs(velocityarray[i]))
-##		
-		if Input.get_action_strength(inputstrings[i]) == 1:
-			if abs(velocityarray[i]) < 0.01:
-				accelarray[i] = initial_acceleration
-			elif velocityarray[i] != 0.0:
-				if abs(accelarray[i]) <= 0.01:
-					accelarray[i] = 0.0
-				elif accelarray[i] != 0.0:
-					if accelarray[i] < -2000:
-						accelarray[i] = 0
-					elif accelarray[i] < -0.01:
-						accelarray[i] = -(accelarray[i])+jerk*delta
-					elif accelarray[i] > 0.01:
-						accelarray[i] = accelarray[i]+jerk*delta
-		elif Input.get_action_strength(inputstrings[i]) == 0:
-			if abs(velocityarray[i]) < 30:
-				velocityarray[i] = 0.0
-				accelarray[i] = 0.0
-			elif velocityarray[i] != 0.0:
-				if accelarray[i] < -1900:
-					accelarray[i] = 0.0
-				else:
-					accelarray[i] = accelarray[i]+jerk*delta
-					print("a")
-		
-		acceleration = cirp(accelarray[0]-accelarray[1], accelarray[2]-accelarray[3])*delta
-		velocityarray[i] += accelarray[i]
+	inputvec  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
+	
+	if inputvec == Vector2.ZERO:
+		if velocity.length() > acceleration*delta:
+			velocity -= velocity.normalized()*acceleration*delta*11/16
+		else:
+			velocity = Vector2.ZERO
+	else:
+		velocity += inputvec*acceleration*delta
+		if velocity.length() > maxspeed:
+			velocity = velocity.normalized() * maxspeed
+	
 	if Input.get_action_strength("neutral special"):
 		firing = true
 	else:
@@ -181,43 +168,6 @@ func do_the_delta_input_thing(delta):
 		moment_firing = framecount
 	exit_goo = false
 	
-func cirp(x : float,y : float):
-	var circle_radius = max(abs(x), abs(y))
-	return circle_radius*Vector2(x,y).normalized()
-
-# Function Vector2 accel_thingy()
-# returns proper velocity for Durdan (not acceleration lmfao)
-# uses values from array rldu[i]. Loops through r and l first due to the fact that x and y have to be assigned
-# independently. inputvel holds the return value.
-# If rldu is less than 1 or greater that 0, i.e. Durdan is accelerating, the x/y value equals v(rldu) times
-# the sign multiplier. Else if rldu is greater than or equal to 1, i.e. Durdan is at his peak velocity, the
-# x/y value equals exactly the maxspeed multiplied by the sign multiplier. Else if rldu is less than 0, i.e.
-# Durdan is deaccelerating because the sign gets flipped in do_the_delta_input_thingy, x/y value equals
-# v(rldu+(2*maxveltime)). This works because deacceleration in the velocity function is equal to values
-# greater than maxveltime, and adding 2*maxveltime to the deacceleration delta is the perfect number for
-# deacceleration.
-#func accel_thingy():
-#	# Initiation variable
-#	var inputvel = Vector2(0,0)
-#	# X axis/Right and Left
-#	for i in 2:
-#		if rldu[i] < maxveltime and rldu[i] > 0:
-#			inputvel.x += vel(rldu[i]) * velocitymultiplier[i]
-#		elif rldu[i] >= maxveltime:
-#			inputvel.x += maxspeed * velocitymultiplier[i]
-#		elif rldu[i] < 0:
-#			inputvel.x += vel(rldu[i]+2*maxveltime) * velocitymultiplier[i]
-#	# Y axis/Up and Down
-#	for i in 2:
-#		if rldu[i+2] < maxveltime and rldu[i+2] > 0:
-#			inputvel.y += vel(rldu[i+2]) * velocitymultiplier[i+2]
-#		elif rldu[i+2] >= maxveltime:
-#			inputvel.y += maxspeed * velocitymultiplier[i]
-#		elif rldu[i+2] < 0:
-#			inputvel.y += vel(rldu[i+2]+2*maxveltime) * velocitymultiplier[i+2]
-#
-#
-#	return inputvel
 
 # Function void gunner_thingy()
 # Currently fires bullets at a rate of four times per second. fps variable is the frames per second, derived
@@ -271,18 +221,13 @@ func _input(event : InputEvent):
 # flick_stick(). If this value is nan, the rotation stays the same as the previous
 # frame. The current rotation is then stored in previous_rotation.
 func _physics_process(delta):
-	print(acceleration)
-	print(accelarray)
-	print(velocity)
 	
-	print(cirp(7,2))
 	
 	deltatime += delta
 	framecount += 1
 	
 	var mousepos = get_viewport().get_mouse_position()
 	
-	do_the_delta_input_thing(delta)
 	
 	var objposition = self.get_position()
 	var objrotation = self.get_rotation_degrees()
@@ -296,7 +241,10 @@ func _physics_process(delta):
 			self.set_rotation_degrees(previous_rotation)
 		else:
 			self.set_rotation_degrees(polar_rad_to_deg(flick_stick()).y)
-	velocity += acceleration
+			
+	do_the_delta_input_thing(delta)
+	print(velocity)
+	
 	move_and_slide()
 	gunner_thingy(delta)
 	previous_rotation = rotation_degrees
