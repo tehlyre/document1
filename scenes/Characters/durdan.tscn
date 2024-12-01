@@ -19,8 +19,10 @@ texture = ExtResource("2_ovms2")
 shape = SubResource("RectangleShape2D_ju5nh")
 
 [node name="gunner" type="Marker2D" parent="."]
-position = Vector2(640, 328)
+position = Vector2(600, 296)
+rotation = -0.270105
 scale = Vector2(5, 5)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_qlc2s")]
-position = Vector2(448, 320)
+position = Vector2(432.587, 342.758)
+rotation = -0.270105

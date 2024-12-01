@@ -48,12 +48,11 @@ class_name Player
 
 @export var game_manager : GameManager
 
-@export var maxspeed : float = 750 # b
+@export var maxsped : float = 400 # b
+var maxspeed : float = maxsped
 @export var maxveltime : float = 0.75 # m
 
-var acceleration : float = 3000
-var initial_acceleration : float = 2*maxspeed/maxveltime
-var jerk : float = -2*maxspeed/pow(maxveltime,2)
+var acceleration : float = 1500
 
 var deltatime : float = 0
 var framecount : int = 0
@@ -156,7 +155,7 @@ func do_the_delta_input_thing(delta):
 		else:
 			velocity = Vector2.ZERO
 	else:
-		velocity += inputvec*acceleration*delta
+		velocity += inputvec*acceleration*delta*2
 		if velocity.length() > maxspeed:
 			velocity = velocity.normalized() * maxspeed
 	
@@ -190,11 +189,11 @@ func damage_thingy(damage):
 		health = 0
 		emit_signal("you_died", true)
 
-#func hazard_thingy():
-#	if in_goo:
-#		maxspeed = maxsped*0.5
-#	elif !in_goo:
-#		maxspeed = maxsped
+func hazard_thingy():
+	if in_goo:
+		maxspeed = maxsped*0.5
+	elif !in_goo:
+		maxspeed = maxsped
 		
 func on_Goo_body_exited(body : Node2D):
 	if body != self:
@@ -222,7 +221,7 @@ func _input(event : InputEvent):
 # frame. The current rotation is then stored in previous_rotation.
 func _physics_process(delta):
 	
-	
+	hazard_thingy()
 	deltatime += delta
 	framecount += 1
 	
@@ -243,7 +242,6 @@ func _physics_process(delta):
 			self.set_rotation_degrees(polar_rad_to_deg(flick_stick()).y)
 			
 	do_the_delta_input_thing(delta)
-	print(velocity)
 	
 	move_and_slide()
 	gunner_thingy(delta)

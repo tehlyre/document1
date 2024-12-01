@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name h_Wall
 
 var polygon : Polygon2D
 

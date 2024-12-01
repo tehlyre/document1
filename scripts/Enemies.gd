@@ -8,9 +8,7 @@ func _ready():
 	if get_child_count() > 0:
 		for i in get_children():
 			i.player = player
-			i.get_node("EnemyBody").target = player
 			i.enemyhandles = EnemyHandles
-			i.readyy()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

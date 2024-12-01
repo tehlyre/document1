@@ -34,7 +34,7 @@ func _physics_process(_delta : float):
 func on_body_entered(body : Node2D):
 	
 	if(body.is_in_group("enemies")):
-		body.damage_thingy(10*1/body.scle)
+		body.damage_thingy(100/body.scle)
 	elif(body.is_in_group("player")):
-		body.damage_thingy(10*1)
+		body.damage_thingy(10)
 	queue_free()
