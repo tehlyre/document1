@@ -30,6 +30,11 @@ var health : float = 100.0
 # float scle: The damage scaling constant, used to calculate how much damage is dealt to the enemy. AKA how many hits does it take to kill using normal bullets.
 var scle : float = 3
 
+var minus_suggestion
+var plus_suggestion
+var minus = true
+var plus = true
+
 # enum States: The states that govern the behavior of the enemy. Currently, only seek (move towards player), stop, and flee (move away from player) have been implemented.
 enum States {
 	SEEK,
@@ -61,12 +66,27 @@ func flee():
 	velocity += (desired_velocity-velocity)
 
 func peek():
-	print("no peeking")
+	var peeking = true
+	if minus:
+		$beta_minus.target_position = $beta_minus.target_position.rotated(0.1)
+	if plus:
+		$beta_plus.target_position = $beta_plus.target_position.rotated(-0.1)
+	if $beta_minus.get_collider() == null or $beta_minus.get_collider() != $alpha_particle.get_collider():
+		minus_suggestion = $beta_minus.target_position
+		minus = false
+	if $beta_plus.get_collider() == null or $beta_plus.get_collider() != $alpha_particle.get_collider():
+		plus_suggestion = $beta_plus.target_position
+		plus = false
+	if !minus and !plus:
+		if (to_local(player.position)-$beta_plus.target_position).length() < (to_local(player.position)-$beta_minus.target_position).length():
+			velocity = ($beta_plus.target_position.normalized()*max_sped).rotated(PI/8)
+		elif (to_local(player.position)-$beta_minus.target_position).length() < (to_local(player.position)-$beta_plus.target_position).length():
+			velocity = ($beta_minus.target_position.normalized()*max_sped).rotated(PI/8)
 	
 # void set_state(void): Sets the appropriate state for the enemy based on preconceived conditions. If the player is farther than 200 units away, switch state to seek. If the
 # player is around 200 units away, switch state to stop, and if the player is under 200 units away, switch state to flee.
 func set_state():
-		if $proximity_checker.get_collider() != null and $proximity_checker.get_collider() != player:
+		if $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
 			state = States.PEEK
 		elif (player.position-position).length() > 200:
 			state = States.SEEK
@@ -91,7 +111,10 @@ func damage_thingy(damage : int):
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta):
-	$proximity_checker.target_position = to_local(player.position)
+	$alpha_particle.target_position = to_local(player.position)
+	if state != States.PEEK:
+		$beta_minus.target_position = to_local(player.position)
+		$beta_plus.target_position = to_local(player.position)
 	set_state()
 	hazard_thingy()
 	

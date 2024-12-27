@@ -37,6 +37,10 @@ position = Vector2(47, 20)
 scale = Vector2(-0.00271003, -0.00271003)
 texture = ExtResource("2_lc6c0")
 
-[node name="proximity_checker" type="RayCast2D" parent="."]
+[node name="alpha_particle" type="RayCast2D" parent="."]
 position = Vector2(-1, 0)
 target_position = Vector2(64, 0)
+
+[node name="beta_plus" type="RayCast2D" parent="."]
+
+[node name="beta_minus" type="RayCast2D" parent="."]

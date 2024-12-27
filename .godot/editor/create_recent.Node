@@ -1,3 +1,4 @@
+RayCast2D
 Control
 Label
 CollisionPolygon2D
@@ -6,7 +7,6 @@ Node2D
 Area2D
 StaticBody2D
 Sprite2D
-RayCast2D
 CharacterBody2D
 Marker2D
 Node
