@@ -54,27 +54,29 @@ var maxspeed : float = maxsped
 
 var acceleration : float = 1500
 
-var deltatime : float = 0
 var framecount : int = 0
-var rldu = [0.0,0.0,0.0,0.0]
-var last_frame = [0,0,0,0]
-var inputstrings = ["right", "left", "down", "up"]
-var velocitymultiplier = [1, -1, 1, -1]
-var velocityarray = [0.0,0.0,0.0,0.0]
-var accelarray = [0.0,0.0,0.0,0.0]
 var firing : bool = false
 var moment_firing : int = 0
 var health : int = 100
 var using_mouse : bool = true
 var previous_rotation : float = 0
 var in_goo : bool = false
-var exit_goo : bool = false
 var inputvec : Vector2 = Vector2(0,0)
+var interactables = []
+
 
 signal you_died(deded : bool)
+signal open_chest(chestID : int)
 
 func _ready():
-	Goo.body_exited.connect(on_Goo_body_exited)
+	$Interaction.area_entered.connect(_on_interaction_area_area_entered)
+	$Interaction.area_exited.connect(_on_interaction_area_area_exited)
+	
+func _on_interaction_area_area_entered(area):
+	interactables.append(area.get_parent().interactionID)
+
+func _on_interaction_area_area_exited(area):
+	interactables.erase(area.get_parent().interactionID)
 
 # Function Vector2 cart_to_polar_from_object(Vector2 coords, Vector2 obj)
 # Reoriginizes obj to be the origin
@@ -106,9 +108,6 @@ func cart_to_polar(coords: Vector2):
 		coordphi = coordphi+2*PI
 	
 	return Vector2(coordr, coordphi)
-	
-func quadratic_formula(a : float, b : float, c : float):
-	return (-b+sqrt(b*b-4*a*c))/(2*a)
 
 # Function Vector2 polar_rad_to_deg(Vector2 rads)
 # Returns Vector2 with same polar coords and converted phi rads into degrees
@@ -122,23 +121,6 @@ func polar_rad_to_deg(rads: Vector2):
 func flick_stick():
 	var direction = Input.get_vector("joystick aim left", "joystick aim right", "joystick aim up", "joystick aim down")
 	return cart_to_polar(direction)
-
-# Function float vel(float x)
-# Velocity function v(x) = -(b/m^2)x^2 + (b/m)x (kinda just a magic function lol)
-# Produces upside down parabola with vertex at (maxveltime, maxspeed) and zeros at (0,0) and (1*maxveltime, 0)
-func vel(x: float):
-	var a = -maxspeed/(maxveltime*maxveltime)
-	var b = maxspeed/maxveltime
-	return a*pow(x,2) + 2*b*x
-	
-
-func fortitude(four : int, vector : Vector2):
-	if four == 0 or four == 1:
-		return vector.x
-	elif four == 2 or four == 3:
-		return vector.y
-	else:
-		return "you're gay"
 
 # Function void float do_the_delta_input_thing(float delta)
 # Sets global variabl rldu[i] based on previous values and the total time delta.
@@ -165,7 +147,6 @@ func do_the_delta_input_thing(delta):
 		firing = false
 	if Input.is_action_just_pressed("neutral special"):
 		moment_firing = framecount
-	exit_goo = false
 	
 
 # Function void gunner_thingy()
@@ -195,10 +176,6 @@ func hazard_thingy():
 	elif !in_goo:
 		maxspeed = maxsped
 		
-func on_Goo_body_exited(body : Node2D):
-	if body != self:
-		return
-	exit_goo = true
 
 # Function void _input(InputEvent event)
 # Called every time an input occurs. Here it is used to detect if the keyboard and mouse or controller
@@ -208,6 +185,10 @@ func _input(event : InputEvent):
 		using_mouse = true
 	elif(event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		using_mouse = false
+	if(event.is_action_pressed("interact") and interactables != []):
+		if interactables[0][0] == 'c':
+			print("openous intentions")
+			open_chest.emit(int(interactables[0][len(interactables[0])-1]))
 
 # Function void _physics_process(float delta)
 # deltatime is total time since session open, mousepos is the mouse position
@@ -222,11 +203,9 @@ func _input(event : InputEvent):
 func _physics_process(delta):
 	
 	hazard_thingy()
-	deltatime += delta
 	framecount += 1
 	
 	var mousepos = get_viewport().get_mouse_position()
-	
 	
 	var objposition = self.get_position()
 	var objrotation = self.get_rotation_degrees()

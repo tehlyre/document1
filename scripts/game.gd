@@ -26,7 +26,9 @@ class_name GameManager
 
 @onready var pausemenu : Control = $CanvasLayer/Pause
 @onready var deathmenu : Control = $CanvasLayer/Death
+@onready var chestmenu : Control = $"CanvasLayer/Chest Pop Up"
 @onready var player : CharacterBody2D = $container/Durdan
+var inventory = {'keys':0, 'coins':0}
 
 var ded : bool = false
 var game_paused : bool = false:
@@ -45,6 +47,7 @@ func _ready():
 	pausemenu.connect("resume", on_resume)
 	deathmenu.connect("restart", on_restart)
 	player.connect("you_died", on_player_death)
+	player.connect("open_chest", on_player_open_chest)
 
 # Function void _input(InputEvent event)
 # Pauses/resumes the game when escape is pressed so long as the player is alive. The pause button cannot be activated
@@ -60,6 +63,11 @@ func on_resume():
 	get_tree().paused = !get_tree().paused
 	game_paused = !game_paused
 
+func on_player_open_chest(i : int):
+	inventory['keys'] += $container/Chests.get_child(i).parsed['keys']
+	inventory['coins'] += $container/Chests.get_child(i).parsed['coins']
+	$container/Chests.get_child(i).opened = true
+
 # Function void on_player_death(bool _died)
 # Connected to the signal player.you_died. Simply manually empties the player's healthbar and sets ded to true.
 func on_player_death(_died : bool):
@@ -72,3 +80,7 @@ func on_restart():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	ded = false
+
+func _process(delta):
+	$container/CanvasLayer/HUD/Inventory/keys.text = "Keys: x"+str(inventory['keys'])
+	$container/CanvasLayer/HUD/Inventory/coins.text = "Coins: "+str(inventory['coins'])

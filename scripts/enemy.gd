@@ -60,10 +60,15 @@ func flee():
 	var desired_velocity = -(player.position-position).normalized() * (max_speed/2)
 	velocity += (desired_velocity-velocity)
 
+func peek():
+	print("no peeking")
+	
 # void set_state(void): Sets the appropriate state for the enemy based on preconceived conditions. If the player is farther than 200 units away, switch state to seek. If the
 # player is around 200 units away, switch state to stop, and if the player is under 200 units away, switch state to flee.
 func set_state():
-		if (player.position-position).length() > 200:
+		if $proximity_checker.get_collider() != null and $proximity_checker.get_collider() != player:
+			state = States.PEEK
+		elif (player.position-position).length() > 200:
 			state = States.SEEK
 		elif (player.position-position).length() < 200 and (player.position-position).length() > 195:
 			state = States.STOP
@@ -86,6 +91,7 @@ func damage_thingy(damage : int):
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta):
+	$proximity_checker.target_position = to_local(player.position)
 	set_state()
 	hazard_thingy()
 	
@@ -96,6 +102,8 @@ func _physics_process(delta):
 			stop()
 		States.FLEE:
 			flee()
+		States.PEEK:
+			peek()
 	
 	look_at(player.position)
 	move_and_slide()

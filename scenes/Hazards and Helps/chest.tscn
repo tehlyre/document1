@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ry5we25acm4m"]
+
+[ext_resource type="Texture2D" uid="uid://bng2pxhh5yw4x" path="res://assets/textures/chest.png" id="1_0m1oo"]
+[ext_resource type="Script" path="res://scripts/chest.gd" id="1_a88ng"]
+[ext_resource type="PackedScene" uid="uid://b6auh6buywrqa" path="res://scenes/Hazards and Helps/interaction_boundary.tscn" id="3_mipub"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6y2u"]
+size = Vector2(72, 45)
+
+[node name="Chest" type="StaticBody2D"]
+script = ExtResource("1_a88ng")
+
+[node name="Chest" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_0m1oo")
+
+[node name="interaction_boundary" parent="." instance=ExtResource("3_mipub")]
+
+[node name="Stopping Region" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_n6y2u")

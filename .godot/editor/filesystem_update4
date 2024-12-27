@@ -1,16 +1,17 @@
-res://scenes/Other Things/bullet.tscn
-res://scenes/Hazards and Helps/goo.tscn
-res://scenes/Characters/enemigo.tscn
 res://scenes/Characters/durdan.tscn
-res://scenes/valuepackpolygon.tscn
-res://scenes/UI/deathmenu.tscn
 res://scripts/durdan.gd
-res://scripts/enemy.gd
-res://scenes/Characters/EnemyBody.gd
-res://scripts/Enemies.gd
-res://scripts/UI/hud.gd
-res://scenes/UI/hud.tscn
-res://scenes/main.tscn
 res://scenes/Levels/container.tscn
-res://scripts/wall.gd
-res://scripts/bullet.gd
+res://scenes/Hazards and Helps/chest.tscn
+res://scenes/Hazards and Helps/wall.tscn
+res://scenes/Hazards and Helps/interaction_boundary.tscn
+res://scripts/chest.gd
+res://scenes/main.tscn
+res://scenes/UI/chest_pop_up_menu.tscn
+res://scenes/UI/pausemenu.tscn
+res://scripts/game.gd
+res://scenes/Levels/container.gd
+res://scripts/UI/chestmenu.gd
+res://scenes/UI/hud.tscn
+res://scripts/UI/hud.gd
+res://scripts/enemy.gd
+res://scenes/Characters/enemigo.tscn

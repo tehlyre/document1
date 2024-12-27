@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=10 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scripts/UI/deathmenu.gd" id="5_ghli0"]
 [ext_resource type="PackedScene" uid="uid://c0hig8yqsr4ak" path="res://scenes/UI/optionsmenuoverlay.tscn" id="6_ukfdh"]
 [ext_resource type="Script" path="res://scripts/UI/optionsmenuoverlay.gd" id="7_jb57r"]
+[ext_resource type="PackedScene" uid="uid://c2udhxi146lk1" path="res://scenes/UI/chest_pop_up_menu.tscn" id="8_kqed6"]
+[ext_resource type="Script" path="res://scripts/UI/chestmenu.gd" id="9_o46kr"]
 
 [node name="Game" type="Node2D"]
 process_mode = 3
@@ -29,3 +31,12 @@ container = NodePath("../../container")
 [node name="Options" parent="CanvasLayer" node_paths=PackedStringArray("pause_menu") instance=ExtResource("6_ukfdh")]
 script = ExtResource("7_jb57r")
 pause_menu = NodePath("../Pause")
+
+[node name="Chest" parent="CanvasLayer" node_paths=PackedStringArray("container") instance=ExtResource("8_kqed6")]
+process_mode = 3
+offset_left = 7.0
+offset_top = -7.0
+offset_right = 47.0
+offset_bottom = 33.0
+script = ExtResource("9_o46kr")
+container = NodePath("../../container")
