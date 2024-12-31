@@ -26,9 +26,12 @@ class_name GameManager
 
 @onready var pausemenu : Control = $CanvasLayer/Pause
 @onready var deathmenu : Control = $CanvasLayer/Death
-@onready var chestmenu : Control = $"CanvasLayer/Chest Pop Up"
+@onready var chestmenu : Control = $CanvasLayer/Chest
 @onready var player : CharacterBody2D = $container/Durdan
 var inventory = {'keys':0, 'coins':0}
+
+var debug = preload("res://scenes/debug_window.tscn")
+var enemy_state : String
 
 var ded : bool = false
 var game_paused : bool = false:
@@ -44,10 +47,15 @@ signal toggle_pause(is_paused : bool)
 # Function void _ready()
 # Called when the game starts. Connects resume to on_resume, restart to on_restart, and you_died to on_player_death.
 func _ready():
+	get_viewport().set_embedding_subwindows(false)
 	pausemenu.connect("resume", on_resume)
 	deathmenu.connect("restart", on_restart)
 	player.connect("you_died", on_player_death)
 	player.connect("open_chest", on_player_open_chest)
+	var d = debug.instantiate()
+	add_child(d)
+	d.position = Vector2(100,100)
+	
 
 # Function void _input(InputEvent event)
 # Pauses/resumes the game when escape is pressed so long as the player is alive. The pause button cannot be activated
@@ -84,3 +92,8 @@ func on_restart():
 func _process(delta):
 	$container/CanvasLayer/HUD/Inventory/keys.text = "Keys: x"+str(inventory['keys'])
 	$container/CanvasLayer/HUD/Inventory/coins.text = "Coins: "+str(inventory['coins'])
+	$debug_window/Control/VBoxContainer/Label.text = "Enemy State: "+$container/Enemy.States.keys()[$container/Enemy.state]
+	$debug_window/Control/VBoxContainer/Label2.text = "Beta Plus: " + str($container/Enemy/beta_plus.target_position)
+	$debug_window/Control/VBoxContainer/Label3.text = "Beta Minus: " + str($container/Enemy/beta_minus.target_position)
+	if $container/Enemy.velocity != null:
+		$debug_window/Control/VBoxContainer/Label4.text = "Velocity: " + str($container/Enemy.velocity)

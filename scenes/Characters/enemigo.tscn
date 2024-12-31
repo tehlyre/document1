@@ -38,6 +38,7 @@ scale = Vector2(-0.00271003, -0.00271003)
 texture = ExtResource("2_lc6c0")
 
 [node name="alpha_particle" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(-1, 0)
 target_position = Vector2(64, 0)
 

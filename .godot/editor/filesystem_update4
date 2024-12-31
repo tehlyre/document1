@@ -15,3 +15,5 @@ res://scenes/UI/hud.tscn
 res://scripts/UI/hud.gd
 res://scripts/enemy.gd
 res://scenes/Characters/enemigo.tscn
+res://scripts/supplemental tools/debug_window.gd
+res://scenes/debug_window.tscn

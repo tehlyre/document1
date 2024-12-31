@@ -1,6 +1,8 @@
-RayCast2D
-Control
+VBoxContainer
 Label
+Control
+Window
+RayCast2D
 CollisionPolygon2D
 CollisionShape2D
 Node2D
@@ -15,7 +17,6 @@ CanvasLayer
 Camera2D
 Button
 HSlider
-VBoxContainer
 Panel
 RichTextLabel
 ProgressBar

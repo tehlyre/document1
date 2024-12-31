@@ -34,6 +34,8 @@ var minus_suggestion
 var plus_suggestion
 var minus = true
 var plus = true
+var peek_init = false
+var lock_on
 
 # enum States: The states that govern the behavior of the enemy. Currently, only seek (move towards player), stop, and flee (move away from player) have been implemented.
 enum States {
@@ -66,7 +68,13 @@ func flee():
 	velocity += (desired_velocity-velocity)
 
 func peek():
-	var peeking = true
+	if peek_init:
+		peek_init = false
+	if ($beta_minus.target_position - to_local(player.position)).length() < 0.01:
+		peek_init = true
+		lock_on = to_local(player.position)
+		$beta_minus.target_position = lock_on
+		$beta_plus.target_position = lock_on
 	if minus:
 		$beta_minus.target_position = $beta_minus.target_position.rotated(0.1)
 	if plus:
@@ -78,10 +86,10 @@ func peek():
 		plus_suggestion = $beta_plus.target_position
 		plus = false
 	if !minus and !plus:
-		if (to_local(player.position)-$beta_plus.target_position).length() < (to_local(player.position)-$beta_minus.target_position).length():
-			velocity = ($beta_plus.target_position.normalized()*max_sped).rotated(PI/8)
-		elif (to_local(player.position)-$beta_minus.target_position).length() < (to_local(player.position)-$beta_plus.target_position).length():
-			velocity = ($beta_minus.target_position.normalized()*max_sped).rotated(PI/8)
+		if (lock_on-$beta_plus.target_position).length() < (lock_on-$beta_minus.target_position).length():
+			velocity = ($beta_plus.target_position.normalized()*max_speed)
+		elif (lock_on-$beta_minus.target_position).length() < (lock_on-$beta_plus.target_position).length():
+			velocity = ($beta_minus.target_position.normalized()*max_speed)
 	
 # void set_state(void): Sets the appropriate state for the enemy based on preconceived conditions. If the player is farther than 200 units away, switch state to seek. If the
 # player is around 200 units away, switch state to stop, and if the player is under 200 units away, switch state to flee.
@@ -112,9 +120,12 @@ func damage_thingy(damage : int):
 # deleted if its health is zero.
 func _physics_process(delta):
 	$alpha_particle.target_position = to_local(player.position)
+	#$RayCast2D.target_position = velocity
 	if state != States.PEEK:
 		$beta_minus.target_position = to_local(player.position)
 		$beta_plus.target_position = to_local(player.position)
+		plus = true
+		minus = true
 	set_state()
 	hazard_thingy()
 	
@@ -128,7 +139,7 @@ func _physics_process(delta):
 		States.PEEK:
 			peek()
 	
-	look_at(player.position)
+	#look_at(player.position)
 	move_and_slide()
 	$healthbar.value = health
 	if health <= 1:
