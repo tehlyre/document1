@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="3_qlc2s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ju5nh"]
-size = Vector2(368, 368)
+[sub_resource type="CircleShape2D" id="CircleShape2D_tydpf"]
+radius = 170.082
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
 radius = 8.2
@@ -19,16 +19,15 @@ script = ExtResource("1_bxvgu")
 texture = ExtResource("2_ovms2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ju5nh")
+shape = SubResource("CircleShape2D_tydpf")
 
-[node name="gunner" type="Marker2D" parent="."]
-position = Vector2(600, 296)
-rotation = -0.270105
-scale = Vector2(5, 5)
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("3_qlc2s")]
+[node name="neutral_special" parent="." instance=ExtResource("3_qlc2s")]
 position = Vector2(432.587, 342.758)
 rotation = -0.270105
+
+[node name="gunner" type="Marker2D" parent="neutral_special"]
+position = Vector2(173.82, -0.391418)
+scale = Vector2(5, 5)
 
 [node name="Interaction" type="Area2D" parent="."]
 collision_layer = 0

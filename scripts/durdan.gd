@@ -64,6 +64,7 @@ var in_goo : bool = false
 var inputvec : Vector2 = Vector2(0,0)
 var interactables = []
 
+var theta = 0.9
 
 signal you_died(deded : bool)
 signal open_chest(chestID : int)
@@ -154,12 +155,10 @@ func do_the_delta_input_thing(delta):
 # from delta. If the fifteen frame modulos of the current framecount and the moment_firing are equal,
 # then instantiate one bullet and add it to the root node in the main class. Also set the transform plane
 # to be equal to Durdan's (gun's) transform plane at that moment.
-func gunner_thingy(delta):
-	var fps = int(1/delta)
-	if firing and (int(framecount) % (fps/4))-(int(moment_firing) % (fps/4)) == 0:
-		var b = Bullet.instantiate()
-		owner.add_child(b)
-		b.transform = $gunner.global_transform
+func he_wields_a_gun():
+	var b = Bullet.instantiate()
+	owner.add_child(b)
+	b.transform = $neutral_special/gunner.global_transform
 
 # Function void damage_thingy(float damage)
 # Called by bullets to deal damage to the player. Simply decreases the health of the player and emits the
@@ -190,6 +189,14 @@ func _input(event : InputEvent):
 			print("openous intentions")
 			open_chest.emit(int(interactables[0][len(interactables[0])-1]))
 
+func adjust_gun():
+	var d = global_position.distance_to(get_global_mouse_position())
+	var s = global_position.distance_to($neutral_special.global_position)
+	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
+	var cool_number = (question_mark-0.9)*180/PI
+	if d > 112:
+		$neutral_special.rotation_degrees = -cool_number*0.9
+
 # Function void _physics_process(float delta)
 # deltatime is total time since session open, mousepos is the mouse position
 # Calls do_the_delta_input_thing() to set rldu[i]
@@ -209,7 +216,7 @@ func _physics_process(delta):
 	
 	var objposition = self.get_position()
 	var objrotation = self.get_rotation_degrees()
-	var mousepolar = polar_rad_to_deg(cart_to_polar_from_object(mousepos, objposition))
+	print(global_position.distance_to(get_global_mouse_position()))
 	
 #	hazard_thingy()
 	if using_mouse:
@@ -221,7 +228,8 @@ func _physics_process(delta):
 			self.set_rotation_degrees(polar_rad_to_deg(flick_stick()).y)
 			
 	do_the_delta_input_thing(delta)
-	
+	if Input.is_action_just_pressed("neutral special"):
+		he_wields_a_gun()
+	adjust_gun()
 	move_and_slide()
-	gunner_thingy(delta)
 	previous_rotation = rotation_degrees

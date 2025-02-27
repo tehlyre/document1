@@ -1,20 +1,22 @@
 [gd_scene load_steps=9 format=3 uid="uid://b4rpkbb7pbeqj"]
 
-[ext_resource type="Script" path="res://scenes/Levels/container.gd" id="1_den2b"]
+[ext_resource type="Script" path="res://scripts/container.gd" id="1_og5ll"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="3_p3x1j"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards and Helps/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://d2fwduwibxhtj" path="res://scenes/Hazards and Helps/wall.tscn" id="4_o0u8o"]
-[ext_resource type="Script" path="res://scripts/wall.gd" id="5_kpox7"]
 [ext_resource type="PackedScene" uid="uid://piryy33ucw4m" path="res://scenes/Characters/enemigo.tscn" id="6_f1ryr"]
-[ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Hazards and Helps/chest.tscn" id="7_fr5aq"]
+[ext_resource type="Script" path="res://scripts/room.gd" id="7_cdtvu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
+size = Vector2(621.5, 418.5)
 
 [node name="container" type="Node2D"]
 process_mode = 1
-script = ExtResource("1_den2b")
+script = ExtResource("1_og5ll")
 
 [node name="Durdan" parent="." node_paths=PackedStringArray("Goo") instance=ExtResource("1_snkv6")]
-position = Vector2(346, 221)
+position = Vector2(346, 193)
 collision_mask = 11
 Goo = NodePath("../Level/Goo")
 
@@ -47,35 +49,40 @@ metadata/_edit_use_anchors_ = true
 [node name="Goo" parent="Level" instance=ExtResource("4_m1f8i")]
 z_index = -2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Goo"]
-polygon = PackedVector2Array(48, 214, 256, 368, 46, 366)
+[node name="Walls" type="Node2D" parent="Level"]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Level/Goo"]
-polygon = PackedVector2Array(-269, 257, -152, 378, -365, 389)
+[node name="Wall" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
+position = Vector2(480, 64)
+scale = Vector2(10.1, -0.474)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Level/Goo"]
-polygon = PackedVector2Array(659, 34, 1130, 333, 442, 575)
+[node name="Wall3" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
+position = Vector2(492, 1189)
+scale = Vector2(9.7, -0.474)
 
-[node name="Wall" parent="Level" instance=ExtResource("4_o0u8o")]
-script = ExtResource("5_kpox7")
+[node name="Wall2" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
+position = Vector2(1180, 641)
+rotation = 1.5708
+scale = Vector2(8, -0.501)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Wall"]
-polygon = PackedVector2Array(-9, 159, -2, 462, -49, 465, -35, 156)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Level/Wall"]
-polygon = PackedVector2Array(131, -63, 333, -66, 335, -26, 138, -28)
-
-[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_f1ryr")]
-position = Vector2(297, 30)
-player = NodePath("../Durdan")
+[node name="Wall4" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
+position = Vector2(-217, 650)
+rotation = 1.5708
+scale = Vector2(7.882, -0.474)
 
 [node name="Chests" type="Node2D" parent="."]
 
-[node name="Chest" parent="Chests" instance=ExtResource("7_fr5aq")]
-position = Vector2(111, 132)
-contents = "key:1,coins:2000"
+[node name="Room" type="Area2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(0, 1)
+script = ExtResource("7_cdtvu")
+player = NodePath("../Durdan")
 
-[node name="Chest2" parent="Chests" instance=ExtResource("7_fr5aq")]
-position = Vector2(313, 131)
-contents = "key:1,coins:500"
-ID = 1
+[node name="enemies" type="Node2D" parent="Room"]
+
+[node name="Enemy" parent="Room/enemies" node_paths=PackedStringArray("player") instance=ExtResource("6_f1ryr")]
+position = Vector2(247, 760)
+player = NodePath("../../../Durdan")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room"]
+position = Vector2(477, 620)
+scale = Vector2(2.1197, 2.54633)
+shape = SubResource("RectangleShape2D_nxx2i")

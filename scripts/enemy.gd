@@ -36,6 +36,7 @@ var minus = true
 var plus = true
 var peek_init = false
 var lock_on
+var DO_NOT_COME
 
 # enum States: The states that govern the behavior of the enemy. Currently, only seek (move towards player), stop, and flee (move away from player) have been implemented.
 enum States {
@@ -94,11 +95,13 @@ func peek():
 # void set_state(void): Sets the appropriate state for the enemy based on preconceived conditions. If the player is farther than 200 units away, switch state to seek. If the
 # player is around 200 units away, switch state to stop, and if the player is under 200 units away, switch state to flee.
 func set_state():
-		if $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
+		if DO_NOT_COME:
+			state = States.STOP
+		elif $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
 			state = States.PEEK
 		elif (player.position-position).length() > 200:
 			state = States.SEEK
-		elif (player.position-position).length() < 200 and (player.position-position).length() > 195:
+		elif ((player.position-position).length() < 200 and (player.position-position).length() > 195):
 			state = States.STOP
 		elif (player.position-position).length() < 195:
 			state = States.FLEE

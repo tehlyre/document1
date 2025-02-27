@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/supplemental tools/debug_window.gd" id="1_heuti"]
 
 [node name="debug_window" type="Window"]
-position = Vector2i(0, 36)
+position = Vector2i(70, 70)
 size = Vector2i(400, 600)
 script = ExtResource("1_heuti")
 

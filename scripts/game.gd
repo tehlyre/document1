@@ -52,9 +52,9 @@ func _ready():
 	deathmenu.connect("restart", on_restart)
 	player.connect("you_died", on_player_death)
 	player.connect("open_chest", on_player_open_chest)
-	var d = debug.instantiate()
-	add_child(d)
-	d.position = Vector2(100,100)
+#	var d = debug.instantiate()
+#	add_child(d)
+#	d.position = Vector2(100,100)
 	
 
 # Function void _input(InputEvent event)
@@ -92,8 +92,8 @@ func on_restart():
 func _process(delta):
 	$container/CanvasLayer/HUD/Inventory/keys.text = "Keys: x"+str(inventory['keys'])
 	$container/CanvasLayer/HUD/Inventory/coins.text = "Coins: "+str(inventory['coins'])
-	$debug_window/Control/VBoxContainer/Label.text = "Enemy State: "+$container/Enemy.States.keys()[$container/Enemy.state]
-	$debug_window/Control/VBoxContainer/Label2.text = "Beta Plus: " + str($container/Enemy/beta_plus.target_position)
-	$debug_window/Control/VBoxContainer/Label3.text = "Beta Minus: " + str($container/Enemy/beta_minus.target_position)
-	if $container/Enemy.velocity != null:
-		$debug_window/Control/VBoxContainer/Label4.text = "Velocity: " + str($container/Enemy.velocity)
+#	$debug_window/Control/VBoxContainer/Label.text = "Enemy State: "+$container/Room/enemies/Enemy.States.keys()[$container/Room/enemies/Enemy.state]
+#	$debug_window/Control/VBoxContainer/Label2.text = "Beta Plus: " + str($container/Room/enemies/Enemy/beta_plus.target_position)
+#	$debug_window/Control/VBoxContainer/Label3.text = "Beta Minus: " + str($container/Room/enemies/Enemy/beta_minus.target_position)
+#	if $container/Room/enemies/Enemy.velocity != null:
+#		$debug_window/Control/VBoxContainer/Label4.text = "Velocity: " + str($container/Room/enemies/Enemy.velocity)

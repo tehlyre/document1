@@ -1,19 +1,13 @@
 res://scenes/Characters/durdan.tscn
-res://scripts/durdan.gd
 res://scenes/Levels/container.tscn
 res://scenes/Hazards and Helps/chest.tscn
 res://scenes/Hazards and Helps/wall.tscn
 res://scenes/Hazards and Helps/interaction_boundary.tscn
-res://scripts/chest.gd
 res://scenes/main.tscn
 res://scenes/UI/chest_pop_up_menu.tscn
 res://scenes/UI/pausemenu.tscn
-res://scripts/game.gd
-res://scenes/Levels/container.gd
-res://scripts/UI/chestmenu.gd
 res://scenes/UI/hud.tscn
-res://scripts/UI/hud.gd
-res://scripts/enemy.gd
 res://scenes/Characters/enemigo.tscn
-res://scripts/supplemental tools/debug_window.gd
 res://scenes/debug_window.tscn
+res://scenes/Other Things/room.tscn
+res://scripts/durdan.gd

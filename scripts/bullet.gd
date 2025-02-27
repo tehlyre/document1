@@ -17,7 +17,7 @@ extends Area2D
 # void _physics_process(delta): Called every frame give or take. Applies physics to the bullet.
 # void _on_Bullet_body_entered(body): Called every time the bullet intersects another body. Deals damage to objects.
 
-@export var speed : float = 10
+@export var speed : float = 20
 
 # Function void _ready()
 # Calls when bullet is fired. Connects the body_entered signal to on_body_entered().
