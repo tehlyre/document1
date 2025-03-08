@@ -13,13 +13,16 @@ extends CharacterBody2D
 # CharacterBody2D player: Pointer to the player in the level
 @export var player : CharacterBody2D
 
+@export var Bullet : PackedScene
+
 # float max_sped: The maximum speed (currently only speed) of the enemy in normal circumstances.
 # float max_speed: The current maximum speed after hazards are accounted for.
 var max_sped : float = 200
 var max_speed : float = max_sped
 
-# States state: The current behavior state of the enemy. Currently either SEEK, STOP, or FLEE.
-var state : States
+# MoveStates movestate: The current behavior state of the enemy. Currently either SEEK, STOP, or FLEE.
+var movestate : MoveStates
+var firestate : FireStates
 
 # bool in_goo: Whether or not the enemy is stuck in goo, slowing it down.
 var in_goo : bool = false
@@ -38,13 +41,24 @@ var peek_init = false
 var lock_on
 var DO_NOT_COME
 
+var previous_state = [MoveStates.STOP, FireStates.CONSERVE]
+
+var framecount = 0
+var deltatime = 0
+var moment_firing
+
 # enum States: The states that govern the behavior of the enemy. Currently, only seek (move towards player), stop, and flee (move away from player) have been implemented.
-enum States {
+enum MoveStates {
 	SEEK,
 	STOP,
 	FLEE,
 	PEEK,
 	WANDER
+}
+
+enum FireStates {
+	FIRE,
+	CONSERVE
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -91,20 +105,42 @@ func peek():
 			velocity = ($beta_plus.target_position.normalized()*max_speed)
 		elif (lock_on-$beta_minus.target_position).length() < (lock_on-$beta_plus.target_position).length():
 			velocity = ($beta_minus.target_position.normalized()*max_speed)
-	
+
+func fire(delta : float):
+	look_at(player.position)
+	if previous_state[1] != FireStates.FIRE or moment_firing == null:
+		moment_firing = deltatime
+	print(moment_firing)
+	var fps = int(1/delta)
+	if (framecount % (fps/1))-(int(moment_firing) % (fps/4)) == 0:
+		var b = Bullet.instantiate()
+		owner.add_child(b)
+		b.transform = $gunner.global_transform
+		b.player_origin = false
+
+func conserve():
+	pass
+
 # void set_state(void): Sets the appropriate state for the enemy based on preconceived conditions. If the player is farther than 200 units away, switch state to seek. If the
 # player is around 200 units away, switch state to stop, and if the player is under 200 units away, switch state to flee.
 func set_state():
-		if DO_NOT_COME:
-			state = States.STOP
-		elif $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
-			state = States.PEEK
-		elif (player.position-position).length() > 200:
-			state = States.SEEK
-		elif ((player.position-position).length() < 200 and (player.position-position).length() > 195):
-			state = States.STOP
-		elif (player.position-position).length() < 195:
-			state = States.FLEE
+	previous_state[0] = movestate
+	previous_state[1] = firestate
+	if DO_NOT_COME:
+		movestate = MoveStates.STOP
+		firestate = FireStates.CONSERVE
+	elif $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
+		movestate = MoveStates.PEEK
+		firestate = FireStates.CONSERVE
+	elif (player.position-position).length() > 200:
+		movestate = MoveStates.SEEK
+		firestate = FireStates.FIRE
+	elif ((player.position-position).length() < 200 and (player.position-position).length() > 195):
+		movestate = MoveStates.STOP
+		firestate = FireStates.FIRE
+	elif (player.position-position).length() < 195:
+		movestate = MoveStates.FLEE
+		firestate = FireStates.FIRE
 				
 
 # void hazard_thingy(void): Halves maximum speed if the enemy is in goo.
@@ -124,23 +160,31 @@ func damage_thingy(damage : int):
 func _physics_process(delta):
 	$alpha_particle.target_position = to_local(player.position)
 	#$RayCast2D.target_position = velocity
-	if state != States.PEEK:
+	if movestate != MoveStates.PEEK:
 		$beta_minus.target_position = to_local(player.position)
 		$beta_plus.target_position = to_local(player.position)
 		plus = true
 		minus = true
 	set_state()
 	hazard_thingy()
+	framecount += 1
+	deltatime += delta
 	
-	match state:
-		States.SEEK:
+	match movestate:
+		MoveStates.SEEK:
 			seek()
-		States.STOP:
+		MoveStates.STOP:
 			stop()
-		States.FLEE:
+		MoveStates.FLEE:
 			flee()
-		States.PEEK:
+		MoveStates.PEEK:
 			peek()
+	
+	match firestate:
+		FireStates.FIRE:
+			fire(delta)
+		FireStates.CONSERVE:
+			conserve()
 	
 	#look_at(player.position)
 	move_and_slide()

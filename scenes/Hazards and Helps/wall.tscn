@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2fwduwibxhtj"]
 
 [ext_resource type="Script" path="res://scripts/wall.gd" id="1_17y2m"]
-[ext_resource type="Texture2D" uid="uid://gmlmhx2tod4d" path="res://assets/textures/bullet.png" id="1_twsum"]
+[ext_resource type="Texture2D" uid="uid://4se753nw0uvs" path="res://assets/textures/Wall.png" id="2_rqch4"]
 
 [node name="Wall" type="StaticBody2D"]
 script = ExtResource("1_17y2m")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_twsum")
+texture = ExtResource("2_rqch4")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(72.5, 68.5, -72.5, 68.5, -72.5, -68.5, 72.5, -68.5)
+polygon = PackedVector2Array(50, 50, -50, 50, -50, -50, 50, -50)

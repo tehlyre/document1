@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://piryy33ucw4m"]
+[gd_scene load_steps=6 format=3 uid="uid://piryy33ucw4m"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_jpdw6"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="2_4kvev"]
+[ext_resource type="PackedScene" uid="uid://c6s6grxio50hr" path="res://scenes/Other Things/bullet.tscn" id="2_hgaah"]
 [ext_resource type="Texture2D" uid="uid://bc72o7r0pj7fx" path="res://assets/textures/enieamy.png" id="2_lc6c0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkui6"]
@@ -9,6 +10,7 @@ size = Vector2(24, 24)
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_jpdw6")
+Bullet = ExtResource("2_hgaah")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_tkui6")

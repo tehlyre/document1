@@ -17,7 +17,10 @@ extends Area2D
 # void _physics_process(delta): Called every frame give or take. Applies physics to the bullet.
 # void _on_Bullet_body_entered(body): Called every time the bullet intersects another body. Deals damage to objects.
 
-@export var speed : float = 20
+@export var player_speed : float = 15
+@export var enemy_speed : float = 5
+
+var player_origin : bool
 
 # Function void _ready()
 # Calls when bullet is fired. Connects the body_entered signal to on_body_entered().
@@ -27,7 +30,10 @@ func _ready():
 # Function void _physics_process(float _delta)
 # Changes the position of the bullet by the speed of the bullet.
 func _physics_process(_delta : float):
-	position += transform.x * speed
+	if player_origin:
+		position += transform.x * player_speed
+	else:
+		position += transform.x * enemy_speed
 
 # Function on_body_entered(Node2D body)
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.

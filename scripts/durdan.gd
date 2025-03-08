@@ -159,6 +159,7 @@ func he_wields_a_gun():
 	var b = Bullet.instantiate()
 	owner.add_child(b)
 	b.transform = $neutral_special/gunner.global_transform
+	b.player_origin = true
 
 # Function void damage_thingy(float damage)
 # Called by bullets to deal damage to the player. Simply decreases the health of the player and emits the
@@ -216,7 +217,6 @@ func _physics_process(delta):
 	
 	var objposition = self.get_position()
 	var objrotation = self.get_rotation_degrees()
-	print(global_position.distance_to(get_global_mouse_position()))
 	
 #	hazard_thingy()
 	if using_mouse:
