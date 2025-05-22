@@ -1,69 +1,72 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1741400663
-icon.svg::CompressedTexture2D::7399799570421521073::1697560146::1697560182::1::::<><>::
-::res://assets/::1723770819
-::res://assets/textures/::1741402834
-background_tile.png::CompressedTexture2D::3779113072425843576::1740629795::1740629800::1::::<><>::
-bullet.png::CompressedTexture2D::446595315770855593::1741402834::1741402836::1::::<><>::
-chest.png::CompressedTexture2D::3312929282434940681::1733169320::1733169322::1::::<><>::
-duuuururrurrdan.png::CompressedTexture2D::8629978761662258568::1698077298::1698528448::1::::<><>::
-enieamy.png::CompressedTexture2D::2594524527183642969::1698528296::1698528298::1::::<><>::
-key.png::CompressedTexture2D::6205413893644573204::1733097142::1733097249::1::::<><>::
-neutral special.png::CompressedTexture2D::6518507749241808614::1699123416::1699123418::1::::<><>::
-Wall.png::CompressedTexture2D::2072936898028131956::1740629848::1740629850::1::::<><>::
-::res://document1/::1723770819
-README.md::TextFile::-1::1703304872::0::1::::<><>::
-::res://scenes/::1741402742
-debug_window.tscn::PackedScene::104823042384515666::1741402742::0::1::::<><>::res://scripts/supplemental tools/debug_window.gd
-main.tscn::PackedScene::1436345888032593477::1741402742::0::1::::<><>::res://scripts/game.gd<>uid://b4rpkbb7pbeqj::::res://scenes/Levels/container.tscn<>uid://ckaa3ih3v8cyl::::res://scenes/UI/pausemenu.tscn<>uid://uvj7iu2qje8l::::res://scenes/UI/deathmenu.tscn<>res://scripts/UI/deathmenu.gd<>uid://c0hig8yqsr4ak::::res://scenes/UI/optionsmenuoverlay.tscn<>res://scripts/UI/optionsmenuoverlay.gd<>uid://c2udhxi146lk1::::res://scenes/UI/chest_pop_up_menu.tscn<>res://scripts/UI/chestmenu.gd
-valuepackpolygon.tscn::PackedScene::4006942054709759457::1733169222::0::1::::<><>::
-::res://scenes/Characters/::1741402742
-durdan.tscn::PackedScene::3935021291853927780::1741402742::0::1::::<><>::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn
-enemigo.tscn::PackedScene::1070424029647662094::1741402742::0::1::::<><>::res://scripts/enemy.gd<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn<>uid://c6s6grxio50hr::::res://scenes/Other Things/bullet.tscn<>uid://bc72o7r0pj7fx::::res://assets/textures/enieamy.png
-::res://scenes/Hazards and Helps/::1741402742
-chest.tscn::PackedScene::1244616458359162790::1741402742::0::1::::<><>::uid://bng2pxhh5yw4x::::res://assets/textures/chest.png<>res://scripts/chest.gd<>uid://b6auh6buywrqa::::res://scenes/Hazards and Helps/interaction_boundary.tscn
-goo.tscn::PackedScene::3293155290536947191::1733169222::0::1::::<><>::res://scripts/goo.gd
-interaction_boundary.tscn::PackedScene::4563503307595092820::1741402742::0::1::::<><>::res://scripts/interaction.gd
-key.tscn::PackedScene::590808016570443336::1733169223::0::1::::<><>::uid://cun7i32ewnelg
-wall.tscn::PackedScene::9066024934117485811::1741402742::0::1::::<><>::res://scripts/wall.gd<>uid://4se753nw0uvs::::res://assets/textures/Wall.png
-::res://scenes/Levels/::1741402742
-container.tscn::PackedScene::4457920239387779953::1741402742::0::1::::<><>::res://scripts/container.gd<>uid://bwcfhw8ni6iky::::res://scenes/Characters/durdan.tscn<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://bm6h10gtdvvdf::::res://scenes/Hazards and Helps/goo.tscn<>uid://d2fwduwibxhtj::::res://scenes/Hazards and Helps/wall.tscn<>uid://piryy33ucw4m::::res://scenes/Characters/enemigo.tscn<>res://scripts/room.gd<>uid://bt3vo73lycr3m::::res://assets/textures/background_tile.png
-::res://scenes/Other Things/::1741402742
-bullet.tscn::PackedScene::6987748190088326131::1733169222::0::1::::<><>::uid://gmlmhx2tod4d
-neutral_special.tscn::PackedScene::324242721580421956::1702489640::0::1::::<><>::uid://cy4u4ua4i5vhu
-room.tscn::PackedScene::655062654420392753::1741402742::0::1::::<><>::res://scripts/room.gd
-::res://scenes/UI/::1741402742
-chest_pop_up_menu.tscn::PackedScene::6709423573846700578::1741402742::0::1::::<><>::
-deathmenu.tscn::PackedScene::1447732856267144613::1733169223::0::1::::<><>::
-hud.tscn::PackedScene::7713038601948674268::1741402742::0::1::::<><>::res://scripts/UI/hud.gd
-optionsmenu.tscn::PackedScene::4206558272162581974::1702825734::0::1::::<><>::res://scripts/UI/optionsmenu.gd
-optionsmenuoverlay.tscn::PackedScene::6542511324418574502::1702825734::0::1::::<><>::res://scripts/UI/optionsmenu.gd
-pausemenu.tscn::PackedScene::5474780238297850203::1741402742::0::1::::<><>::res://scripts/UI/pausemenu.gd
-startmenu.tscn::PackedScene::2749788625872300548::1702825734::0::1::::<><>::res://scripts/UI/startmenu.gd
-::res://scripts/::1741402742
-bullet.gd::GDScript::-1::1740028311::0::1::::<>Area2D<>::
-chest.gd::GDScript::-1::1735055931::0::1::::h_Chest<>StaticBody2D<>::
-container.gd::GDScript::-1::1735050344::0::1::::<>Node2D<>::
-durdan.gd::GDScript::-1::1741402605::0::1::::Player<>CharacterBody2D<>::
-Enemies.gd::GDScript::-1::1732854744::0::1::::<>Node2D<>::
-enemy.gd::GDScript::-1::1741402742::0::1::::<>CharacterBody2D<>::
-enemybody.gd::GDScript::-1::1717120254::0::1::::<>CharacterBody2D<>::
-enemyraycast.gd::GDScript::-1::1703372354::0::1::::<>RayCast2D<>::
-enemysoul.gd::GDScript::-1::1706818166::0::1::::<>Node2D<>::
-game.gd::GDScript::-1::1739564790::0::1::::GameManager<>Node2D<>::
-goo.gd::GDScript::-1::1719106252::0::1::::<>Area2D<>::
-interaction.gd::GDScript::-1::1733256027::0::1::::<>Area2D<>::
-newnintendoenemydsxl.gd::GDScript::-1::1719108174::0::1::::<>CharacterBody2D<>::
-PlayerRayCast.gd::GDScript::-1::1703381442::0::1::::<>RayCast2D<>::
-room.gd::GDScript::-1::1738467468::0::1::::Room<>Area2D<>::
-wall.gd::GDScript::-1::1739565320::0::1::::Wall<>StaticBody2D<>::
-::res://scripts/supplemental tools/::1735360710
-debug_window.gd::GDScript::-1::1735360710::0::1::::<>Window<>::
-::res://scripts/UI/::1735253242
-chestmenu.gd::GDScript::-1::1735012456::0::1::::<>Control<>::
-deathmenu.gd::GDScript::-1::1702838862::0::1::::<>Control<>::
-hud.gd::GDScript::-1::1735253242::0::1::::<>Node<>::
-optionsmenu.gd::GDScript::-1::1702839708::0::1::::<>Control<>::
-optionsmenuoverlay.gd::GDScript::-1::1702839712::0::1::::<>Control<>::
-pausemenu.gd::GDScript::-1::1702838130::0::1::::<>Control<>::
-startmenu.gd::GDScript::-1::1702840114::0::1::::<>Control<>::
+::res://::1747877736
+icon.svg::CompressedTexture2D::7399799570421521073::1697563746::1697563782::1::::<><>::
+::res://assets/::1723774419
+::res://assets/textures/::1744513508
+background_tile.png::CompressedTexture2D::3779113072425843576::1740633395::1740633400::1::::<><>::
+bullet.png::CompressedTexture2D::446595315770855593::1741406434::1741406436::1::::<><>::
+chest.png::CompressedTexture2D::3312929282434940681::1733172920::1733172922::1::::<><>::
+dot.png::CompressedTexture2D::7084899525173978540::1744513446::1744513508::1::::<><>::
+duuuururrurrdan.png::CompressedTexture2D::8629978761662258568::1698080898::1698532048::1::::<><>::
+enieamy.png::CompressedTexture2D::2594524527183642969::1698531896::1698531898::1::::<><>::
+key.png::CompressedTexture2D::6205413893644573204::1733100742::1733100849::1::::<><>::
+neutral special.png::CompressedTexture2D::6518507749241808614::1699127016::1699127018::1::::<><>::
+Wall.png::CompressedTexture2D::2072936898028131956::1740633448::1740633450::1::::<><>::
+::res://document1/::1723774419
+README.md::TextFile::-1::1703308472::0::1::::<><>::
+::res://scenes/::1745253571
+debug_window.tscn::PackedScene::104823042384515666::1745253570::0::1::::<><>::res://scripts/supplemental tools/debug_window.gd
+dot.tscn::PackedScene::5427689565337840758::1745253571::0::1::::<><>::res://scripts/dot.gd<>uid://c768i3vrloe57::::res://assets/textures/dot.png
+main.tscn::PackedScene::1436345888032593477::1745201985::0::1::::<><>::res://scripts/game.gd<>uid://b4rpkbb7pbeqj
+valuepackpolygon.tscn::PackedScene::4006942054709759457::1733172822::0::1::::<><>::
+::res://scenes/Characters/::1745253570
+durdan.tscn::PackedScene::3935021291853927780::1745253570::0::1::::<><>::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Other Things/neutral_special.tscn<>uid://cjlhiv17dwi1c::::res://scenes/dot.tscn
+enemigo.tscn::PackedScene::1070424029647662094::1745201986::0::1::::<><>::res://scripts/enemy.gd<>uid://evch3f3ad4o3
+::res://scenes/Hazards and Helps/::1745253570
+chest.tscn::PackedScene::1244616458359162790::1745253570::0::1::::<><>::uid://bng2pxhh5yw4x::::res://assets/textures/chest.png<>res://scripts/chest.gd<>uid://b6auh6buywrqa::::res://scenes/Hazards and Helps/interaction_boundary.tscn
+goo.tscn::PackedScene::3293155290536947191::1733172822::0::1::::<><>::res://scripts/goo.gd
+interaction_boundary.tscn::PackedScene::4563503307595092820::1745201985::0::1::::<><>::res://scripts/interaction.gd
+key.tscn::PackedScene::590808016570443336::1733172823::0::1::::<><>::uid://cun7i32ewnelg
+wall.tscn::PackedScene::9066024934117485811::1745253570::0::1::::<><>::res://scripts/wall.gd<>uid://4se753nw0uvs::::res://assets/textures/Wall.png
+::res://scenes/Levels/::1745253570
+container.tscn::PackedScene::4457920239387779953::1745253570::0::1::::<><>::res://scripts/container.gd<>uid://bwcfhw8ni6iky::::res://scenes/Characters/durdan.tscn<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://bm6h10gtdvvdf::::res://scenes/Hazards and Helps/goo.tscn<>uid://d2fwduwibxhtj::::res://scenes/Hazards and Helps/wall.tscn<>uid://piryy33ucw4m::::res://scenes/Characters/enemigo.tscn<>res://scripts/room.gd<>uid://bt3vo73lycr3m::::res://assets/textures/background_tile.png
+::res://scenes/Other Things/::1745253570
+bullet.tscn::PackedScene::6987748190088326131::1733172822::0::1::::<><>::uid://gmlmhx2tod4d
+neutral_special.tscn::PackedScene::324242721580421956::1702493240::0::1::::<><>::uid://cy4u4ua4i5vhu
+room.tscn::PackedScene::655062654420392753::1745253570::0::1::::<><>::res://scripts/room.gd
+::res://scenes/UI/::1745201985
+chest_pop_up_menu.tscn::PackedScene::6709423573846700578::1745201985::0::1::::<><>::
+deathmenu.tscn::PackedScene::1447732856267144613::1733172823::0::1::::<><>::
+hud.tscn::PackedScene::7713038601948674268::1745201985::0::1::::<><>::res://scripts/UI/hud.gd
+optionsmenu.tscn::PackedScene::4206558272162581974::1702829334::0::1::::<><>::res://scripts/UI/optionsmenu.gd
+optionsmenuoverlay.tscn::PackedScene::6542511324418574502::1702829334::0::1::::<><>::res://scripts/UI/optionsmenu.gd
+pausemenu.tscn::PackedScene::5474780238297850203::1745201985::0::1::::<><>::res://scripts/UI/pausemenu.gd
+startmenu.tscn::PackedScene::2749788625872300548::1702829334::0::1::::<><>::res://scripts/UI/startmenu.gd
+::res://scripts/::1745253215
+bullet.gd::GDScript::-1::1741406758::0::1::::<>Area2D<>::
+chest.gd::GDScript::-1::1735059531::0::1::::h_Chest<>StaticBody2D<>::
+container.gd::GDScript::-1::1745099736::0::1::::<>Node2D<>::
+dot.gd::GDScript::-1::1745253215::0::1::::<>Node2D<>::
+durdan.gd::GDScript::-1::1745253143::0::1::::Player<>CharacterBody2D<>::
+Enemies.gd::GDScript::-1::1732858344::0::1::::<>Node2D<>::
+enemy.gd::GDScript::-1::1744657783::0::1::::Enemy<>CharacterBody2D<>::
+enemybody.gd::GDScript::-1::1717123854::0::1::::<>CharacterBody2D<>::
+enemyraycast.gd::GDScript::-1::1703375954::0::1::::<>RayCast2D<>::
+enemysoul.gd::GDScript::-1::1706821766::0::1::::<>Node2D<>::
+game.gd::GDScript::-1::1739568390::0::1::::GameManager<>Node2D<>::
+goo.gd::GDScript::-1::1719109852::0::1::::<>Area2D<>::
+interaction.gd::GDScript::-1::1733259627::0::1::::<>Area2D<>::
+newnintendoenemydsxl.gd::GDScript::-1::1719111774::0::1::::<>CharacterBody2D<>::
+PlayerRayCast.gd::GDScript::-1::1703385042::0::1::::<>RayCast2D<>::
+room.gd::GDScript::-1::1745253143::0::1::::Room<>Area2D<>::
+wall.gd::GDScript::-1::1739568920::0::1::::Wall<>StaticBody2D<>::
+::res://scripts/supplemental tools/::1735364310
+debug_window.gd::GDScript::-1::1735364310::0::1::::<>Window<>::
+::res://scripts/UI/::1735256842
+chestmenu.gd::GDScript::-1::1735016056::0::1::::<>Control<>::
+deathmenu.gd::GDScript::-1::1702842462::0::1::::<>Control<>::
+hud.gd::GDScript::-1::1735256842::0::1::::<>Node<>::
+optionsmenu.gd::GDScript::-1::1702843308::0::1::::<>Control<>::
+optionsmenuoverlay.gd::GDScript::-1::1702843312::0::1::::<>Control<>::
+pausemenu.gd::GDScript::-1::1702841730::0::1::::<>Control<>::
+startmenu.gd::GDScript::-1::1702843714::0::1::::<>Control<>::

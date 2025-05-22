@@ -39,11 +39,52 @@ position = Vector2(47, 20)
 scale = Vector2(-0.00271003, -0.00271003)
 texture = ExtResource("2_lc6c0")
 
-[node name="alpha_particle" type="RayCast2D" parent="."]
-visible = false
-position = Vector2(-1, 0)
-target_position = Vector2(64, 0)
+[node name="sieker" type="Node2D" parent="."]
 
-[node name="beta_plus" type="RayCast2D" parent="."]
+[node name="RayCast2D" type="RayCast2D" parent="sieker"]
+target_position = Vector2(0, 348)
 
-[node name="beta_minus" type="RayCast2D" parent="."]
+[node name="RayCast2D2" type="RayCast2D" parent="sieker"]
+target_position = Vector2(133.17, 321.51)
+
+[node name="RayCast2D3" type="RayCast2D" parent="sieker"]
+target_position = Vector2(246.07, 246.07)
+
+[node name="RayCast2D4" type="RayCast2D" parent="sieker"]
+target_position = Vector2(321.51, 133.17)
+
+[node name="RayCast2D5" type="RayCast2D" parent="sieker"]
+target_position = Vector2(348, 0)
+
+[node name="RayCast2D6" type="RayCast2D" parent="sieker"]
+target_position = Vector2(321.51, -133.17)
+
+[node name="RayCast2D7" type="RayCast2D" parent="sieker"]
+target_position = Vector2(246.07, -246.07)
+
+[node name="RayCast2D8" type="RayCast2D" parent="sieker"]
+target_position = Vector2(133.17, -321.51)
+
+[node name="RayCast2D9" type="RayCast2D" parent="sieker"]
+target_position = Vector2(0, -348)
+
+[node name="RayCast2D10" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-133.17, -321.51)
+
+[node name="RayCast2D11" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-246.07, -246.07)
+
+[node name="RayCast2D12" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-321.51, -133.17)
+
+[node name="RayCast2D13" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-348, 0)
+
+[node name="RayCast2D14" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-321.51, 133.17)
+
+[node name="RayCast2D15" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-246.07, 246.07)
+
+[node name="RayCast2D16" type="RayCast2D" parent="sieker"]
+target_position = Vector2(-133.17, 321.51)

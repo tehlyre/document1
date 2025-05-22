@@ -17,7 +17,6 @@ func _on_player_body_entered(body):
 func _on_player_body_exited(body):
 	if body == player:
 		var is_player_in_room = false
-		print(":0")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

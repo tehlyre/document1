@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Enemy
 
 # Base Enemy Running Script (2.0)
 # Sinful Enemy Stablizing and Running Script (SinEStR)
@@ -14,6 +15,8 @@ extends CharacterBody2D
 @export var player : CharacterBody2D
 
 @export var Bullet : PackedScene
+
+var rng = RandomNumberGenerator.new()
 
 # float max_sped: The maximum speed (currently only speed) of the enemy in normal circumstances.
 # float max_speed: The current maximum speed after hazards are accounted for.
@@ -63,7 +66,8 @@ enum FireStates {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	for i in $sieker.get_children():
+		i.collide_with_areas = true
 	
 # void seek(void): Steers the enemy towards the player. First calculates the desired direct velocity limited with respect to the maximum speed, then subtracts velocity from it to
 # produce the desired change in velocity.
@@ -112,7 +116,7 @@ func fire(delta : float):
 		moment_firing = deltatime
 	print(moment_firing)
 	var fps = int(1/delta)
-	if (framecount % (fps/1))-(int(moment_firing) % (fps/4)) == 0:
+	if (framecount % (fps/1))-(int(moment_firing) % (fps/4))+int(10*rng.randf()-5) == 0:
 		var b = Bullet.instantiate()
 		owner.add_child(b)
 		b.transform = $gunner.global_transform
@@ -158,36 +162,37 @@ func damage_thingy(damage : int):
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta):
-	$alpha_particle.target_position = to_local(player.position)
-	#$RayCast2D.target_position = velocity
-	if movestate != MoveStates.PEEK:
-		$beta_minus.target_position = to_local(player.position)
-		$beta_plus.target_position = to_local(player.position)
-		plus = true
-		minus = true
-	set_state()
-	hazard_thingy()
-	framecount += 1
-	deltatime += delta
-	
-	match movestate:
-		MoveStates.SEEK:
-			seek()
-		MoveStates.STOP:
-			stop()
-		MoveStates.FLEE:
-			flee()
-		MoveStates.PEEK:
-			peek()
-	
-	match firestate:
-		FireStates.FIRE:
-			fire(delta)
-		FireStates.CONSERVE:
-			conserve()
-	
-	#look_at(player.position)
-	move_and_slide()
-	$healthbar.value = health
-	if health <= 1:
-		queue_free()
+	pass
+#	$alpha_particle.target_position = to_local(player.position)
+#	#$RayCast2D.target_position = velocity
+#	if movestate != MoveStates.PEEK:
+#		$beta_minus.target_position = to_local(player.position)
+#		$beta_plus.target_position = to_local(player.position)
+#		plus = true
+#		minus = true
+#	set_state()
+#	hazard_thingy()
+#	framecount += 1
+#	deltatime += delta
+#
+#	match movestate:
+#		MoveStates.SEEK:
+#			seek()
+#		MoveStates.STOP:
+#			stop()
+#		MoveStates.FLEE:
+#			flee()
+#		MoveStates.PEEK:
+#			peek()
+#
+#	match firestate:
+#		FireStates.FIRE:
+#			fire(delta)
+#		FireStates.CONSERVE:
+#			conserve()
+#
+#	#look_at(player.position)
+#	move_and_slide()
+#	$healthbar.value = health
+#	if health <= 1:
+#		queue_free()

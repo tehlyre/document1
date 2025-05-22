@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjlhiv17dwi1c"]
+
+[ext_resource type="Script" path="res://scripts/dot.gd" id="1_vv0fg"]
+[ext_resource type="Texture2D" uid="uid://c768i3vrloe57" path="res://assets/textures/dot.png" id="2_7k0iw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ogvmt"]
+radius = 9.0
+
+[node name="dot" type="Node2D"]
+script = ExtResource("1_vv0fg")
+
+[node name="toPlayer" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0.349999, -0.650001)
+
+[node name="Dot" type="Sprite2D" parent="."]
+position = Vector2(0.349999, -0.650001)
+scale = Vector2(0.167, 0.167)
+texture = ExtResource("2_7k0iw")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ogvmt")

@@ -69,6 +69,8 @@ var theta = 0.9
 signal you_died(deded : bool)
 signal open_chest(chestID : int)
 
+@export var enemy : Enemy
+
 func _ready():
 	$Interaction.area_entered.connect(_on_interaction_area_area_entered)
 	$Interaction.area_exited.connect(_on_interaction_area_area_exited)
@@ -158,7 +160,7 @@ func do_the_delta_input_thing(delta):
 func he_wields_a_gun():
 	var b = Bullet.instantiate()
 	owner.add_child(b)
-	b.transform = $neutral_special/gunner.global_transform
+	b.transform = $essence/neutral_special/gunner.global_transform
 	b.player_origin = true
 
 # Function void damage_thingy(float damage)
@@ -192,11 +194,11 @@ func _input(event : InputEvent):
 
 func adjust_gun():
 	var d = global_position.distance_to(get_global_mouse_position())
-	var s = global_position.distance_to($neutral_special.global_position)
+	var s = global_position.distance_to($essence/neutral_special.global_position)
 	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
 	var cool_number = (question_mark-0.9)*180/PI
 	if d > 112:
-		$neutral_special.rotation_degrees = -cool_number*0.9
+		$essence/neutral_special.rotation_degrees = -cool_number*0.9
 
 # Function void _physics_process(float delta)
 # deltatime is total time since session open, mousepos is the mouse position
@@ -220,7 +222,7 @@ func _physics_process(delta):
 	
 #	hazard_thingy()
 	if using_mouse:
-		look_at(get_global_mouse_position())
+		$essence.look_at(get_global_mouse_position())
 	elif !using_mouse:
 		if (is_nan(polar_rad_to_deg(flick_stick()).y)):
 			self.set_rotation_degrees(previous_rotation)
