@@ -100,3 +100,7 @@ interact={
 2d_physics/layer_2="enemy"
 2d_physics/layer_3="bullet"
 2d_physics/layer_4="interaction"
+2d_physics/layer_5="room"
+2d_physics/layer_6="active aura"
+2d_physics/layer_7="walls"
+2d_physics/layer_8="inactive aura"

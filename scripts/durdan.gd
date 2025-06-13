@@ -65,6 +65,7 @@ var inputvec : Vector2 = Vector2(0,0)
 var interactables = []
 
 var theta = 0.9
+var nebula
 
 signal you_died(deded : bool)
 signal open_chest(chestID : int)
@@ -74,6 +75,7 @@ signal open_chest(chestID : int)
 func _ready():
 	$Interaction.area_entered.connect(_on_interaction_area_area_entered)
 	$Interaction.area_exited.connect(_on_interaction_area_area_exited)
+	nebula = $Nebula
 	
 func _on_interaction_area_area_entered(area):
 	interactables.append(area.get_parent().interactionID)

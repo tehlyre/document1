@@ -50,6 +50,11 @@ var framecount = 0
 var deltatime = 0
 var moment_firing
 
+var el_megalist = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+var GOAT = preload("res://scripts/dot.gd")
+
+signal fbi_open_up(collider : Area2D)
+
 # enum States: The states that govern the behavior of the enemy. Currently, only seek (move towards player), stop, and flee (move away from player) have been implemented.
 enum MoveStates {
 	SEEK,
@@ -66,9 +71,8 @@ enum FireStates {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in $sieker.get_children():
-		i.collide_with_areas = true
-	
+	pass
+
 # void seek(void): Steers the enemy towards the player. First calculates the desired direct velocity limited with respect to the maximum speed, then subtracts velocity from it to
 # produce the desired change in velocity.
 func seek():
@@ -87,28 +91,46 @@ func flee():
 	velocity += (desired_velocity-velocity)
 
 func peek():
-	if peek_init:
-		peek_init = false
-	if ($beta_minus.target_position - to_local(player.position)).length() < 0.01:
-		peek_init = true
-		lock_on = to_local(player.position)
-		$beta_minus.target_position = lock_on
-		$beta_plus.target_position = lock_on
-	if minus:
-		$beta_minus.target_position = $beta_minus.target_position.rotated(0.1)
-	if plus:
-		$beta_plus.target_position = $beta_plus.target_position.rotated(-0.1)
-	if $beta_minus.get_collider() == null or $beta_minus.get_collider() != $alpha_particle.get_collider():
-		minus_suggestion = $beta_minus.target_position
-		minus = false
-	if $beta_plus.get_collider() == null or $beta_plus.get_collider() != $alpha_particle.get_collider():
-		plus_suggestion = $beta_plus.target_position
-		plus = false
-	if !minus and !plus:
-		if (lock_on-$beta_plus.target_position).length() < (lock_on-$beta_minus.target_position).length():
-			velocity = ($beta_plus.target_position.normalized()*max_speed)
-		elif (lock_on-$beta_minus.target_position).length() < (lock_on-$beta_plus.target_position).length():
-			velocity = ($beta_minus.target_position.normalized()*max_speed)
+	for i in range(0,16):
+		var current = $sieker.get_children()[i]
+		var possible_dot = current.get_collider()
+		if possible_dot and possible_dot.get_parent().get_script() == GOAT and possible_dot.get_parent().adequate_target == true:
+#			print(possible_dot.get_parent().adequate_target)
+			el_megalist[i] = current.get_collision_point()
+		else:
+			el_megalist[i] = Vector2.ZERO
+#		print(el_megalist)
+	var weighted_vector_sum : Vector2 = Vector2.ZERO
+	for i in el_megalist:
+		if i == Vector2.ZERO:
+			continue
+		elif i != Vector2.ZERO:
+			weighted_vector_sum += i*(1/i.distance_to(position))
+	velocity = -weighted_vector_sum.normalized()*max_speed
+	
+	
+#	if peek_init:
+#		peek_init = false
+#	if ($beta_minus.target_position - to_local(player.position)).length() < 0.01:
+#		peek_init = true
+#		lock_on = to_local(player.position)
+#		$beta_minus.target_position = lock_on
+#		$beta_plus.target_position = lock_on
+#	if minus:
+#		$beta_minus.target_position = $beta_minus.target_position.rotated(0.1)
+#	if plus:
+#		$beta_plus.target_position = $beta_plus.target_position.rotated(-0.1)
+#	if $beta_minus.get_collider() == null or $beta_minus.get_collider() != $alpha_particle.get_collider():
+#		minus_suggestion = $beta_minus.target_position
+#		minus = false
+#	if $beta_plus.get_collider() == null or $beta_plus.get_collider() != $alpha_particle.get_collider():
+#		plus_suggestion = $beta_plus.target_position
+#		plus = false
+#	if !minus and !plus:
+#		if (lock_on-$beta_plus.target_position).length() < (lock_on-$beta_minus.target_position).length():
+#			velocity = ($beta_plus.target_position.normalized()*max_speed)
+#		elif (lock_on-$beta_minus.target_position).length() < (lock_on-$beta_plus.target_position).length():
+#			velocity = ($beta_minus.target_position.normalized()*max_speed)
 
 func fire(delta : float):
 	look_at(player.position)
@@ -130,12 +152,12 @@ func conserve():
 func set_state():
 	previous_state[0] = movestate
 	previous_state[1] = firestate
-	if DO_NOT_COME:
-		movestate = MoveStates.STOP
-		firestate = FireStates.CONSERVE
-	elif $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
+#	if DO_NOT_COME:
+#		movestate = MoveStates.STOP
+#		firestate = FireStates.CONSERVE
+	if $alpha_particle.get_collider() != null and $alpha_particle.get_collider() != player:
 		movestate = MoveStates.PEEK
-		firestate = FireStates.CONSERVE
+#		firestate = FireStates.CONSERVE
 	elif (player.position-position).length() > 200:
 		movestate = MoveStates.SEEK
 		firestate = FireStates.FIRE
@@ -162,28 +184,29 @@ func damage_thingy(damage : int):
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta):
-	pass
-#	$alpha_particle.target_position = to_local(player.position)
+	$alpha_particle.target_position = to_local(player.position)
 #	#$RayCast2D.target_position = velocity
 #	if movestate != MoveStates.PEEK:
 #		$beta_minus.target_position = to_local(player.position)
 #		$beta_plus.target_position = to_local(player.position)
 #		plus = true
 #		minus = true
-#	set_state()
-#	hazard_thingy()
-#	framecount += 1
-#	deltatime += delta
+	set_state()
+	hazard_thingy()
+	framecount += 1
+	deltatime += delta
 #
-#	match movestate:
-#		MoveStates.SEEK:
-#			seek()
-#		MoveStates.STOP:
-#			stop()
-#		MoveStates.FLEE:
-#			flee()
-#		MoveStates.PEEK:
-#			peek()
+	match movestate:
+		MoveStates.SEEK:
+			seek()
+		MoveStates.STOP:
+			stop()
+		MoveStates.FLEE:
+			flee()
+		MoveStates.PEEK:
+			peek()
+	
+	print(movestate)
 #
 #	match firestate:
 #		FireStates.FIRE:
@@ -191,8 +214,8 @@ func _physics_process(delta):
 #		FireStates.CONSERVE:
 #			conserve()
 #
-#	#look_at(player.position)
-#	move_and_slide()
-#	$healthbar.value = health
-#	if health <= 1:
-#		queue_free()
+	look_at(player.position)
+	move_and_slide()
+	$healthbar.value = health
+	if health <= 1:
+		queue_free()

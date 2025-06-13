@@ -65,34 +65,42 @@ z_index = -2
 [node name="Wall" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(480, 64)
 scale = Vector2(14.38, -0.474)
+collision_layer = 64
 
 [node name="Wall5" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(480, 335)
 scale = Vector2(4.62, -0.474)
+collision_layer = 64
 
 [node name="Wall3" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(492, 1189)
 scale = Vector2(14.0411, -0.592078)
+collision_layer = 64
 
 [node name="Wall2" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(1169, 609)
 rotation = 1.5708
 scale = Vector2(11.0526, -0.501005)
+collision_layer = 64
 
 [node name="Wall6" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(733, 203)
 rotation = 1.5708
 scale = Vector2(3.2526, -0.501005)
+collision_layer = 64
 
 [node name="Wall4" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
 position = Vector2(-217, 639)
 rotation = 1.5708
 scale = Vector2(11.202, -0.474)
+collision_layer = 64
 
 [node name="Chests" type="Node2D" parent="."]
 
 [node name="Room" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 1)
+collision_layer = 16
+collision_mask = 2
 script = ExtResource("7_cdtvu")
 player = NodePath("../Durdan")
 

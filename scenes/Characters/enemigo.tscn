@@ -9,6 +9,8 @@
 size = Vector2(24, 24)
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 65
 script = ExtResource("1_jpdw6")
 Bullet = ExtResource("2_hgaah")
 
@@ -43,48 +45,83 @@ texture = ExtResource("2_lc6c0")
 
 [node name="RayCast2D" type="RayCast2D" parent="sieker"]
 target_position = Vector2(0, 348)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D2" type="RayCast2D" parent="sieker"]
 target_position = Vector2(133.17, 321.51)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D3" type="RayCast2D" parent="sieker"]
 target_position = Vector2(246.07, 246.07)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D4" type="RayCast2D" parent="sieker"]
 target_position = Vector2(321.51, 133.17)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D5" type="RayCast2D" parent="sieker"]
 target_position = Vector2(348, 0)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D6" type="RayCast2D" parent="sieker"]
 target_position = Vector2(321.51, -133.17)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D7" type="RayCast2D" parent="sieker"]
 target_position = Vector2(246.07, -246.07)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D8" type="RayCast2D" parent="sieker"]
 target_position = Vector2(133.17, -321.51)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D9" type="RayCast2D" parent="sieker"]
 target_position = Vector2(0, -348)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D10" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-133.17, -321.51)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D11" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-246.07, -246.07)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D12" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-321.51, -133.17)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D13" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-348, 0)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D14" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-321.51, 133.17)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D15" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-246.07, 246.07)
+collision_mask = 96
+collide_with_areas = true
 
 [node name="RayCast2D16" type="RayCast2D" parent="sieker"]
 target_position = Vector2(-133.17, 321.51)
+collision_mask = 96
+collide_with_areas = true
+
+[node name="alpha_particle" type="RayCast2D" parent="."]
+collision_mask = 65
