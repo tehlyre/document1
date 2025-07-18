@@ -38,7 +38,7 @@ signal resume()
 # to their respective functions.
 func _ready():
 	hide()
-	game.connect("toggle_pause", on_game_paused)
+	game.connect("sig_toggle_pause", on_game_paused)
 	options_button.connect("pressed", on_options_pressed)
 	resume_button.connect("pressed", on_resume_pressed)
 	quit_button.connect("pressed", on_quit_pressed)

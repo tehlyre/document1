@@ -2,45 +2,59 @@ extends Area2D
 
 # Bullet Script
 #
-# Object: Moves the bullets and hits enemies.
+# Object: Moves the bullets and hits anything in its path.
 #
-# Clarifications: N/A
+# NODE STRUCTURE:
+# bullet
+# |_ bulletSprite: Sprite2D of the bullet.
+# |_ bulletCollider: CollisionShape2D for the bullet.
 #
-# Signals:
-# _on_Bullet_body_entered attached to signal body_entered
-#
-# Global Variables:
-# float speed: Controls the overall speed of the bullet. Set to be relatively low so it is easy to dodge.
-#
-# Functions:
-# void _ready(): Called when the bullet is fired. Connects body_entered to on_body_entered.
-# void _physics_process(delta): Called every frame give or take. Applies physics to the bullet.
-# void _on_Bullet_body_entered(body): Called every time the bullet intersects another body. Deals damage to objects.
+# GLOBAL VARIABLES
 
-@export var player_speed : float = 15
-@export var enemy_speed : float = 5
+# @export float player_speed, enemy_speed: The speed the bullet has when used by the player or the enemy.
+# These can be different for balancing purposes.
+@export var speed_when_player : float = 15
+@export var speed_when_enemy : float = 5
 
-var player_origin : bool
+# bool is_fired_by_player: Stores whether or not 
+var is_fired_by_player : bool
 
-# Function void _ready()
-# Calls when bullet is fired. Connects the body_entered signal to on_body_entered().
+
+# Called when bullet is fired/node is instantiated. Connects the body_entered signal to on_body_entered().
 func _ready():
-	connect("body_entered", on_body_entered)
+	connect("body_entered", _on_body_entered)
+	if is_fired_by_player: collision_mask -= 1
+	else: collision_mask -= 2
 
-# Function void _physics_process(float _delta)
-# Changes the position of the bullet by the speed of the bullet.
+
+
+
+
+# PROCESS
+
+
+
+# Changes the position of the bullet by the speed of the bullet, thereby moving the bullet. This is done
+# by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
+# the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float):
-	if player_origin:
-		position += transform.x * player_speed
+	if is_fired_by_player:
+		position += transform.x * speed_when_player
 	else:
-		position += transform.x * enemy_speed
+		position += transform.x * speed_when_enemy
 
-# Function on_body_entered(Node2D body)
+
+
+
+# SIGNAL RESPONSES
+
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
-func on_body_entered(body : Node2D):
+func _on_body_entered(body : Node2D):
 	
 	if(body.is_in_group("enemies")):
-		body.damage_thingy(100/body.scle)
+		body.thingy_damage(100/body.scle)
 	elif(body.is_in_group("player")):
-		body.damage_thingy(10)
+		body.thingy_damage(10)
+	elif(body.is_in_group("walls")):
+		queue_free()
 	queue_free()

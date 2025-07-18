@@ -2,20 +2,48 @@ extends StaticBody2D
 
 class_name h_Chest
 
-@export var interaction_boundary : Area2D
-@export var contents : String
-var parsed = {}
-var interactable : bool = false
-@export var ID : int
-var interactionID
-var opened = false
+# Handler for Chest Contents
+#
+# Object:
+# To make it easier to add contents to chests and to streamline the process probably.
+#
+# Node Structure:
+# StaticBody2D chest
+# |_ chestSprite: Sprite2D for the chest.
+# |_ chestInteractionArea: Area2D in which the player can interact with the chest.
+# |_ chestCollider: CollisionShape2D for the chest.
+#
+# GLOBAL VARIABLES
+#
+# @export Area2D interaction_area: Pointer to $chestInteractionArea
+@export var interaction_area : Area2D
 
-# Called when the node enters the scene tree for the first time.
+# @export String contents: The contents of the chest in an easy-to-parse string.
+@export var contents : String
+
+# Dictionary parsed: A helper variable that parses the contents string of the chest.
+var parsed = {}
+
+# @export int ID: The id number for the thing, based on how many things there are.
+@export var ID : int
+
+# interactionID: The id of the thing, based on the name of the thing plus ID.
+var interactionID
+
+# bool is_opened: Whether or not the chest is opened.
+var is_opened : bool = false
+
+# Called when the node is instantiated. Adds a comma to the contents string to make things easier,
+# then creates the interactionID and calls for the contents to be parsed.
 func _ready():
 	contents += ','
 	interactionID = "chest" + str(ID)
 	parse_contents()
 
+# Called on ready to parse the easy to type in string contents into easy-to-read parsed content. I
+# got lazy, and so the parser reads the first letter, identifies what the item is, and then skips to
+# the nearest colon, skips it, and reads the number of that item, then reads a comma, and goes to 
+# next item.
 func parse_contents():
 	var skip = false
 	var key = ''
@@ -45,11 +73,7 @@ func parse_contents():
 					skip = false
 		index += 1
 
-func open():
-	print("openous intentions")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. Detects if the chest is opened or not. If so, it promptly deletes itself.
 func _process(delta):
-	if opened:
+	if is_opened:
 		queue_free()
-	#print(interactionID)

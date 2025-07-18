@@ -30,7 +30,7 @@ signal restart()
 func _ready():
 	hide()
 	
-	container.get_child(0).connect("you_died", on_player_death)
+	container.get_child(0).connect("sig_you_died", on_player_death)
 	
 	restart_button.connect("pressed", on_restart_pressed)
 	quit_button.connect("pressed", on_quit_pressed)

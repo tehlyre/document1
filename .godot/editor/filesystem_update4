@@ -1,9 +1,9 @@
-res://scenes/Characters/durdan.tscn
-res://scripts/enemy.gd
 res://scenes/Levels/container.tscn
-res://scenes/Hazards and Helps/chest.tscn
-res://scenes/Hazards and Helps/wall.tscn
-res://scenes/debug_window.tscn
+res://addons/drag/drag.gd
+res://scenes/drag.tscn
 res://scenes/Other Things/room.tscn
-res://scenes/dot.tscn
-res://scenes/Characters/enemigo.tscn
+res://scenes/Other Things/bullet.tscn
+res://scenes/UI/hud.tscn
+res://scenes/Other Things/neutral_special.tscn
+res://scenes/main.tscn
+res://scripts/enemy.gd

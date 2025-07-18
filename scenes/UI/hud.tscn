@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dh5ivbowm0f1m"]
 
-[ext_resource type="Script" path="res://scripts/UI/hud.gd" id="1_8ggds"]
+[ext_resource type="Script" uid="uid://brygg006yot8t" path="res://scripts/UI/hud.gd" id="1_8ggds"]
 
-[node name="HUD" type="Control"]
+[node name="hud" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ggds")
 
-[node name="playerhealth" type="ProgressBar" parent="."]
+[node name="playerHealthBar" type="ProgressBar" parent="."]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 0
 offset_left = 26.0
@@ -20,14 +20,14 @@ offset_right = 200.0
 offset_bottom = 55.0
 show_percentage = false
 
-[node name="Inventory" type="Control" parent="."]
+[node name="playerInventory" type="Control" parent="."]
 anchors_preset = 0
 offset_left = -128.0
 offset_top = -56.0
 offset_right = -88.0
 offset_bottom = -16.0
 
-[node name="keys" type="Label" parent="Inventory"]
+[node name="keys" type="Label" parent="playerInventory"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -39,7 +39,7 @@ offset_bottom = 96.0
 grow_horizontal = 0
 text = "Keys: x0"
 
-[node name="coins" type="Label" parent="Inventory"]
+[node name="coins" type="Label" parent="playerInventory"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

@@ -20,9 +20,9 @@ func _on_player_body_exited(body):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for i in $enemies.get_children():
-		if overlaps_body(player):
-			i.DO_NOT_COME = false
-		else:
-			i.DO_NOT_COME = true
+#	for i in $enemies.get_children():
+#		if overlaps_body(player):
+#			i.DO_NOT_COME = false
+#		else:
+#			i.DO_NOT_COME = true
 	pass

@@ -6,7 +6,7 @@ extends Control
 func _ready():
 	hide()
 	
-	container.get_child(0).connect("open_chest", on_player_open_chest)
+	container.get_child(0).connect("sig_open_chest", on_player_open_chest)
 	$Panel/VBoxContainer/Quit.pressed.connect(on_quit_button_pressed)
 
 func on_player_open_chest(i:int):
