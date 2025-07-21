@@ -1,14 +1,14 @@
 @tool
 extends TextureButton
 
-func _ready():
+func _ready() -> void:
 	pressed.connect(test)
 	toggled.connect(_on_toggle)
 
-func test():
+func test() -> void:
 	print('gay')
 
-func _on_toggle(is_on : bool):
+func _on_toggle(is_on : bool) -> void:
 	if is_on:
 		for i in get_parent().get_children():
 			if i != self:

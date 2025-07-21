@@ -13,6 +13,8 @@
 [node name="gameManager" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_cg0fy")
+is_debugging = true
+metadata/_edit_group_ = true
 
 [node name="container" parent="." instance=ExtResource("2_crrdk")]
 

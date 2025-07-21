@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwcfhw8ni6iky"]
+[gd_scene load_steps=6 format=3 uid="uid://bwcfhw8ni6iky"]
 
 [ext_resource type="Script" uid="uid://br74yhnl7m0vp" path="res://scripts/durdan.gd" id="1_bxvgu"]
 [ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
@@ -6,9 +6,6 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
 radius = 8.2
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wifr"]
-size = Vector2(278.376, 129.458)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wifr"]
 radius = 186.762
@@ -27,25 +24,13 @@ monitorable = false
 scale = Vector2(40, 40)
 shape = SubResource("CircleShape2D_glppu")
 
-[node name="playerBody" type="Node2D" parent="."]
-
-[node name="durdanSprite" type="Sprite2D" parent="playerBody"]
+[node name="durdanSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_ovms2")
 
-[node name="neutralSpecialSprite" parent="playerBody" instance=ExtResource("3_qlc2s")]
+[node name="neutralSpecial" parent="." instance=ExtResource("3_qlc2s")]
 position = Vector2(432.587, 342.758)
 rotation = -0.270105
-
-[node name="gunner" type="Marker2D" parent="playerBody/neutralSpecialSprite"]
-position = Vector2(173.82, -0.391418)
-scale = Vector2(5, 5)
-
-[node name="noGunZone" type="Area2D" parent="playerBody/neutralSpecialSprite"]
-collision_layer = 0
-collision_mask = 64
-
-[node name="noGunZoneCollider" type="CollisionShape2D" parent="playerBody/neutralSpecialSprite/noGunZone"]
-shape = SubResource("RectangleShape2D_4wifr")
+is_on_player = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4wifr")

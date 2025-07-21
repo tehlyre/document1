@@ -3,7 +3,7 @@ extends Area2D
 var polygon : Polygon2D
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	for i in get_children():
 		polygon = Polygon2D.new()
 		polygon.color = Color("5f6e70")
@@ -12,14 +12,10 @@ func _ready():
 	connect("body_entered", on_Goo_body_entered)
 	connect("body_exited", on_Goo_body_exited)
 	
-func on_Goo_body_entered(body : Node2D):
+func on_Goo_body_entered(body : Node2D) -> void:
 	if body.is_in_group("enemies") or body.is_in_group("player"):
 		body.is_in_goo = true
 
-func on_Goo_body_exited(body : Node2D):
+func on_Goo_body_exited(body : Node2D) -> void:
 	if body.is_in_group("enemies") or body.is_in_group("player"):
 		body.is_in_goo = false
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

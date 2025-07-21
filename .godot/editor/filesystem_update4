@@ -1,9 +1,25 @@
-res://scenes/Levels/container.tscn
-res://addons/drag/drag.gd
-res://scenes/drag.tscn
+res://scenes/main.tscn
+res://scripts/enemy.gd
+res://scripts/bullet.gd
+res://scripts/chest.gd
+res://scripts/supplemental tools/debug_window.gd
+res://scripts/game.gd
+res://scripts/supplemental tools/editor_button.gd
+res://scripts/durdan.gd
+res://scripts/goo.gd
+res://scripts/UI/hud.gd
+res://scripts/UI/pausemenu.gd
+res://scripts/room.gd
+res://scenes/Characters/enemigo.tscn
+res://scripts/supplemental tools/enemy_firing.gd
 res://scenes/Other Things/room.tscn
 res://scenes/Other Things/bullet.tscn
 res://scenes/UI/hud.tscn
 res://scenes/Other Things/neutral_special.tscn
-res://scenes/main.tscn
-res://scripts/enemy.gd
+res://scenes/drag.tscn
+res://scenes/Levels/container.tscn
+res://scenes/Characters/durdan.tscn
+res://scenes/Hazards and Helps/chest.tscn
+res://scripts/supplemental tools/enemy_mover.gd
+res://scripts/enemy_fire.gd
+res://scripts/enemy_mover.gd

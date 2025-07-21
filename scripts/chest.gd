@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-class_name h_Chest
+class_name Interactable
 
 # Handler for Chest Contents
 #
@@ -22,20 +22,20 @@ class_name h_Chest
 @export var contents : String
 
 # Dictionary parsed: A helper variable that parses the contents string of the chest.
-var parsed = {}
+var parsed : Dictionary = {}
 
 # @export int ID: The id number for the thing, based on how many things there are.
 @export var ID : int
 
 # interactionID: The id of the thing, based on the name of the thing plus ID.
-var interactionID
+var interactionID : String
 
 # bool is_opened: Whether or not the chest is opened.
 var is_opened : bool = false
 
 # Called when the node is instantiated. Adds a comma to the contents string to make things easier,
 # then creates the interactionID and calls for the contents to be parsed.
-func _ready():
+func _ready() -> void:
 	contents += ','
 	interactionID = "chest" + str(ID)
 	parse_contents()
@@ -44,11 +44,11 @@ func _ready():
 # got lazy, and so the parser reads the first letter, identifies what the item is, and then skips to
 # the nearest colon, skips it, and reads the number of that item, then reads a comma, and goes to 
 # next item.
-func parse_contents():
-	var skip = false
-	var key = ''
-	var number = ""
-	var index = 0
+func parse_contents() -> void:
+	var skip : bool = false
+	var key : String = ""
+	var number : String = ""
+	var index : int = 0
 	for i in contents:
 		print(i)
 		if not skip:
@@ -74,6 +74,6 @@ func parse_contents():
 		index += 1
 
 # Called every frame. Detects if the chest is opened or not. If so, it promptly deletes itself.
-func _process(delta):
+func _process(delta) -> void:
 	if is_opened:
 		queue_free()

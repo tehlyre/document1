@@ -2,27 +2,18 @@ extends Area2D
 class_name Room
 
 @export var player : Player
-var is_player_in_room = true
+var is_player_in_room : bool = true
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	body_entered.connect(_on_player_body_entered)
 	body_exited.connect(_on_player_body_exited)
 
-func _on_player_body_entered(body):
+func _on_player_body_entered(body : Node2D) -> void:
 	if body == player:
 		var is_player_in_room = true
 
-func _on_player_body_exited(body):
+func _on_player_body_exited(body : Node2D):
 	if body == player:
 		var is_player_in_room = false
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-#	for i in $enemies.get_children():
-#		if overlaps_body(player):
-#			i.DO_NOT_COME = false
-#		else:
-#			i.DO_NOT_COME = true
-	pass

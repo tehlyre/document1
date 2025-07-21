@@ -36,7 +36,7 @@ signal resume()
 
 # Function void _ready(): Called when the game starts. Hides the menu and connects toggle_pause and button signals
 # to their respective functions.
-func _ready():
+func _ready() -> void:
 	hide()
 	game.connect("sig_toggle_pause", on_game_paused)
 	options_button.connect("pressed", on_options_pressed)
@@ -45,7 +45,7 @@ func _ready():
 
 # Function void on_game_paused(bool is_paused): Connected to game.toggle_paused. If the game is paused, show the menu,
 # else, hide the menu.
-func on_game_paused(is_paused : bool):
+func on_game_paused(is_paused : bool) -> void:
 	if (is_paused):
 		show()
 	else:
@@ -53,17 +53,17 @@ func on_game_paused(is_paused : bool):
 
 # Function void on_resume_pressed(): Connected to resume_button.pressed. Simply emits the resume signal for the game
 # manager to unpause the game.
-func on_resume_pressed():
+func on_resume_pressed() -> void:
 	emit_signal("resume")
 
 # Function void on_options_pressed(): Connected to options_button.pressed. Simply hides the pause menu and shows the
 # options menu.
-func on_options_pressed():
+func on_options_pressed() -> void:
 	hide()
 	options_menu.show()
 
 # Function void on_quit_pressed(): Connected to quit_button.pressed. Unpauses the tree and switches the main scene from
 # the game scene to the start menu scene.
-func on_quit_pressed():
+func on_quit_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/UI/startmenu.tscn")

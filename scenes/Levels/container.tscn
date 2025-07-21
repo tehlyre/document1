@@ -16,7 +16,7 @@ process_mode = 1
 script = ExtResource("1_imx2c")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(667, -90)
+position = Vector2(460, 186)
 collision_mask = 75
 
 [node name="Camera" type="Camera2D" parent="Durdan"]
@@ -48,9 +48,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Goo" parent="Level" instance=ExtResource("4_m1f8i")]
 z_index = -2
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Goo"]
-polygon = PackedVector2Array(2079, 1505, 2283, 1482, 2366, 1635, 2112, 1762)
 
 [node name="Walls" type="Node2D" parent="Level"]
 
@@ -94,10 +91,6 @@ player = NodePath("../Durdan")
 
 [node name="enemy" parent="Room/enemies" node_paths=PackedStringArray("player") instance=ExtResource("6_f1ryr")]
 position = Vector2(479, 735)
-player = NodePath("../../../Durdan")
-
-[node name="enemy2" parent="Room/enemies" node_paths=PackedStringArray("player") instance=ExtResource("6_f1ryr")]
-position = Vector2(580, 549)
 player = NodePath("../../../Durdan")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room"]

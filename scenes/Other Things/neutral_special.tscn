@@ -1,7 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://evch3f3ad4o3"]
+[gd_scene load_steps=4 format=3 uid="uid://evch3f3ad4o3"]
 
 [ext_resource type="Texture2D" uid="uid://cy4u4ua4i5vhu" path="res://assets/textures/neutral special.png" id="1_iylq5"]
+[ext_resource type="Script" uid="uid://1pa06st4d6j3" path="res://scripts/neutral_special.gd" id="2_g44u8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_py26n"]
+size = Vector2(278.376, 129.458)
 
 [node name="NeutralSpecial" type="Sprite2D"]
-position = Vector2(1, 0)
 texture = ExtResource("1_iylq5")
+script = ExtResource("2_g44u8")
+
+[node name="gunner" type="Marker2D" parent="."]
+position = Vector2(173.82, -0.391418)
+scale = Vector2(5, 5)
+
+[node name="noGunZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="noGunZoneCollider" type="CollisionShape2D" parent="noGunZone"]
+shape = SubResource("RectangleShape2D_py26n")
