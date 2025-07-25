@@ -36,42 +36,43 @@ var is_opened : bool = false
 # Called when the node is instantiated. Adds a comma to the contents string to make things easier,
 # then creates the interactionID and calls for the contents to be parsed.
 func _ready() -> void:
-	contents += ','
+	#contents += ','
 	interactionID = "chest" + str(ID)
-	parse_contents()
+	parsed = JSON.parse_string(contents)
+	print(parsed)
 
-# Called on ready to parse the easy to type in string contents into easy-to-read parsed content. I
-# got lazy, and so the parser reads the first letter, identifies what the item is, and then skips to
-# the nearest colon, skips it, and reads the number of that item, then reads a comma, and goes to 
-# next item.
-func parse_contents() -> void:
-	var skip : bool = false
-	var key : String = ""
-	var number : String = ""
-	var index : int = 0
-	for i in contents:
-		print(i)
-		if not skip:
-			if i == 'k':
-				key = 'keys'
-				skip = true
-			elif i == 'c':
-				key = 'coins'
-				skip = true
-			elif i == ':':
-				pass
-			elif i in "1234567890":
-				number += i
-			elif i == ",":
-				parsed[key] = int(number)
-				skip = false
-				key = ''
-				number = ''
-		elif skip:
-			if i in "abcdefghijklmnopqrstuvwxyz":
-				if contents[index+1] == ':':
-					skip = false
-		index += 1
+## Called on ready to parse the easy to type in string contents into easy-to-read parsed content. I
+## got lazy, and so the parser reads the first letter, identifies what the item is, and then skips to
+## the nearest colon, skips it, and reads the number of that item, then reads a comma, and goes to 
+## next item.
+#func parse_contents() -> void:
+	#var skip : bool = false
+	#var key : String = ""
+	#var number : String = ""
+	#var index : int = 0
+	#for i in contents:
+		#print(i)
+		#if not skip:
+			#if i == 'k':
+				#key = 'keys'
+				#skip = true
+			#elif i == 'c':
+				#key = 'coins'
+				#skip = true
+			#elif i == ':':
+				#pass
+			#elif i in "1234567890":
+				#number += i
+			#elif i == ",":
+				#parsed[key] = int(number)
+				#skip = false
+				#key = ''
+				#number = ''
+		#elif skip:
+			#if i in "abcdefghijklmnopqrstuvwxyz":
+				#if contents[index+1] == ':':
+					#skip = false
+		#index += 1
 
 # Called every frame. Detects if the chest is opened or not. If so, it promptly deletes itself.
 func _process(delta) -> void:

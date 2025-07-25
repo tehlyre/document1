@@ -10,6 +10,11 @@ size = Vector2(72, 45)
 [node name="chest" type="StaticBody2D"]
 script = ExtResource("1_a88ng")
 
+[node name="chestCollider" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_n6y2u")
+
 [node name="chestSprite" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
 scale = Vector2(0.5, 0.5)
@@ -18,8 +23,3 @@ texture = ExtResource("1_0m1oo")
 [node name="chestInteractionArea" parent="." instance=ExtResource("3_mipub")]
 visible = false
 script = null
-
-[node name="chestCollider" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_n6y2u")

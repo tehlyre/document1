@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 window/size/viewport_width=600
 window/size/viewport_height=400
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/drag/plugin.cfg", "res://addons/wallhandling/plugin.cfg")
+
 [input]
 
 left={

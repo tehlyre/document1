@@ -197,6 +197,7 @@ func thingy_velocity(delta) -> void:
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
+	print(interactables)
 	# For facing the mouse {
 	
 	if is_using_mouse:

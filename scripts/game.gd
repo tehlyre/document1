@@ -15,7 +15,7 @@ func debug(debugger : DebugWindow) -> void:
 		var j : = $container/Room/enemies.get_children()
 		debugger.display_text("Enemy "+str(i+1)+":", i*5)
 		debugger.display_text(j[i].mover.get_move_state(), i*5+1)
-		debugger.display_text(str(j[i].current_action), i*5+2)
+		debugger.display_text(str(j[i].mover.current_action), i*5+2)
 		debugger.display_text(" ", i*5+3)
 	
 
@@ -153,7 +153,7 @@ func _on_game_resume() -> void:
 # chest into the player's inventory and then deletes it by setting the chest's is_opened to true.
 func _on_player_open_chest(i : int) -> void:
 	inventory['keys'] += $container/Chests.get_child(i).parsed['keys']
-	inventory['coins'] += $container/Chests.get_child(i).parsed['coins']
+	inventory['coins'] += $container/Chests.get_child(i).parsed['coins'] if $container/Chests.get_child(i).parsed['coins'] != null else 0
 	$container/Chests.get_child(i).is_opened = true
 
 

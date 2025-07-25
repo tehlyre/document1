@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=11 format=3 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards and Helps/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://d2fwduwibxhtj" path="res://scenes/Hazards and Helps/wall.tscn" id="4_o0u8o"]
 [ext_resource type="PackedScene" uid="uid://piryy33ucw4m" path="res://scenes/Characters/enemigo.tscn" id="6_f1ryr"]
+[ext_resource type="Script" uid="uid://trrfv454e3p0" path="res://scripts/wall.gd" id="6_imx2c"]
+[ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Hazards and Helps/chest.tscn" id="6_l41vt"]
 [ext_resource type="Script" uid="uid://ljvv1x31b24r" path="res://scripts/room.gd" id="7_cdtvu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
@@ -15,19 +17,20 @@ size = Vector2(621.5, 418.5)
 process_mode = 1
 script = ExtResource("1_imx2c")
 
-[node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(460, 186)
-collision_mask = 75
-
-[node name="Camera" type="Camera2D" parent="Durdan"]
-position = Vector2(-184, 168)
-zoom = Vector2(0.5, 0.5)
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(493, 619)
+scale = Vector2(0.125, 0.125)
+zoom = Vector2(0.4, 0.4)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.5
 drag_top_margin = 0.5
 drag_right_margin = 0.5
 drag_bottom_margin = 0.5
+
+[node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
+position = Vector2(523, 165)
+collision_mask = 75
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -63,13 +66,8 @@ scale = Vector2(4.62, -0.474)
 position = Vector2(492, 1189)
 scale = Vector2(14.0411, -0.592078)
 
-[node name="Wall2" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
-position = Vector2(1169, 609)
-rotation = 1.5708
-scale = Vector2(11.0526, -0.501005)
-
 [node name="Wall6" parent="Level/Walls" instance=ExtResource("4_o0u8o")]
-position = Vector2(733, 203)
+position = Vector2(733, 197)
 rotation = 1.5708
 scale = Vector2(3.2526, -0.501005)
 
@@ -78,7 +76,60 @@ position = Vector2(-217, 639)
 rotation = 1.5708
 scale = Vector2(11.202, -0.474)
 
+[node name="wall" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(1222, 409)
+scale = Vector2(0.543501, 7.3828)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@27805" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(1219.2, 1089.91)
+scale = Vector2(0.503964, 2.38182)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@28738" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(1479.84, 1200)
+scale = Vector2(4.72028, 0.516847)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@29674" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(1740.78, 1474.48)
+scale = Vector2(0.63559, 5.9896)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@30606" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(2163.02, 53)
+scale = Vector2(19.6407, 0.619542)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@31839" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(3172.82, 881.3)
+scale = Vector2(0.596348, 17.146)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
+[node name="@StaticBody2D@32487" type="StaticBody2D" parent="Level/Walls" groups=["walls"] instance=ExtResource("4_o0u8o")]
+position = Vector2(2469.18, 1758.17)
+scale = Vector2(14.6836, 0.623389)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("6_imx2c")
+
 [node name="Chests" type="Node2D" parent="."]
+
+[node name="chest" parent="Chests" instance=ExtResource("6_l41vt")]
+position = Vector2(245.518, 989.985)
+contents = "{\"keys\":1, \"coins\":3}"
 
 [node name="Room" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 1)
