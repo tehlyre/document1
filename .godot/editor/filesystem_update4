@@ -1,5 +1,4 @@
 res://scenes/Levels/container.tscn
-res://addons/wallhandling/wallhandling.gd
 res://scenes/Other Things/room.tscn
 res://scenes/Other Things/bullet.tscn
 res://scenes/UI/hud.tscn
@@ -9,6 +8,3 @@ res://scenes/drag.tscn
 res://scenes/Characters/durdan.tscn
 res://scenes/Hazards and Helps/chest.tscn
 res://scenes/Characters/enemigo.tscn
-res://scripts/durdan.gd
-res://scripts/chest.gd
-res://scripts/game.gd

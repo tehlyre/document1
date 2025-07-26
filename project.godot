@@ -17,12 +17,12 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=600
-window/size/viewport_height=400
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/drag/plugin.cfg", "res://addons/wallhandling/plugin.cfg")
+enabled=PackedStringArray("res://addons/drag/plugin.cfg")
 
 [input]
 
