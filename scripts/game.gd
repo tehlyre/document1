@@ -66,6 +66,8 @@ var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
 # bool is_player_dead: Whether or not the player has died in this current timespace continuum.
 var is_player_dead : bool = false
 var d_ : DebugWindow
+var is_opening_chest : bool = false
+
 
 # bool is_game_paused: Whether or not the game is paused. When this variable is set, the level
 # automatically pauses.
@@ -74,7 +76,6 @@ var is_game_paused : bool = false:
 		return is_game_paused
 	set(value):
 		is_game_paused = value
-		
 		sig_toggle_pause.emit(is_game_paused)
 
 signal sig_toggle_pause(is_paused : bool)
@@ -93,6 +94,9 @@ func _ready() -> void:
 	deathmenu.restart.connect(_on_game_restart)
 	player.sig_you_died.connect(_on_player_death)
 	player.sig_open_chest.connect(_on_player_open_chest)
+	player.sig_change_inventory.connect(_on_change_inventory)
+	player.sig_query_inventory.connect(_on_player_query_inventory)
+	player.sig_set_healthbar.connect(_on_player_change_health)
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -105,7 +109,7 @@ func _ready() -> void:
 # player is alive. The pause button cannot be activated when the player is dead. Pauses the game 
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
-	if event.is_action_pressed("cancel") and !is_player_dead:
+	if event.is_action_pressed("cancel") and !is_player_dead and !is_opening_chest:
 		get_tree().paused = !get_tree().paused
 		is_game_paused = !is_game_paused
 
@@ -120,15 +124,10 @@ func _input(event : InputEvent) -> void:
 
 
 # Serves the rudimentary inventory that is a placeholder for things to come.
-func _process(delta : float) -> void:
-	$container/CanvasLayer/HUD/playerInventory/keys.text = "Keys: x"+str(inventory['keys'])
-	$container/CanvasLayer/HUD/playerInventory/coins.text = "Coins: "+str(inventory['coins'])
+func _process(_delta : float) -> void:
+	$hud/playerInventory/keys.text = "Keys: x"+str(int(inventory['keys']))
+	$hud/playerInventory/coins.text = "Coins: "+str(int(inventory['coins']))
 	if is_debugging: debug(d_)
-#	$debug_window/Control/VBoxContainer/Label.text = "Enemy State: "+$container/Room/enemies/Enemy.States.keys()[$container/Room/enemies/Enemy.state]
-#	$debug_window/Control/VBoxContainer/Label2.text = "Beta Plus: " + str($container/Room/enemies/Enemy/beta_plus.target_position)
-#	$debug_window/Control/VBoxContainer/Label3.text = "Beta Minus: " + str($container/Room/enemies/Enemy/beta_minus.target_position)
-#	if $container/Room/enemies/Enemy.velocity != null:
-#		$debug_window/Control/VBoxContainer/Label4.text = "Velocity: " + str($container/Room/enemies/Enemy.velocity)
 
 
 
@@ -151,24 +150,34 @@ func _on_game_resume() -> void:
 
 # Fired when the player opens a chest, connected to player.opened_chest. Puts the contents of the 
 # chest into the player's inventory and then deletes it by setting the chest's is_opened to true.
-func _on_player_open_chest(i : int) -> void:
-	inventory['keys'] += $container/Chests.get_child(i).parsed['keys']
-	inventory['coins'] += $container/Chests.get_child(i).parsed['coins'] if $container/Chests.get_child(i).parsed['coins'] != null else 0
-	$container/Chests.get_child(i).is_opened = true
+func _on_player_open_chest(chest : Chest) -> void:
+	inventory['keys'] += chest.parsed['keys']
+	inventory['coins'] += chest.parsed['coins'] if chest.parsed['coins'] != null else 0
+	inventory['coins'] = int(inventory['coins'])
+	chest.is_opened = true
 
 
 # Connected to the signal player.you_died, fired when the player dies. Simply manually empties the 
 # player's healthbar and kills the player.
 func _on_player_death() -> void:
-	$container/CanvasLayer/HUD/playerHealthBar.value = 0
+	$hud/playerHealthBar.value = 0
 	is_player_dead = true
 	inventory = {'keys':0, 'coins':0}
 	
 
 
-# Fired when the player restarts the game after death.Connected to the signal deathmenu.restart. 
+# Fired when the player restarts the game after death. Connected to the signal deathmenu.restart. 
 # Unpauses the game, reloads the scene, and unkills the player.
 func _on_game_restart() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	is_player_dead = false
+
+func _on_change_inventory(type : String, bywhat : int) -> void:
+	inventory[type] = inventory[type] + bywhat
+
+func _on_player_query_inventory() -> void:
+	player.inventory = inventory
+
+func _on_player_change_health(health : float) -> void:
+	$hud/playerHealthBar.value = health

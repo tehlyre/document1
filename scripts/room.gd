@@ -2,7 +2,7 @@ extends Area2D
 class_name Room
 
 @export var player : Player
-var is_player_in_room : bool = true
+var _is_player_in_room : bool = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -12,8 +12,8 @@ func _ready() -> void:
 
 func _on_player_body_entered(body : Node2D) -> void:
 	if body == player:
-		var is_player_in_room = true
+		_is_player_in_room = true
 
 func _on_player_body_exited(body : Node2D):
 	if body == player:
-		var is_player_in_room = false
+		_is_player_in_room = false

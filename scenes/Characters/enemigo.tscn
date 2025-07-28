@@ -8,6 +8,7 @@
 radius = 12.0416
 
 [node name="enemy" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_jpdw6")
@@ -30,7 +31,7 @@ shape = SubResource("CircleShape2D_yki5q")
 
 [node name="neutralSpecial" parent="." instance=ExtResource("2_4kvev")]
 position = Vector2(32, 20)
-scale = Vector2(0.100358, 0.0882353)
+scale = Vector2(0.0645161, 0.0588235)
 
 [node name="toPlayer" type="RayCast2D" parent="."]
 collision_mask = 65

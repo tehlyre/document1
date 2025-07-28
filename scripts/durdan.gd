@@ -72,7 +72,9 @@ var input_vector : Vector2 = Vector2.ZERO
 
 # Array interactables: An array of all the interactable things that the player can interact with in
 # his current position.
-var interactables : Array = []
+var interactables : Array[Interactable] = []
+
+var inventory : Dictionary = {}
 
 
 
@@ -85,9 +87,11 @@ var interactables : Array = []
 # signal open_chest(int chestID): Sent out when the player opens a chest. Received by the game
 # 		manager in on_player_opened_chest.
 signal sig_you_died()
-signal sig_open_chest(chestID : int)
-
-
+signal sig_open_chest(chest : Chest)
+signal sig_open_door(doorID : int)
+signal sig_change_inventory(item : String, bywhat : int)
+signal sig_query_inventory()
+signal sig_set_healthbar(health : float)
 
 
 # READY
@@ -106,10 +110,10 @@ func _ready() -> void:
 # These functions add or take away possible interactions that the player can interact with at the 
 # current moment to the interactables array. If and only if the player is inside the interactable 
 # area, the player can interact with it.
-func _on_interaction_area_area_entered(area) -> void:
-	interactables.append(area.get_parent().interactionID)
-func _on_interaction_area_area_exited(area) -> void:
-	interactables.erase(area.get_parent().interactionID)
+func _on_interaction_area_area_entered(area : Area2D) -> void:
+	interactables.append(area.get_parent())
+func _on_interaction_area_area_exited(area : Area2D) -> void:
+	interactables.erase(area.get_parent())
 
 # Called every time an input occurs. Here it is used to detect if the keyboard and mouse or
 # controller is the main input option to be able to switch between mouse aiming and right joystick
@@ -121,9 +125,14 @@ func _input(event : InputEvent) -> void:
 	elif (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		is_using_mouse = false
 	if (event.is_action_pressed("interact") and interactables != []):
-		if interactables[0][0] == 'c':
+		if interactables[0] is Chest:
 			print("openous intentions")
-			sig_open_chest.emit(int(interactables[0][len(interactables[0])-1]))
+			sig_open_chest.emit(interactables[0])
+		elif interactables[0] is Door and inventory["keys"] >= 1:
+			print("openous intentions")
+			sig_open_door.emit(interactables[0])
+			interactables[0].is_opened = true
+			sig_change_inventory.emit("keys", -1)
 
 
 
@@ -154,6 +163,7 @@ func flick_stick_angle() -> float:
 # emits theyou_died signal if the health drops at or below zero, which functionally kills the player.
 func thingy_damage(damage) -> void:
 	health -= damage
+	sig_set_healthbar.emit(health)
 	if health <= 0:
 		health = 0
 		sig_you_died.emit()
@@ -197,7 +207,8 @@ func thingy_velocity(delta) -> void:
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
-	print(interactables)
+	print(inventory)
+	sig_query_inventory.emit()
 	# For facing the mouse {
 	
 	if is_using_mouse:
@@ -212,7 +223,7 @@ func _physics_process(delta) -> void:
 #   Thingy Calls (no particular order)
 	thingy_hazard()
 	thingy_velocity(delta)
-	gun.adjust(THETA)
+	gun.adjust(get_global_mouse_position(), THETA)
 	if Input.is_action_just_pressed("neutral special") and !is_in_illinois:
 		gun.fire()
 	

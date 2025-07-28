@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="3_qlc2s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
-radius = 8.2
+radius = 10.2078
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wifr"]
 radius = 186.762

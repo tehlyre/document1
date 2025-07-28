@@ -30,19 +30,16 @@ signal restart()
 func _ready():
 	hide()
 	
-	container.get_child(0).connect("sig_you_died", on_player_death)
+	container.get_node("Durdan").connect("sig_you_died", on_player_death)
 	
 	restart_button.connect("pressed", on_restart_pressed)
 	quit_button.connect("pressed", on_quit_pressed)
 
 # Function void on_player_death(bool died)
 # Connected to player.you_died. Pauses the tree and shows the death menu if the player is dead.
-func on_player_death(died : bool):
+func on_player_death():
 	get_tree().paused = true
-	if (died):
-		show()
-	else:
-		hide()
+	show()
 
 # Function void on_restart_pressed()
 # Connected to restart_button.pressed. Emits the restart signal. This signal is used by the game manager to restart 

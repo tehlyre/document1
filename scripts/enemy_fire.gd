@@ -90,7 +90,7 @@ func box_in() -> void:
 # Behavior cw_sprinkler: Fires 8 bullets in a clockwise manner in a sprinkler fashion.
 func cw_sprinkler() -> void:
 	current_action = "cw_sprinkler"
-	mover.is_stopped = true
+	mover.is_stoppedf = true
 	mover.is_facing_player = false
 	mover.starting_rotation = enemy.get_rotation()
 	await mover.rotate_to(-0.25, 0.25)
@@ -98,12 +98,12 @@ func cw_sprinkler() -> void:
 		gun.fire()
 		await mover.rotate_to(0.5, 0.125)
 	await mover.back_to_player()
-	mover.is_stopped = false
+	mover.is_stoppedf = false
 
 # Behavior ccw_sprinkler: Fires 8 bullets in a counterclockwise manner in a sprinkler fashion.
 func ccw_sprinkler() -> void:
 	current_action = "ccw_sprinkler"
-	mover.is_stopped = true
+	mover.is_stoppedf = true
 	mover.is_facing_player = false
 	var i = 0
 	mover.starting_rotation = enemy.get_rotation()
@@ -113,14 +113,14 @@ func ccw_sprinkler() -> void:
 		await mover.rotate_to(-0.5, 0.125)
 		i += 1
 	await mover.back_to_player()
-	mover.is_stopped = false
+	mover.is_stoppedf = false
 
 
 
 # Behavior doubles: Fires 7 sets of two bullets while facing the player.
 func doubles() -> void:
 	current_action = "doubles"
-	mover.is_stopped = true
+	mover.is_stoppedf = true
 	for i in range(0,7):
 		mover.is_facing_player = false
 		gun.fire()
@@ -128,7 +128,7 @@ func doubles() -> void:
 		gun.fire()
 		await get_tree().create_timer(0.5).timeout
 		mover.back_to_player()
-	mover.is_stopped = false
+	mover.is_stoppedf = false
 
 # Behavior singles: Fires 10 bullets while facing the player.
 func singles() -> void:

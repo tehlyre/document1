@@ -2,16 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://bng2pxhh5yw4x" path="res://assets/textures/chest.png" id="1_0m1oo"]
 [ext_resource type="Script" uid="uid://c0sj28766nvul" path="res://scripts/chest.gd" id="1_a88ng"]
-[ext_resource type="PackedScene" uid="uid://b6auh6buywrqa" path="res://scenes/Hazards and Helps/interaction_boundary.tscn" id="3_mipub"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6y2u"]
 size = Vector2(72, 45)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6qlve"]
+radius = 53.2353
+
 [node name="chest" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("1_a88ng")
 
 [node name="chestCollider" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_n6y2u")
 
@@ -20,6 +23,8 @@ position = Vector2(0, 1)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_0m1oo")
 
-[node name="chestInteractionArea" parent="." instance=ExtResource("3_mipub")]
-visible = false
-script = null
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_6qlve")

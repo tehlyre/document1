@@ -2,51 +2,32 @@
 
 [ext_resource type="Script" uid="uid://brygg006yot8t" path="res://scripts/UI/hud.gd" id="1_8ggds"]
 
-[node name="hud" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="hud" type="CanvasLayer"]
 script = ExtResource("1_8ggds")
 
 [node name="playerHealthBar" type="ProgressBar" parent="."]
 modulate = Color(1, 0, 0, 1)
-layout_mode = 0
 offset_left = 26.0
 offset_top = 28.0
 offset_right = 200.0
 offset_bottom = 55.0
 show_percentage = false
 
-[node name="playerInventory" type="Control" parent="."]
-anchors_preset = 0
-offset_left = -128.0
-offset_top = -56.0
-offset_right = -88.0
-offset_bottom = -16.0
-
-[node name="keys" type="Label" parent="playerInventory"]
-layout_mode = 1
+[node name="playerInventory" type="VBoxContainer" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 620.0
-offset_top = 70.0
-offset_right = 683.0
-offset_bottom = 96.0
+offset_left = -153.0
+offset_top = 67.0
+offset_right = -90.0
+offset_bottom = 117.0
 grow_horizontal = 0
+alignment = 2
+
+[node name="keys" type="Label" parent="playerInventory"]
+layout_mode = 2
 text = "Keys: x0"
 
 [node name="coins" type="Label" parent="playerInventory"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 641.0
-offset_top = 130.0
-offset_right = 692.0
-offset_bottom = 156.0
-grow_horizontal = 0
+layout_mode = 2
 text = "Coins: "

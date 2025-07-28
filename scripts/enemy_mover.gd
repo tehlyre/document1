@@ -26,14 +26,14 @@ var MAX_SPEED : float
 
 # is_rotating_to_player: true when the enemy is rotating back to the player
 # is_facing_player: true when the enemy is facing the player
-# is_stopped: true when the enemy must stop
+# is_stoppedf: true when the enemy must stop
 # is_rotating: true when the enemy is rotating and not facing the player.
 # is_in_wandering_process: true when the enemy is wandering or endwandering.
 # is_strictly_wandering: true when the enemy is wandering, used to break the wandering loop.
 
 var is_rotating_to_player : bool = false
 var is_facing_player : bool = true
-var is_stopped : bool = false
+var is_stoppedf : bool = false
 var is_rotating : bool = false
 var is_in_wandering_process : bool = false
 var is_strictly_wandering : bool = false
@@ -62,7 +62,7 @@ var current_action : String
 # MoveStates move_state: The current behavior state of the enemy. Currently either SEEK, STOP, FLEE,
 # or PEEK. SEEK moves the enemy towards the player, STOP stops the enemy, and FLEE moves the enemy
 # away from the player.
-var move_state : MoveStates = 0
+var move_state : MoveStates = MoveStates.STOP
 
 
 
@@ -289,7 +289,7 @@ func tick(delta : float) -> void:
 		thingy_rotate(delta)
 	if current_action:
 		enemy.velocity = Callable(self, current_action).call()
-	if is_stopped:
+	if is_stoppedf:
 		enemy.velocity = Vector2.ZERO
 	
 

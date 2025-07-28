@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://qv0hmxcgsqlj"]
+
+[ext_resource type="Script" uid="uid://cxagn1rxim1ly" path="res://scenes/Levels/doorkun.gd" id="1_ndq58"]
+[ext_resource type="Texture2D" uid="uid://m7vidltf1igu" path="res://assets/textures/makoto yuki.png" id="2_irn8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpvv5"]
+size = Vector2(400, 160)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hpvv5"]
+radius = 115.0
+height = 522.0
+
+[node name="Door" type="StaticBody2D"]
+position = Vector2(40, 0)
+collision_layer = 72
+collision_mask = 0
+script = ExtResource("1_ndq58")
+
+[node name="interactableSprite" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_irn8e")
+
+[node name="interactableCollider" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_hpvv5")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_hpvv5")

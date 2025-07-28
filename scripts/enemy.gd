@@ -22,7 +22,6 @@ class_name Enemy
 # PackedScene Bullet: The packaged scene for the bullet that is to be fired.
 # RandomNumberGenerator rng: A random number generator to make this thing more deterministic.
 @export var player : CharacterBody2D
-@export var Bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var gun : Gun = $neutralSpecial
 @onready var player_raycast = $toPlayer
@@ -35,6 +34,7 @@ var fire : EnemyFire
 # float SCLE: Used by the Bullet Class
 var MAX_SPEED : float = 200
 var DAMAGE_SCALE : float = 5
+var THETA : float = 0.8
 
 # FLAGS
 
@@ -90,6 +90,7 @@ func _physics_process(delta : float) -> void:
 	$toPlayer.target_position = to_local(player.position)
 	thingy_hazard()
 	mover.tick(delta)
+	gun.adjust(player.global_position, THETA)
 	move_and_slide()
 	$enemyHealthBar.value = health
 	if is_zero_approx(health):

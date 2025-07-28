@@ -5,7 +5,7 @@ class_name Gun
 #
 #
 # PackedScene Bullet: The scene for the bullet that is fired off by the player
-@export var Bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
+@export var bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
 #
 #
 # FLAGS
@@ -17,16 +17,16 @@ func _ready() -> void:
 	$noGunZone.body_entered.connect(_on_noGunZone_body_entered)
 	$noGunZone.body_exited.connect(_on_noGunZone_body_exited)
 
-func _on_noGunZone_body_entered(body : PhysicsBody2D) -> void:
+func _on_noGunZone_body_entered(_body : PhysicsBody2D) -> void:
 	is_in_illinois = true
 
-func _on_noGunZone_body_exited(body : PhysicsBody2D) -> void:
+func _on_noGunZone_body_exited(_body : PhysicsBody2D) -> void:
 	is_in_illinois = false
 
 # This function instantiates a bullet scene from the firing point every time the entity desires to 
 # fire and directs it in the direction the marker is facing. It has no adjustment function
 func fire() -> void:
-	var b_ : Bullet = Bullet.instantiate()
+	var b_ : Bullet = bullet.instantiate()
 	if is_on_player:
 		owner.get_parent().add_child(b_)
 	else:
@@ -39,9 +39,9 @@ func fire() -> void:
 # cursor. The algorithm is mostly just magic, but it works. It stops attempting to adjust when the
 # cursor gets within 112 pixels, which was tested to be a reasonable distance. This was literally
 # made with a teensy bit of precalculus and a lot of trial and error.
-func adjust(theta : float) -> void:
-	var d = global_position.distance_to(get_global_mouse_position())
-	var s = global_position.distance_to(global_position)
+func adjust(point : Vector2, theta : float) -> void:
+	var d = global_position.distance_to(point)
+	var s = global_position.distance_to(get_parent().global_position)
 	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
 	var cool_number = (question_mark-0.9)*180/PI
 	if d > 112:

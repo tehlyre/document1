@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 # Heads Up Display Script
 #
@@ -22,9 +22,3 @@ var game_manager : GameManager
 # Called on startup. Prints the players inventory for debugging purposes.
 func _ready() -> void:
 	game_manager = get_tree().get_root().get_node("gameManager")
-	print(game_manager.inventory)
-
-
-# Called every frame. Sets the playerHealthBar to whatever the player's health is.
-func _process(delta) -> void:
-	$playerHealthBar.value = player.health
