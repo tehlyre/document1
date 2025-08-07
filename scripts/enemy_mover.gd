@@ -252,7 +252,6 @@ func thingy_rotate(delta : float) -> void:
 func thingy_set_state() -> void:
 	var distance : float = (player.position-enemy.position).length()
 	if enemy.player_raycast.get_collider() != player and enemy.player_raycast.get_collider():
-		print(enemy.player_raycast.get_collider())
 		move_state = MoveStates.WANDER
 		return
 	elif (player.position-enemy.position).length() > 800:

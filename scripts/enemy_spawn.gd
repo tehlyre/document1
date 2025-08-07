@@ -1,0 +1,39 @@
+extends TileMapLayer
+class_name EnemySpawn
+
+@export var cam : Camera2D
+var CAMERA_TO_TILE : Vector2i = Vector2i(32, 18)
+var enemy : PackedScene = preload("res://scenes/Characters/enemigo.tscn")
+@export var enemy_root : Node2D
+@export var player : Player
+@export var walls : Wall
+
+
+func _ready() -> void:
+	walls.sig_this_room.connect(_on_player_change_rooms)
+	_on_player_change_rooms([Vector2i.ZERO], Vector2i.ZERO)
+	for i in get_used_cells():
+		get_cell_tile_data(i).modulate.a = 0
+
+func bounded_by_rectanglei(arg_ : Vector2i, tleft : Vector2i, bright : Vector2i) -> bool:
+	return arg_.x > tleft.x and arg_.y > tleft.y and arg_.x < bright.x and arg_.y < bright.y
+
+func bounded_by_rectangle(arg_ : Vector2, tleft : Vector2, bright : Vector2) -> bool:
+	return arg_.x > tleft.x and arg_.y > tleft.y and arg_.x < bright.x and arg_.y < bright.y
+
+func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
+	var cool_arrayx : Array[int] = []
+	var cool_arrayy : Array[int] = []
+	for i in rooms: 
+		cool_arrayx.append(i.x)
+		cool_arrayy.append(i.y)
+	var tleft_bound : Vector2i = Vector2i(cool_arrayx.min(), cool_arrayy.min())*CAMERA_TO_TILE
+	var bright_bound : Vector2i = (Vector2i(cool_arrayx.max(), cool_arrayy.max())+Vector2i.ONE)*CAMERA_TO_TILE
+	for child in enemy_root.get_children():
+		child.queue_free()
+	for i in get_used_cells():
+		if bounded_by_rectangle(i, tleft_bound, bright_bound):
+			var e_ = enemy.instantiate()
+			e_.player = player
+			e_.position = map_to_local(i)
+			enemy_root.add_child(e_)

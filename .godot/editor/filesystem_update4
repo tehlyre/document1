@@ -1,31 +1,17 @@
-res://scenes/UI/hud.tscn
-res://scripts/UI/hud.gd
-res://scenes/Characters/durdan.tscn
-res://scripts/chest.gd
-res://scripts/durdan.gd
+res://scenes/Levels/container.tscn
+res://scenes/Levels/wall.gd
 res://scenes/Other Things/room.tscn
 res://scenes/Other Things/bullet.tscn
+res://scenes/UI/hud.tscn
 res://scenes/Other Things/neutral_special.tscn
 res://scenes/main.tscn
 res://scenes/drag.tscn
-res://scenes/Levels/container.tscn
+res://scenes/Characters/durdan.tscn
 res://scenes/Hazards and Helps/chest.tscn
 res://scenes/Characters/enemigo.tscn
-res://scenes/Levels/doorkun.gd
-res://scripts/Interactable.gd
-res://scenes/door.tscn
-res://scripts/UI/deathmenu.gd
-res://scripts/UI/chestmenu.gd
-res://scripts/level.gd
-res://scripts/game.gd
 res://scenes/UI/chest_pop_up_menu.tscn
-res://scenes/UI/pausemenu.tscn
-res://scenes/door_rotated.tscn
-res://scenes/Levels/doors.gd
-res://scripts/wall.gd
-res://scripts/neutral_special.gd
-res://scripts/enemy_mover.gd
-res://scripts/enemy.gd
-res://scripts/room.gd
-res://scripts/enemy_fire.gd
 res://scripts/camera.gd
+res://scenes/Levels/area_2d.gd
+res://scripts/durdan.gd
+res://scripts/UI/hud.gd
+res://scripts/enemy_spawn.gd

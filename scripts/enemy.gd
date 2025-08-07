@@ -57,6 +57,7 @@ func _ready() -> void:
 	add_child(mover)
 	fire = EnemyFire.new(self, gun, mover)
 	add_child(fire)
+	print(get_parent())
 
 
 

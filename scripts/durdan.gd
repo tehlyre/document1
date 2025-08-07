@@ -102,6 +102,7 @@ signal sig_set_healthbar(health : float)
 func _ready() -> void:
 	$areaInteraction.area_entered.connect(_on_interaction_area_area_entered)
 	$areaInteraction.area_exited.connect(_on_interaction_area_area_exited)
+	sig_set_healthbar.emit(100.0)
 
 
 # Signal Calls
@@ -207,11 +208,11 @@ func thingy_velocity(delta) -> void:
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
-	print(inventory)
 	sig_query_inventory.emit()
 	# For facing the mouse {
 	
 	if is_using_mouse:
+		pass
 		look_at(get_global_mouse_position())
 	elif !is_using_mouse:
 		if (is_nan(flick_stick_angle())):

@@ -1,8 +1,8 @@
-Label
 CollisionShape2D
-TileMapLayer
-TileMap
 Area2D
+TileMapLayer
+Label
+TileMap
 Sprite2D
 StaticBody2D
 CanvasLayer

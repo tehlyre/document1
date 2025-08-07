@@ -22,3 +22,4 @@ var game_manager : GameManager
 # Called on startup. Prints the players inventory for debugging purposes.
 func _ready() -> void:
 	game_manager = get_tree().get_root().get_node("gameManager")
+	$playerHealthBar.value = 100.0
