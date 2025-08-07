@@ -49,13 +49,12 @@ func load_section(this_load : Vector2i, last_load : Vector2i):
 				SIDE_BOTTOM: butt+=1
 				SIDE_LEFT: left+=1
 				SIDE_RIGHT: right+=1
-	prints(top, butt, left, right)
-	if top < 25 and this_load != Vector2i(last_load.x, last_load.y+1):
-		load_section(Vector2i(last_load.x, last_load.y-1), this_load)
-	if butt < 25 and this_load != Vector2i(last_load.x, last_load.y-1):
-		load_section(Vector2i(last_load.x, last_load.y+1), this_load)
-	if left < 13 and this_load != Vector2i(last_load.x+1, last_load.y):
-		load_section(Vector2i(last_load.x-1, last_load.y), this_load)
-	if right < 13 and this_load != Vector2i(last_load.x-1, last_load.y):
-		load_section(Vector2i(last_load.x+1, last_load.y), this_load)
 	room.append(this_load)
+	if top < 25 and this_load != Vector2i(last_load.x, last_load.y+1) and not Vector2i(last_load.x, last_load.y-1) in room:
+		load_section(Vector2i(this_load.x, this_load.y-1), this_load)
+	if butt < 25 and this_load != Vector2i(last_load.x, last_load.y-1) and not Vector2i(last_load.x, last_load.y+1) in room:
+		load_section(Vector2i(this_load.x, this_load.y+1), this_load)
+	if left < 13 and this_load != Vector2i(last_load.x+1, last_load.y) and not Vector2i(last_load.x-1, last_load.y) in room:
+		load_section(Vector2i(this_load.x-1, this_load.y), this_load)
+	if right < 13 and this_load != Vector2i(last_load.x-1, last_load.y) and not Vector2i(last_load.x+1, last_load.y) in room:
+		load_section(Vector2i(this_load.x+1, this_load.y), this_load)
