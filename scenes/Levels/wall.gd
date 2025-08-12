@@ -27,6 +27,10 @@ func which_side(tile_coords : Vector2i, current_cell : Vector2i, cell_screen_siz
 
 func _ready() -> void:
 	cam.sig_change_rooms.connect(_on_player_change_rooms)
+	#print(JSON.stringify(get_used_cells()))
+	var output : Array = []
+	OS.execute("python", ["C:\\Users\\718983\\Desktop\\yay.py", get_used_cells_by_id(0)], output)
+	print(get_used_cells_by_id(0))
 
 func _on_player_change_rooms(coords : Vector2i):
 	room = []

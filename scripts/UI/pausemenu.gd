@@ -48,8 +48,10 @@ func _ready() -> void:
 func on_game_paused(is_paused : bool) -> void:
 	if (is_paused):
 		show()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		hide()
+		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 # Function void on_resume_pressed(): Connected to resume_button.pressed. Simply emits the resume signal for the game
 # manager to unpause the game.
@@ -61,6 +63,7 @@ func on_resume_pressed() -> void:
 func on_options_pressed() -> void:
 	hide()
 	options_menu.show()
+	game.is_on_options = true
 
 # Function void on_quit_pressed(): Connected to quit_button.pressed. Unpauses the tree and switches the main scene from
 # the game scene to the start menu scene.

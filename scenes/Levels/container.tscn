@@ -48,6 +48,7 @@ sources/0 = SubResource("TileSetAtlasSource_n5cux")
 process_mode = 1
 script = ExtResource("1_imx2c")
 player = NodePath("Durdan")
+metadata/_edit_group_ = true
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "wall", "enemy_spawn")]
 position = Vector2(-24, 1394)

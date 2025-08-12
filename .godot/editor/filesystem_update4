@@ -1,17 +1,3 @@
 res://scenes/Levels/container.tscn
-res://scenes/Levels/wall.gd
-res://scenes/Other Things/room.tscn
-res://scenes/Other Things/bullet.tscn
-res://scenes/UI/hud.tscn
-res://scenes/Other Things/neutral_special.tscn
-res://scenes/main.tscn
-res://scenes/drag.tscn
-res://scenes/Characters/durdan.tscn
-res://scenes/Hazards and Helps/chest.tscn
-res://scenes/Characters/enemigo.tscn
-res://scenes/UI/chest_pop_up_menu.tscn
-res://scripts/camera.gd
-res://scenes/Levels/area_2d.gd
-res://scripts/durdan.gd
-res://scripts/UI/hud.gd
-res://scripts/enemy_spawn.gd
+res://addons/drag/drag.gd
+res://scenes/UI/map_menu.tscn

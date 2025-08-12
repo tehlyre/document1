@@ -12,6 +12,7 @@ extends Control
 # void on_back_pressed(): Called when back is pressed. Hides the menu and shows the pause menu.
 
 @export var pause_menu : Control
+@export var game : GameManager
 @onready var back_button : Button = $Panel/VBoxContainer/Back
 
 # Function void _ready()
@@ -25,3 +26,4 @@ func _ready():
 func on_back_pressed():
 	hide()
 	pause_menu.show()
+	game.is_on_options = false

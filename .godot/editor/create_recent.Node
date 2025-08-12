@@ -1,9 +1,10 @@
+Label
+Sprite2D
+Panel
 CollisionShape2D
 Area2D
 TileMapLayer
-Label
 TileMap
-Sprite2D
 StaticBody2D
 CanvasLayer
 VBoxContainer
@@ -11,4 +12,3 @@ CollisionPolygon2D
 TextureButton
 Button
 TextureRect
-Timer

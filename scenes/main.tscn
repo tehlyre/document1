@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=13 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://c2udhxi146lk1" path="res://scenes/UI/chest_pop_up_menu.tscn" id="8_kqed6"]
 [ext_resource type="Script" uid="uid://duwmwk20o36rn" path="res://scripts/UI/chestmenu.gd" id="9_o46kr"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://ca7nup0qekyl7" path="res://scenes/UI/map_menu.tscn" id="10_eb6dy"]
+[ext_resource type="Script" uid="uid://dkvh7libvy76f" path="res://scripts/UI/map_menu.gd" id="11_trceg"]
 
 [node name="gameManager" type="Node2D"]
 process_mode = 3
@@ -30,9 +32,10 @@ options_menu = NodePath("../optionsMenu")
 script = ExtResource("5_ghli0")
 container = NodePath("../../container")
 
-[node name="optionsMenu" parent="menuLayer" node_paths=PackedStringArray("pause_menu") instance=ExtResource("6_ukfdh")]
+[node name="optionsMenu" parent="menuLayer" node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("6_ukfdh")]
 script = ExtResource("7_jb57r")
 pause_menu = NodePath("../pauseMenu")
+game = NodePath("../..")
 
 [node name="chestMenu" parent="menuLayer" node_paths=PackedStringArray("container", "game") instance=ExtResource("8_kqed6")]
 process_mode = 3
@@ -42,6 +45,10 @@ offset_right = 47.0
 offset_bottom = 33.0
 script = ExtResource("9_o46kr")
 container = NodePath("../../container")
+game = NodePath("../..")
+
+[node name="mapMenu" parent="menuLayer" node_paths=PackedStringArray("game") instance=ExtResource("10_eb6dy")]
+script = ExtResource("11_trceg")
 game = NodePath("../..")
 
 [node name="hud" parent="." instance=ExtResource("10_choun")]

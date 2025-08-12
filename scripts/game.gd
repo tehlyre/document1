@@ -67,6 +67,8 @@ var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
 var is_player_dead : bool = false
 var d_ : DebugWindow
 var is_opening_chest : bool = false
+var is_on_options : bool = false
+var is_opening_map : bool = false
 
 
 # bool is_game_paused: Whether or not the game is paused. When this variable is set, the level
@@ -79,8 +81,7 @@ var is_game_paused : bool = false:
 		sig_toggle_pause.emit(is_game_paused)
 
 signal sig_toggle_pause(is_paused : bool)
-		
-
+signal sig_open_map(is_opening : bool)
 
 
 # AUTOMATICS
@@ -89,6 +90,7 @@ signal sig_toggle_pause(is_paused : bool)
 
 # Called when the game starts. Connects all connections to their proper callbacks.
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	get_viewport().set_embedding_subwindows(false)
 	pausemenu.resume.connect(_on_game_resume)
 	deathmenu.restart.connect(_on_game_restart)
@@ -104,14 +106,26 @@ func _ready() -> void:
 		d_.ready_labels(12)
 	
 
+func can_pause_game() -> bool:
+	return !is_player_dead and !is_opening_chest and !is_on_options and !is_opening_map
+func can_open_map() -> bool:
+	return !is_game_paused and !is_player_dead and !is_opening_chest and !is_on_options
 
 # Called when an input is pressed. Pauses/resumes the game when escape is pressed so long as the 
 # player is alive. The pause button cannot be activated when the player is dead. Pauses the game 
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
-	if event.is_action_pressed("cancel") and !is_player_dead and !is_opening_chest:
+	if event.is_action_pressed("cancel") and can_pause_game():
 		get_tree().paused = !get_tree().paused
 		is_game_paused = !is_game_paused
+	elif event.is_action_pressed("open_map") and can_open_map():
+		is_opening_map = !is_opening_map
+		get_tree().paused = !get_tree().paused
+		if is_opening_map:
+			sig_open_map.emit(true)
+		else:
+			sig_open_map.emit(false)
+		
 
 
 
