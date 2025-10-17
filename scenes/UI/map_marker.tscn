@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuylsurhulnxl"]
+
+[ext_resource type="Texture2D" uid="uid://c280kp42nfs74" path="res://assets/textures/marker_door.png" id="1_4sq6o"]
+[ext_resource type="Script" uid="uid://bb71hjw6jv04k" path="res://scripts/UI/map_marker.gd" id="1_y0oa8"]
+
+[node name="map_marker" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_y0oa8")
+
+[node name="lockSprite" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 57.0
+offset_bottom = 57.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_4sq6o")

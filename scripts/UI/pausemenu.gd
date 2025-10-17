@@ -30,6 +30,8 @@ extends Control
 @onready var resume_button : Button = $Panel/VBoxContainer/Resume
 @onready var quit_button : Button = $Panel/VBoxContainer/Quit
 
+
+
 var died : bool = false
 
 signal resume()
@@ -49,20 +51,23 @@ func on_game_paused(is_paused : bool) -> void:
 	if (is_paused):
 		show()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		game.menu_state = game.MenuStates.MENU_PAUSE
 	else:
 		hide()
-		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+		#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+		game.menu_state = game.MenuStates.MENU_NONE
 
 # Function void on_resume_pressed(): Connected to resume_button.pressed. Simply emits the resume signal for the game
 # manager to unpause the game.
 func on_resume_pressed() -> void:
-	emit_signal("resume")
+	resume.emit()
 
 # Function void on_options_pressed(): Connected to options_button.pressed. Simply hides the pause menu and shows the
 # options menu.
 func on_options_pressed() -> void:
 	hide()
 	options_menu.show()
+	game.menu_state = game.MenuStates.MENU_OPTIONS
 	game.is_on_options = true
 
 # Function void on_quit_pressed(): Connected to quit_button.pressed. Unpauses the tree and switches the main scene from

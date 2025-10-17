@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=12 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://duwmwk20o36rn" path="res://scripts/UI/chestmenu.gd" id="9_o46kr"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://ca7nup0qekyl7" path="res://scenes/UI/map_menu.tscn" id="10_eb6dy"]
-[ext_resource type="Script" uid="uid://dkvh7libvy76f" path="res://scripts/UI/map_menu.gd" id="11_trceg"]
 
 [node name="gameManager" type="Node2D"]
 process_mode = 3
@@ -48,7 +47,6 @@ container = NodePath("../../container")
 game = NodePath("../..")
 
 [node name="mapMenu" parent="menuLayer" node_paths=PackedStringArray("game") instance=ExtResource("10_eb6dy")]
-script = ExtResource("11_trceg")
 game = NodePath("../..")
 
 [node name="hud" parent="." instance=ExtResource("10_choun")]

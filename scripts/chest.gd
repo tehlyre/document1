@@ -33,8 +33,8 @@ var is_opened : bool = false
 # then creates the interactionID and calls for the contents to be parsed.
 func _ready() -> void:
 	init("chest")
-	parsed = JSON.parse_string(contents)
-	print(parsed)
+	parsed = JSON.parse_string(contents) if contents else {"keys": 0, "coins": 0}
+	#print(parsed)
 
 # Called every frame. Detects if the chest is opened or not. If so, it promptly deletes itself.
 func _process(_delta : float) -> void:

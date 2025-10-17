@@ -51,13 +51,14 @@ var current_max_speed : float = MAX_SPEED
 # float health: The current health of the enemy, in percent.
 var health : float = 100.0
 
+
 # Creates and adds the mover and the fire managers.
 func _ready() -> void:
 	mover = EnemyMover.new(self, player, MAX_SPEED)
 	add_child(mover)
 	fire = EnemyFire.new(self, gun, mover)
 	add_child(fire)
-	print(get_parent())
+	#print(get_parent())
 
 
 

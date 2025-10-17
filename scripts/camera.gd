@@ -19,7 +19,7 @@ func _ready() -> void:
 func update_position() -> void:
 	current_cell = (player.global_position / size).floor()
 	if last_cell != current_cell and not current_cell in current_room:
-		print("oh skibidi I love you")
+		#print("oh skibidi I love you")
 		sig_change_rooms.emit(current_cell)
 		last_cell = current_cell
 		global_position = Vector2(current_cell) * size
@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	
 
 func _on_room_callback(rooms : Array[Vector2i], coords : Vector2i) -> void:
-	print(rooms)
+	#print(rooms)
 	current_room = rooms
 	var cool_arrayx : Array[int] = []
 	var cool_arrayy : Array[int] = []

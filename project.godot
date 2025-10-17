@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/initial_position_type=0
+window/size/initial_position=Vector2i(300, 300)
 
 [editor_plugins]
 
@@ -119,3 +121,9 @@ open_map={
 2d_physics/layer_6="nuttin"
 2d_physics/layer_7="walls"
 2d_physics/layer_8="inactive aura"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+textures/decals/filter=1
+textures/light_projectors/filter=1

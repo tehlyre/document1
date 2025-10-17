@@ -19,11 +19,10 @@ func on_player_open_chest(chest : Chest):
 		menu.move_child(l_, 1+i)
 	if stuff["keys"] > 0: menu.get_child(2).text = "Keys +"+str(stuff["keys"])
 	if stuff["coins"] > 0: menu.get_child(3).text = "Coins +"+str(stuff["coins"])
-	game.is_opening_chest = true
 	get_tree().paused = true
 	show()
 
 func on_quit_button_pressed():
 	get_tree().paused = false
-	game.is_opening_chest = false
+	game.menu_state = game.MenuStates.MENU_NONE
 	hide()

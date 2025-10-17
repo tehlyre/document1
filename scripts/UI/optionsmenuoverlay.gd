@@ -26,4 +26,4 @@ func _ready():
 func on_back_pressed():
 	hide()
 	pause_menu.show()
-	game.is_on_options = false
+	game.menu_state = game.MenuStates.MENU_PAUSE

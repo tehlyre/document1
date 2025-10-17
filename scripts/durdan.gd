@@ -219,6 +219,7 @@ func _physics_process(delta) -> void:
 			self.set_rotation_degrees(previous_rotation)
 		else:
 			self.set_rotation(flick_stick_angle())
+	
 #	}
 
 #   Thingy Calls (no particular order)

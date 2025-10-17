@@ -1,6 +1,7 @@
 from PIL import Image
 import sys
 walls = sys.argv[1].split("), ")
+print(sys.argv[1])
 destination = sys.argv[2]
 parsed_walls = []
 wall_x = []
@@ -19,15 +20,13 @@ for q in range(0,len(walls)):
     wall_x.append(w[0])
     wall_y.append(w[1])
     parsed_walls.append(w)
-img = Image.new("RGBA",(max(wall_x)-min(wall_x)+1, max(wall_y)-min(wall_y)+1))
-print(parsed_walls)
-print(max(wall_x))
-print(min(wall_x))
-print(max(wall_y))
-print(min(wall_y))
+img = Image.new("RGBA",((max(wall_x)-min(wall_x)+1)*2, (max(wall_y)-min(wall_y)+1)*2))
 pixelMap = img.load()
 for i in range(0,len(parsed_walls)):
-    pixelMap[parsed_walls[i][0]-min(wall_x), parsed_walls[i][1]-min(wall_y)] = (255,255,0,255)
+    pixelMap[(parsed_walls[i][0]-min(wall_x))*2, (parsed_walls[i][1]-min(wall_y))*2] = (0,0,255,255)
+    pixelMap[(parsed_walls[i][0]-min(wall_x))*2+1, (parsed_walls[i][1]-min(wall_y))*2] = (0,0,255,255)
+    pixelMap[(parsed_walls[i][0]-min(wall_x))*2, (parsed_walls[i][1]-min(wall_y))*2+1] = (0,0,255,255)
+    pixelMap[(parsed_walls[i][0]-min(wall_x))*2+1, (parsed_walls[i][1]-min(wall_y))*2+1] = (0,0,255,255)
 img.show()       
 img.save("assets/textures/"+destination) 
 img.close()

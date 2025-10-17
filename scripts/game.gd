@@ -11,12 +11,7 @@ class_name GameManager
 
 
 func debug(debugger : DebugWindow) -> void:
-	for i in range(0, len($container/Room/enemies.get_children())):
-		var j : = $container/Room/enemies.get_children()
-		debugger.display_text("Enemy "+str(i+1)+":", i*5)
-		debugger.display_text(j[i].mover.get_move_state(), i*5+1)
-		debugger.display_text(str(j[i].mover.current_action), i*5+2)
-		debugger.display_text(" ", i*5+3)
+	debugger.display_text(str(menu_state), 1)
 	
 
 
@@ -51,6 +46,7 @@ func debug(debugger : DebugWindow) -> void:
 @onready var pausemenu : Control = $menuLayer/pauseMenu
 @onready var deathmenu : Control = $menuLayer/deathMenu
 @onready var chestmenu : Control = $menuLayer/chestMenu
+@onready var mapmenu : Control = $menuLayer/mapMenu
 @export var is_debugging : bool = false
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
@@ -69,19 +65,24 @@ var d_ : DebugWindow
 var is_opening_chest : bool = false
 var is_on_options : bool = false
 var is_opening_map : bool = false
+var menu_state : MenuStates = MenuStates.MENU_NONE
 
 
 # bool is_game_paused: Whether or not the game is paused. When this variable is set, the level
 # automatically pauses.
-var is_game_paused : bool = false:
-	get: 
-		return is_game_paused
-	set(value):
-		is_game_paused = value
-		sig_toggle_pause.emit(is_game_paused)
+var is_game_paused : bool = false
 
 signal sig_toggle_pause(is_paused : bool)
-signal sig_open_map(is_opening : bool)
+signal sig_open_map(is_opening : bool, player_position : Vector2)
+
+enum MenuStates {
+	MENU_NONE,
+	MENU_PAUSE,
+	MENU_OPTIONS,
+	MENU_DEATH,
+	MENU_CHEST,
+	MENU_MAP
+}
 
 
 # AUTOMATICS
@@ -90,8 +91,9 @@ signal sig_open_map(is_opening : bool)
 
 # Called when the game starts. Connects all connections to their proper callbacks.
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	get_viewport().set_embedding_subwindows(false)
+	mapmenu.player = player
 	pausemenu.resume.connect(_on_game_resume)
 	deathmenu.restart.connect(_on_game_restart)
 	player.sig_you_died.connect(_on_player_death)
@@ -103,7 +105,7 @@ func _ready() -> void:
 		d_ = Debugger.instantiate()
 		add_child(d_)
 		d_.position = Vector2(20,100)
-		d_.ready_labels(12)
+		d_.ready_labels(2)
 	
 
 func can_pause_game() -> bool:
@@ -115,16 +117,24 @@ func can_open_map() -> bool:
 # player is alive. The pause button cannot be activated when the player is dead. Pauses the game 
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
-	if event.is_action_pressed("cancel") and can_pause_game():
-		get_tree().paused = !get_tree().paused
+	if event.is_action_pressed("cancel") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP]):
+		if menu_state == MenuStates.MENU_MAP:
+			sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
+			is_opening_map = !is_opening_map
+		else:
+			get_tree().paused = !get_tree().paused
 		is_game_paused = !is_game_paused
-	elif event.is_action_pressed("open_map") and can_open_map():
+		sig_toggle_pause.emit(is_game_paused)
+		
+	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
 		is_opening_map = !is_opening_map
 		get_tree().paused = !get_tree().paused
-		if is_opening_map:
-			sig_open_map.emit(true)
+		if is_opening_map:	
+			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
+			menu_state = MenuStates.MENU_MAP
 		else:
-			sig_open_map.emit(false)
+			sig_open_map.emit(false, Vector2(6,7))
+			menu_state = MenuStates.MENU_NONE
 		
 
 
@@ -142,6 +152,7 @@ func _process(_delta : float) -> void:
 	$hud/playerInventory/keys.text = "Keys: x"+str(int(inventory['keys']))
 	$hud/playerInventory/coins.text = "Coins: "+str(int(inventory['coins']))
 	if is_debugging: debug(d_)
+	#print(is_opening_map)
 
 
 
@@ -160,6 +171,7 @@ func _process(_delta : float) -> void:
 func _on_game_resume() -> void:
 	get_tree().paused = !get_tree().paused
 	is_game_paused = !is_game_paused
+	sig_toggle_pause.emit(false)
 
 
 # Fired when the player opens a chest, connected to player.opened_chest. Puts the contents of the 
@@ -168,14 +180,14 @@ func _on_player_open_chest(chest : Chest) -> void:
 	inventory['keys'] += chest.parsed['keys']
 	inventory['coins'] += chest.parsed['coins'] if chest.parsed['coins'] != null else 0
 	inventory['coins'] = int(inventory['coins'])
-	chest.is_opened = true
+	menu_state = MenuStates.MENU_CHEST
 
 
 # Connected to the signal player.you_died, fired when the player dies. Simply manually empties the 
 # player's healthbar and kills the player.
 func _on_player_death() -> void:
 	$hud/playerHealthBar.value = 0
-	is_player_dead = true
+	menu_state = MenuStates.MENU_DEATH
 	inventory = {'keys':0, 'coins':0}
 	
 
