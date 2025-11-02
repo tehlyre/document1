@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c0sj28766nvul" path="res://scripts/chest.gd" id="1_a88ng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6y2u"]
-size = Vector2(64, 39)
+size = Vector2(128, 78)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6qlve"]
 radius = 29.5

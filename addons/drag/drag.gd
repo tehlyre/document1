@@ -29,6 +29,7 @@ func _enter_tree() -> void:
 func _on_map_button_pressed():
 	var wall_node = get_tree().edited_scene_root.get_node("Wall")
 	OS.execute("python", ["yay.py", wall_node.get_used_cells_by_id(0), "stupid.png"])
+	print(wall_node.get_used_cells_by_id(0))
 	var w_x = []
 	var w_y = []
 	for i in wall_node.get_used_cells_by_id(0):
@@ -56,6 +57,14 @@ func _on_map_button_pressed():
 		m_.position = Vector2((chest.x-w_x.min())*2,(chest.y-w_y.min())*2)
 		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
 		m_.marker_type = 2
+	for stamp in wall_node.get_used_cells_by_id(3):
+		var m_ = marker.instantiate()
+		get_tree().edited_scene_root.get_node("Panel/map/markers").add_child(m_)
+		m_.owner = get_tree().edited_scene_root
+		
+		m_.position = Vector2((stamp.x-w_x.min())*2,(stamp.y-w_y.min())*2)
+		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
+		m_.marker_type = 4
 	print("lmao")
 	for door in wall_node.get_used_cells_by_id(3):
 		print("ooooh")

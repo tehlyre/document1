@@ -12,6 +12,8 @@ var interactionID : String
 
 var interactable_type = ""
 
+var send_to
+
 func init(type : String):
 	interactionID = type + str(ID)
 	interactable_type = type

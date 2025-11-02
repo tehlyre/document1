@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgejbcjs0l80s"]
+
+[ext_resource type="Script" uid="uid://ctouwgr8k8cvn" path="res://scripts/stamp.gd" id="1_d4wel"]
+[ext_resource type="Texture2D" uid="uid://bs2oetb61y4th" path="res://assets/textures/stamp.png" id="2_mw43d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h48pl"]
+radius = 30.1672
+
+[node name="stamp" type="StaticBody2D"]
+z_index = -1
+script = ExtResource("1_d4wel")
+metadata/_custom_type_script = "uid://c4bqiq6eo5uyq"
+
+[node name="stampSprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_mw43d")
+
+[node name="interactionArea" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+collision_layer = 8
+
+[node name="interactionAreaCollider" type="CollisionShape2D" parent="interactionArea"]
+rotation = 1.5708
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_h48pl")

@@ -1,7 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6auh6buywrqa"]
-
-[sub_resource type="Resource" id="Resource_gdcoa"]
-metadata/__load_path__ = "res://scripts/interaction.gd"
+[gd_scene load_steps=2 format=3 uid="uid://b6auh6buywrqa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5v7m2"]
 radius = 59.0085
@@ -10,7 +7,6 @@ radius = 59.0085
 collision_layer = 8
 collision_mask = 0
 monitoring = false
-script = SubResource("Resource_gdcoa")
 
 [node name="Interaction Region" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)

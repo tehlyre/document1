@@ -1,11 +1,11 @@
-map_marker
+Interactable
+CollisionShape2D
+Area2D
 Control
 Node2D
 Label
 TextureRect
 CharacterBody2D
-Area2D
-CollisionShape2D
 StaticBody2D
 Marker2D
 Sprite2D

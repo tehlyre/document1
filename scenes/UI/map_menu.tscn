@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://ca7nup0qekyl7"]
 
-[ext_resource type="Texture2D" uid="uid://bbamkaedifht2" path="res://assets/textures/stupid.png" id="1_4ybmi"]
 [ext_resource type="Script" uid="uid://dkvh7libvy76f" path="res://scripts/UI/map_menu.gd" id="1_l3h4p"]
 [ext_resource type="Texture2D" uid="uid://u0ds4dnh5ud" path="res://assets/textures/marker.png" id="2_4ybmi"]
+[ext_resource type="Texture2D" uid="uid://gvimn3v1udci" path="res://assets/textures/stupid.png" id="2_5mb33"]
 [ext_resource type="PackedScene" uid="uid://cuylsurhulnxl" path="res://scenes/UI/map_marker.tscn" id="2_ajspr"]
 [ext_resource type="Script" uid="uid://cqoyjkdo48i05" path="res://scripts/markers.gd" id="3_5mb33"]
 [ext_resource type="Script" uid="uid://bb71hjw6jv04k" path="res://scripts/UI/map_marker.gd" id="5_5mb33"]
@@ -26,12 +26,12 @@ offset_bottom = 723.0
 
 [node name="map" type="TextureRect" parent="Panel"]
 layout_mode = 0
-offset_left = 456.0
-offset_top = 186.0
-offset_right = 584.0
-offset_bottom = 294.0
+offset_left = 651.0
+offset_top = 140.0
+offset_right = 779.0
+offset_bottom = 248.0
 scale = Vector2(7, 7)
-texture = ExtResource("1_4ybmi")
+texture = ExtResource("2_5mb33")
 
 [node name="markers" type="Control" parent="Panel/map"]
 anchors_preset = 0
@@ -39,7 +39,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_5mb33")
 
-[node name="map_marker" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
+[node name="@Control@68213" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 62.0
@@ -50,7 +50,7 @@ script = ExtResource("5_5mb33")
 marker_type = 1
 cursor = NodePath("../../../cursor")
 
-[node name="@Control@50054" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
+[node name="@Control@68214" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 126.0
@@ -61,7 +61,7 @@ script = ExtResource("5_5mb33")
 marker_type = 1
 cursor = NodePath("../../../cursor")
 
-[node name="@Control@50055" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
+[node name="@Control@68215" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 126.0
@@ -72,7 +72,7 @@ script = ExtResource("5_5mb33")
 marker_type = 1
 cursor = NodePath("../../../cursor")
 
-[node name="@Control@50056" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
+[node name="@Control@68216" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 30.0
@@ -83,15 +83,15 @@ script = ExtResource("5_5mb33")
 marker_type = 1
 cursor = NodePath("../../../cursor")
 
-[node name="@Control@50057" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
+[node name="@Control@68217" type="Control" parent="Panel/map/markers" node_paths=PackedStringArray("cursor") instance=ExtResource("2_ajspr")]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 52.0
+offset_left = 44.0
 offset_top = 62.0
-offset_right = 52.0
+offset_right = 44.0
 offset_bottom = 62.0
 script = ExtResource("5_5mb33")
-marker_type = 2
+marker_type = 4
 cursor = NodePath("../../../cursor")
 
 [node name="cursor" type="TextureRect" parent="Panel"]
