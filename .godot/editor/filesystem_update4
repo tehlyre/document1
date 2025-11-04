@@ -1,0 +1,12 @@
+res://scenes/Other Things/neutral_special.tscn
+res://scenes/UI/map_menu.tscn
+res://scenes/Hazards and Helps/key.tscn
+res://scenes/door.tscn
+res://scenes/UI/map_marker.tscn
+res://scenes/main.tscn
+res://scenes/Levels/container.tscn
+res://scenes/stamp.tscn
+res://scenes/Hazards and Helps/chest.tscn
+res://scenes/Hazards and Helps/interaction_boundary.tscn
+res://scripts/UI/map_marker.gd
+res://addons/drag/drag.gd

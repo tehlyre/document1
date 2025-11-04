@@ -14,12 +14,14 @@ var initial_map_position : Vector2
 @export var ymin : int
 var original_pos : Vector2 = Vector2(652, 390)
 var is_button_pressed_once = false
+var is_open = false
 
 func _ready() -> void:
 	#print($Panel/map.get_rect().position, " aosidjpfgaoihjsdpfj")
 	hide()
 	game.sig_open_map.connect(_on_open_map)
 	markers.selection.connect(_on_marker_select)
+	markers.teleportation.connect(_on_teleportation)
 	initial_map_position = mapSprite.position
 
 func _input(event : InputEvent) -> void:
@@ -29,6 +31,7 @@ func _input(event : InputEvent) -> void:
 
 func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
 	if is_opening: 
+		is_open = true
 		show()
 		mapSprite.position = initial_map_position
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -42,8 +45,10 @@ func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
 		translate_map_to_marker(m_.position)
 	else:
 		hide()
+		is_open = false
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		$Panel/map/markers.get_child($Panel/map/markers.youarehere).queue_free()
+		if $Panel/map/markers.get_child($Panel/map/markers.youarehere) != null:
+			$Panel/map/markers.get_child($Panel/map/markers.youarehere).queue_free()
 		
 	
 
@@ -59,12 +64,18 @@ func _on_marker_select(selection) -> void:
 		2: auxtext.text = "Basic Chest"
 		3: auxtext.text = "You Are Here"
 		4: auxtext.text = "Stamp"
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and !is_button_pressed_once:
-		print(selection.marker_type)
-		is_button_pressed_once = true
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and is_open:
+		if !is_button_pressed_once:
+			print(selection.marker_type)
+			selection.on_click()
+			is_button_pressed_once = true
 	else:
 		is_button_pressed_once = false
 	#mapSprite.global_position += cursor.global_position-marker.global_position+Vector2(40,40) if is_selected else Vector2.ZERO
+	
+func _on_teleportation(pos) -> void:
+	if pos is Vector2:
+		player.position = pos
 	
 func translate_map_to_marker(marker_coords : Vector2):
 	$Panel/map.position = original_pos - Vector2(marker_coords.x*7, marker_coords.y*7)

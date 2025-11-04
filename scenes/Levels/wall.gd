@@ -39,7 +39,7 @@ func _on_player_change_rooms(coords : Vector2i):
 			#cam.set_limit(which_side(i, coords), )
 
 func load_section(this_load : Vector2i, last_load : Vector2i):
-	#prints("uwu", this_load, last_load)
+	prints("uwu", this_load, last_load)
 	var top : int = 0
 	var butt : int = 0
 	var left : int = 0

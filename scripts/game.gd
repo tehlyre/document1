@@ -47,6 +47,7 @@ func debug(debugger : DebugWindow) -> void:
 @onready var deathmenu : Control = $menuLayer/deathMenu
 @onready var chestmenu : Control = $menuLayer/chestMenu
 @onready var mapmenu : Control = $menuLayer/mapMenu
+@onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @export var is_debugging : bool = false
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
@@ -101,6 +102,7 @@ func _ready() -> void:
 	player.sig_change_inventory.connect(_on_change_inventory)
 	player.sig_query_inventory.connect(_on_player_query_inventory)
 	player.sig_set_healthbar.connect(_on_player_change_health)
+	mapmarkersroot.teleportation.connect(_on_teleportation)
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -124,12 +126,13 @@ func _input(event : InputEvent) -> void:
 		else:
 			get_tree().paused = !get_tree().paused
 		is_game_paused = !is_game_paused
+		prints(is_game_paused, "uwu")
 		sig_toggle_pause.emit(is_game_paused)
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
 		is_opening_map = !is_opening_map
 		get_tree().paused = !get_tree().paused
-		if is_opening_map:	
+		if is_opening_map:
 			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
 			menu_state = MenuStates.MENU_MAP
 		else:
@@ -207,3 +210,11 @@ func _on_player_query_inventory() -> void:
 
 func _on_player_change_health(health : float) -> void:
 	$hud/playerHealthBar.value = health
+
+func _on_teleportation(pos) -> void:
+	if pos is Vector2:
+		sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
+		is_opening_map = !is_opening_map
+		prints(is_opening_map, "owo", pos)
+		get_tree().paused = !get_tree().paused
+		menu_state = MenuStates.MENU_NONE

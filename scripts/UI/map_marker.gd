@@ -6,6 +6,8 @@ class_name Marker
 var original_pos : Vector2
 var was_recently_selected : bool
 @export var is_printing_coords : bool
+@export var extra_info : Vector2
+
 
 enum MarkerTypes {
 	NONE,
@@ -16,6 +18,7 @@ enum MarkerTypes {
 }
 
 func _ready() -> void:
+	print(extra_info)
 	original_pos = global_position
 
 func _process(delta: float) -> void:
@@ -48,5 +51,6 @@ func switch_sprite():
 			$lockSprite.texture = preload("res://assets/textures/marker_stamp.png")
 
 func on_click():
+	print("im in danger")
 	if marker_type == MarkerTypes.STAMP:
-		pass
+		get_parent().to_move_player = [true, extra_info]
