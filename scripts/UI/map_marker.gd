@@ -18,10 +18,9 @@ enum MarkerTypes {
 }
 
 func _ready() -> void:
-	print(extra_info)
 	original_pos = global_position
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var within_y_bounds : bool = $lockSprite.global_position.y < cursor.global_position.y+cursor.size.y/2 and $lockSprite.global_position.y+$lockSprite.size.y > cursor.global_position.y+cursor.size.y/2
 	var within_x_bounds : bool = $lockSprite.global_position.x < cursor.global_position.x+cursor.size.x/2 and $lockSprite.global_position.x+$lockSprite.size.x > cursor.global_position.x+cursor.size.x/2
 	if within_x_bounds:

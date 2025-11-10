@@ -28,12 +28,14 @@ func _enter_tree() -> void:
 
 func _on_map_button_pressed():
 	var wall_node = get_tree().edited_scene_root.get_node("Wall")
+	var chests_node = get_tree().edited_scene_root.get_node("Chests")
 	OS.execute("python", ["yay.py", wall_node.get_used_cells_by_id(0), "stupid.png"])
 	var w_x = []
 	var w_y = []
 	for i in wall_node.get_used_cells_by_id(0):
 		w_x.append(i.x)
 		w_y.append(i.y)
+	prints(w_x.min(), w_y.min())
 	get_editor_interface().open_scene_from_path("res://scenes/UI/map_menu.tscn")
 	for old_marker in get_tree().edited_scene_root.get_node("Panel/map/markers").get_children():
 		old_marker.queue_free()
@@ -47,12 +49,12 @@ func _on_map_button_pressed():
 		m_.position = Vector2((door.x-w_x.min())*2,(door.y-w_y.min())*2)
 		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
 		m_.marker_type = 1
-	for chest in wall_node.get_used_cells_by_id(2):
+	for chest in chests_node.get_children():
 		var m_ = marker.instantiate()
 		get_tree().edited_scene_root.get_node("Panel/map/markers").add_child(m_)
 		m_.owner = get_tree().edited_scene_root
-		
-		m_.position = Vector2((chest.x-w_x.min())*2,(chest.y-w_y.min())*2)
+		prints(chest.position.x/40, chest.position.y/40, "six seven")
+		m_.position = Vector2((chest.position.x/40-w_x.min()*2),(chest.position.y/40-w_y.min()*2))
 		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
 		m_.marker_type = 2
 	for stamp in wall_node.get_used_cells_by_id(3):

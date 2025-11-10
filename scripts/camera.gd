@@ -8,6 +8,8 @@ var current_cell : Vector2i
 var last_cell : Vector2i
 var is_locked : bool = true
 var current_room : Array[Vector2i]
+var tweenx
+var tweeny
 
 signal sig_change_rooms(cell : Vector2i)
 
@@ -24,26 +26,35 @@ func update_position() -> void:
 		last_cell = current_cell
 		global_position = Vector2(current_cell) * size
 	else:
-		var tweenx = get_tree().create_tween()
-		var tweeny = get_tree().create_tween()
 		if global_position.x+1280-player.global_position.x < -400 and player.velocity.x > 0:
+			tweenx = get_tree().create_tween()
 			tweenx.tween_property(self, "global_position:x", global_position.x+player.velocity.x/40, 0.033)
 		elif global_position.x+1280-player.global_position.x > 400 and player.velocity.x < 0:
+			print("eight nine")
+			tweenx = get_tree().create_tween()
 			tweenx.tween_property(self, "global_position:x", global_position.x+player.velocity.x/40, 0.033)
+		else:
+			if tweenx != null:
+				tweenx.kill()
+			global_position = global_position
 		if global_position.y+720-player.global_position.y < -200 and player.velocity.y > 0:
+			tweeny = get_tree().create_tween()
 			tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
 		elif global_position.y+720-player.global_position.y > 200 and player.velocity.y < 0:
+			tweeny = get_tree().create_tween()
 			tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
 		else:
-			tweenx.kill()
-			tweeny.kill()
+			if tweeny != null:
+				tweeny.kill()
 			global_position = global_position
-	if global_position.y > limit_bottom-1440: global_position.y = limit_bottom-1440
-	elif global_position.y < limit_top: global_position.y = limit_top
-	if global_position.x > limit_right-2560: global_position.x = limit_right-2560
-	elif global_position.x < limit_left: global_position.x = limit_left
+	position = Vector2(clamp(global_position.x,limit_left,limit_right-get_viewport_rect().size.x),clamp(global_position.y,limit_top,limit_bottom-get_viewport_rect().size.y))
+	#if global_position.y > limit_bottom-1440: global_position.y = limit_bottom-1440
+	#elif global_position.y < limit_top: global_position.y = limit_top
+	#if global_position.x > limit_right-2560: global_position.x = limit_right-2560
+	#elif global_position.x < limit_left: global_position.x = limit_left
 #
 func _process(delta: float) -> void:
+	prints(limit_left, limit_right, limit_top, limit_bottom)
 	update_position()
 	
 

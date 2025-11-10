@@ -17,10 +17,10 @@ func _ready() -> void:
 	$noGunZone.body_entered.connect(_on_noGunZone_body_entered)
 	$noGunZone.body_exited.connect(_on_noGunZone_body_exited)
 
-func _on_noGunZone_body_entered(_body : PhysicsBody2D) -> void:
+func _on_noGunZone_body_entered(_body : Node2D) -> void:
 	is_in_illinois = true
 
-func _on_noGunZone_body_exited(_body : PhysicsBody2D) -> void:
+func _on_noGunZone_body_exited(_body : Node2D) -> void:
 	is_in_illinois = false
 
 # This function instantiates a bullet scene from the firing point every time the entity desires to 

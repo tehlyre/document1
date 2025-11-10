@@ -129,6 +129,7 @@ func _input(event : InputEvent) -> void:
 		if interactables[0] is Chest:
 			print("openous intentions")
 			sig_open_chest.emit(interactables[0])
+			interactables[0].is_opened = true
 		elif interactables[0] is Door and inventory["keys"] >= 1:
 			print("openous intentions")
 			sig_open_door.emit(interactables[0])

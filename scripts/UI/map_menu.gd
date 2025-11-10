@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _input(event : InputEvent) -> void:
 	if event is InputEventMouseMotion and game.menu_state == game.MenuStates.MENU_MAP: 
-		mapSprite.position -= event.screen_relative if !is_first else Vector2.ZERO
+		mapSprite.position -= event.screen_relative/2 if !is_first else Vector2.ZERO
 		is_first = false
 
 func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
