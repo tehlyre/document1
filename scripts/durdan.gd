@@ -50,6 +50,7 @@ var THETA : float = 0.9
 var is_in_goo : bool = false
 var is_in_illinois : bool = false
 var is_using_mouse : bool = true
+var is_sprinting : bool = false
 
 
 # STATUS VARIABLES
@@ -135,6 +136,14 @@ func _input(event : InputEvent) -> void:
 			sig_open_door.emit(interactables[0])
 			interactables[0].is_opened = true
 			sig_change_inventory.emit("keys", -1)
+	elif (event.is_action_pressed("sprint")) and is_sprinting == false:
+		is_sprinting = true
+		MAX_SPEED *= 2
+		ACCELERATION *= 2
+	elif (event.is_action_released("sprint")) and is_sprinting == true:
+		is_sprinting = false
+		MAX_SPEED /= 2
+		ACCELERATION /= 2
 
 
 
@@ -192,7 +201,11 @@ func thingy_velocity(delta) -> void:
 		else:
 			velocity = Vector2.ZERO
 	else:
-		velocity += input_vector*ACCELERATION*delta*2
+		if velocity.length() > current_max_speed+1:
+			velocity -= input_vector*ACCELERATION*delta*2
+			return
+		else:
+			velocity += input_vector*ACCELERATION*delta*2
 		if velocity.length() > current_max_speed:
 			velocity = velocity.normalized() * current_max_speed
 
@@ -222,6 +235,7 @@ func _physics_process(delta) -> void:
 			self.set_rotation(flick_stick_angle())
 	
 #	}
+	print(velocity)
 
 #   Thingy Calls (no particular order)
 	thingy_hazard()

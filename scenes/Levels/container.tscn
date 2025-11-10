@@ -89,14 +89,6 @@ z_index = -2
 position = Vector2(354, 527)
 contents = "{\"keys\": 1, \"coins\": 1}"
 
-[node name="chest2" parent="Chests" instance=ExtResource("6_l41vt")]
-position = Vector2(1272, 82)
-contents = "{\"keys\": 6, \"coins\": 7}"
-
-[node name="chest3" parent="Chests" instance=ExtResource("6_l41vt")]
-position = Vector2(1027, 1060)
-contents = "{\"keys\": 1, \"coins\": 1}"
-
 [node name="Room" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 1)
 collision_layer = 16
