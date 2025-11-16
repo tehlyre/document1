@@ -47,7 +47,10 @@ func debug(debugger : DebugWindow) -> void:
 @onready var deathmenu : Control = $menuLayer/deathMenu
 @onready var chestmenu : Control = $menuLayer/chestMenu
 @onready var mapmenu : Control = $menuLayer/mapMenu
+@onready var dialoguemenu : Control = $menuLayer/dialogue_menu
+@onready var logmenu : Control = $menuLayer/logMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
+@onready var triggerroot : Node2D = $container/Triggers
 @export var is_debugging : bool = false
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
@@ -68,6 +71,16 @@ var is_on_options : bool = false
 var is_opening_map : bool = false
 var menu_state : MenuStates = MenuStates.MENU_NONE
 
+var hud_hidden : bool = false:
+	set(is_hidden):
+		hud_hidden = is_hidden
+		if is_hidden:
+			$hud.hide()
+		elif !is_hidden:
+			$hud.show()
+	get:
+		return hud_hidden
+
 
 # bool is_game_paused: Whether or not the game is paused. When this variable is set, the level
 # automatically pauses.
@@ -76,13 +89,18 @@ var is_game_paused : bool = false
 signal sig_toggle_pause(is_paused : bool)
 signal sig_open_map(is_opening : bool, player_position : Vector2)
 
+var current_cutscene_trigger
+var delete_trigger_on_end = true
+
 enum MenuStates {
 	MENU_NONE,
 	MENU_PAUSE,
 	MENU_OPTIONS,
 	MENU_DEATH,
 	MENU_CHEST,
-	MENU_MAP
+	MENU_MAP,
+	MENU_DIALOGUE,
+	MENU_LOG
 }
 
 
@@ -103,6 +121,8 @@ func _ready() -> void:
 	player.sig_query_inventory.connect(_on_player_query_inventory)
 	player.sig_set_healthbar.connect(_on_player_change_health)
 	mapmarkersroot.teleportation.connect(_on_teleportation)
+	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
+	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -124,13 +144,15 @@ func _input(event : InputEvent) -> void:
 			sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
 			is_opening_map = !is_opening_map
 		else:
+			hud_hidden = !hud_hidden
 			get_tree().paused = !get_tree().paused
 		is_game_paused = !is_game_paused
-		prints(is_game_paused, "uwu")
 		sig_toggle_pause.emit(is_game_paused)
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
 		is_opening_map = !is_opening_map
+		hud_hidden = !hud_hidden
+		print(hud_hidden)
 		get_tree().paused = !get_tree().paused
 		if is_opening_map:
 			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
@@ -138,6 +160,15 @@ func _input(event : InputEvent) -> void:
 		else:
 			sig_open_map.emit(false, Vector2(6,7))
 			menu_state = MenuStates.MENU_NONE
+	elif event.is_action_pressed("open_log"):
+		if menu_state == MenuStates.MENU_DIALOGUE:
+			menu_state = MenuStates.MENU_LOG
+			dialoguemenu.is_cutscene = false
+			logmenu.show()
+		elif menu_state == MenuStates.MENU_LOG:
+			menu_state = MenuStates.MENU_DIALOGUE
+			dialoguemenu.is_cutscene = true
+			logmenu.hide()
 		
 
 
@@ -159,7 +190,21 @@ func _process(_delta : float) -> void:
 
 
 
+func _on_cutscene_trigger(code : String, trigger):
+	hud_hidden = !hud_hidden
+	dialoguemenu.spawn_dialogue(code)
+	current_cutscene_trigger = trigger
+	menu_state = MenuStates.MENU_DIALOGUE
+	player.cutscene_running = true
+	for i in $container/Bullets.get_children():
+		i.queue_free()
 
+func _on_cutscene_end():
+	hud_hidden = !hud_hidden
+	if delete_trigger_on_end:
+		current_cutscene_trigger.queue_free()
+	menu_state = MenuStates.MENU_NONE
+	player.cutscene_running = false
 
 
 
@@ -218,3 +263,6 @@ func _on_teleportation(pos) -> void:
 		prints(is_opening_map, "owo", pos)
 		get_tree().paused = !get_tree().paused
 		menu_state = MenuStates.MENU_NONE
+
+
+	

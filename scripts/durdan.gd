@@ -51,6 +51,7 @@ var is_in_goo : bool = false
 var is_in_illinois : bool = false
 var is_using_mouse : bool = true
 var is_sprinting : bool = false
+var is_in_illinois_for : int = 0
 
 
 # STATUS VARIABLES
@@ -59,6 +60,7 @@ var is_sprinting : bool = false
 # float current_max_speed: The current maximum speed of the player under present conditions, based
 # on the maximum speed under normal conditions.
 var current_max_speed : float = MAX_SPEED
+var current_acceleration : float = ACCELERATION
 
 # int health: The health of the player.
 var health : int = 100
@@ -77,6 +79,7 @@ var interactables : Array[Interactable] = []
 
 var inventory : Dictionary = {}
 
+var cutscene_running = false
 
 
 
@@ -127,6 +130,7 @@ func _input(event : InputEvent) -> void:
 	elif (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		is_using_mouse = false
 	if (event.is_action_pressed("interact") and interactables != []):
+		print("uwu")
 		if interactables[0] is Chest:
 			print("openous intentions")
 			sig_open_chest.emit(interactables[0])
@@ -138,12 +142,12 @@ func _input(event : InputEvent) -> void:
 			sig_change_inventory.emit("keys", -1)
 	elif (event.is_action_pressed("sprint")) and is_sprinting == false:
 		is_sprinting = true
-		MAX_SPEED *= 2
-		ACCELERATION *= 2
+		current_max_speed = MAX_SPEED*2
+		current_acceleration = ACCELERATION*2
 	elif (event.is_action_released("sprint")) and is_sprinting == true:
 		is_sprinting = false
-		MAX_SPEED /= 2
-		ACCELERATION /= 2
+		current_max_speed = MAX_SPEED/2
+		current_acceleration = ACCELERATION/2
 
 
 
@@ -196,16 +200,16 @@ func thingy_hazard() -> void:
 func thingy_velocity(delta) -> void:
 	input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
 	if input_vector == Vector2.ZERO:
-		if velocity.length() > ACCELERATION*delta:
-			velocity -= velocity.normalized()*ACCELERATION*delta*11/16
+		if velocity.length() > current_acceleration*delta:
+			velocity -= velocity.normalized()*current_acceleration*delta*11/16
 		else:
 			velocity = Vector2.ZERO
 	else:
 		if velocity.length() > current_max_speed+1:
-			velocity -= input_vector*ACCELERATION*delta*2
+			velocity -= input_vector*current_acceleration*delta*2
 			return
 		else:
-			velocity += input_vector*ACCELERATION*delta*2
+			velocity += input_vector*current_acceleration*delta*2
 		if velocity.length() > current_max_speed:
 			velocity = velocity.normalized() * current_max_speed
 
@@ -222,27 +226,33 @@ func thingy_velocity(delta) -> void:
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
-	sig_query_inventory.emit()
-	# For facing the mouse {
-	
-	if is_using_mouse:
-		pass
-		look_at(get_global_mouse_position())
-	elif !is_using_mouse:
-		if (is_nan(flick_stick_angle())):
-			self.set_rotation_degrees(previous_rotation)
-		else:
-			self.set_rotation(flick_stick_angle())
-	
-#	}
-	print(velocity)
+	if !cutscene_running:
+		sig_query_inventory.emit()
+		# For facing the mouse {
+		
+		if is_using_mouse:
+			pass
+			look_at(get_global_mouse_position())
+		elif !is_using_mouse:
+			if (is_nan(flick_stick_angle())):
+				self.set_rotation_degrees(previous_rotation)
+			else:
+				self.set_rotation(flick_stick_angle())
+		
+	#	}
 
-#   Thingy Calls (no particular order)
-	thingy_hazard()
-	thingy_velocity(delta)
-	gun.adjust(get_global_mouse_position(), THETA)
-	if Input.is_action_just_pressed("neutral special") and !is_in_illinois:
-		gun.fire()
-	
-	move_and_slide()
-	previous_rotation = rotation_degrees
+	#   Thingy Calls (no particular order)
+		thingy_hazard()
+		thingy_velocity(delta)
+		gun.adjust(get_global_mouse_position(), THETA)
+		if Input.is_action_just_pressed("neutral special"):
+			if !is_in_illinois and is_in_illinois_for == 0:
+				gun.fire()
+			elif !is_in_illinois and is_in_illinois_for > 0:
+				is_in_illinois_for -= 1
+		
+		move_and_slide()
+		previous_rotation = rotation_degrees
+	else:
+		velocity = Vector2.ZERO
+		is_in_illinois_for = 1

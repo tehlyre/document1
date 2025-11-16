@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr4ohj1mjxsei"]
+
+[ext_resource type="Script" uid="uid://bb8rcdqiin7pd" path="res://scripts/UI/dialogue_menu.gd" id="1_31nlq"]
+[ext_resource type="Texture2D" uid="uid://d2f86bd5c6ohc" path="res://assets/textures/enter_sprite.png" id="2_7qs1y"]
+[ext_resource type="Texture2D" uid="uid://bnmer1xpnl6cl" path="res://assets/textures/sprites/celia_sprite.png" id="3_eqrs0"]
+
+[node name="dialogue_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_31nlq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_top = 473.0
+offset_right = 1282.0
+offset_bottom = 721.0
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 1.0
+offset_right = 1160.0
+offset_bottom = 228.0
+
+[node name="Panel" type="Panel" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="dialogue" type="Label" parent="MarginContainer/Panel/MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 68.0
+offset_right = 914.0
+offset_bottom = 202.0
+theme_override_font_sizes/font_size = 32
+autowrap_mode = 2
+visible_characters_behavior = 1
+
+[node name="EnterSprite" type="Sprite2D" parent="MarginContainer/Panel/MarginContainer/Panel"]
+visible = false
+position = Vector2(147, 178)
+scale = Vector2(0.31000018, 0.30000022)
+texture = ExtResource("2_7qs1y")
+
+[node name="character_name" type="Label" parent="MarginContainer/Panel"]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 18.0
+offset_right = 399.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Celia"
+
+[node name="sprite" type="Sprite2D" parent="MarginContainer"]
+position = Vector2(183, 119)
+texture = ExtResource("3_eqrs0")

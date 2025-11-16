@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb38y2bvlbksd"]
+
+[ext_resource type="AudioStream" uid="uid://ooxxvxsylssv" path="res://assets/tunes/01_may-this-journey-lead-us-starward.mp3" id="1_sumlq"]
+
+[node name="backgroundMusicPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_sumlq")
+autoplay = true

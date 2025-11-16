@@ -10,9 +10,9 @@ size = Vector2(128, 78)
 radius = 29.5
 height = 103.5
 
-[node name="chest" type="StaticBody2D"]
-collision_layer = 8
-collision_mask = 0
+[node name="chest" type="StaticBody2D" groups=["walls"]]
+collision_layer = 72
+collision_mask = 3
 script = ExtResource("1_a88ng")
 
 [node name="chestCollider" type="CollisionShape2D" parent="."]

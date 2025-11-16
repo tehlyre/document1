@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw3q6imsosios"]
+
+[ext_resource type="Script" uid="uid://dhuh4hpl4em2q" path="res://scripts/pot.gd" id="1_n1183"]
+[ext_resource type="Texture2D" uid="uid://cnpecvq1t05hs" path="res://assets/textures/pot_pristine.png" id="1_xu6wc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1183"]
+size = Vector2(60, 60)
+
+[node name="pot" type="StaticBody2D" groups=["breakables"]]
+collision_layer = 67
+collision_mask = 0
+script = ExtResource("1_n1183")
+
+[node name="potSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_xu6wc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n1183")

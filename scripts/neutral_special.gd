@@ -18,6 +18,7 @@ func _ready() -> void:
 	$noGunZone.body_exited.connect(_on_noGunZone_body_exited)
 
 func _on_noGunZone_body_entered(_body : Node2D) -> void:
+	print("currently gooning")
 	is_in_illinois = true
 
 func _on_noGunZone_body_exited(_body : Node2D) -> void:
@@ -26,13 +27,14 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 # This function instantiates a bullet scene from the firing point every time the entity desires to 
 # fire and directs it in the direction the marker is facing. It has no adjustment function
 func fire() -> void:
-	var b_ : Bullet = bullet.instantiate()
-	if is_on_player:
-		owner.get_parent().add_child(b_)
-	else:
-		owner.get_parent().owner.add_child(b_)
-	b_.transform = $gunner.global_transform
-	b_.is_fired_by_player = is_on_player
+	if !is_in_illinois:
+		var b_ : Bullet = bullet.instantiate()
+		if is_on_player:
+			owner.get_parent().find_child("Bullets").add_child(b_)
+		else:
+			owner.get_parent().find_child("Bullets").owner.add_child(b_)
+		b_.transform = $gunner.global_transform
+		b_.is_fired_by_player = is_on_player
 
 
 # Called every frame to adjust the (player's) gun so that when fired, the bullets pass through the

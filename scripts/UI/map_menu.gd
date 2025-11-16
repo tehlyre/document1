@@ -39,7 +39,7 @@ func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
 		get_node("Panel/map/markers").add_child(m_)
 		m_.position = Vector2((player_position.x-xmin)*2,(player_position.y-ymin)*2)
 		m_.cursor = get_node("Panel/cursor")
-		m_.marker_type = 3
+		m_.marker_type = Aeon.MapMarkerTypes.PLAYER
 		$Panel/map/markers.youarehere = m_.get_index()
 		m_.switch_sprite()
 		translate_map_to_marker(m_.position)

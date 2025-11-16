@@ -1,7 +1,7 @@
 extends Control
 class_name Marker
 
-@export var marker_type : MarkerTypes
+@export var marker_type : Aeon.MapMarkerTypes
 @export var cursor : TextureRect
 var original_pos : Vector2
 var was_recently_selected : bool
@@ -9,13 +9,7 @@ var was_recently_selected : bool
 @export var extra_info : Vector2
 
 
-enum MarkerTypes {
-	NONE,
-	DOOR,
-	CHEST,
-	PLAYER,
-	STAMP
-}
+
 
 func _ready() -> void:
 	original_pos = global_position
@@ -38,18 +32,18 @@ func _process(_delta: float) -> void:
 
 func switch_sprite():
 	match marker_type:
-		MarkerTypes.NONE:
+		Aeon.MapMarkerTypes.NONE:
 			pass
-		MarkerTypes.DOOR:
+		Aeon.MapMarkerTypes.DOOR:
 			$lockSprite.texture = preload("res://assets/textures/marker_door.png")
-		MarkerTypes.CHEST:
+		Aeon.MapMarkerTypes.CHEST:
 			$lockSprite.texture = preload("res://assets/textures/marker_chest.png")
-		MarkerTypes.PLAYER:
+		Aeon.MapMarkerTypes.PLAYER:
 			$lockSprite.texture = preload("res://assets/textures/marker_player.png")
-		MarkerTypes.STAMP:
+		Aeon.MapMarkerTypes.STAMP:
 			$lockSprite.texture = preload("res://assets/textures/marker_stamp.png")
 
 func on_click():
 	print("im in danger")
-	if marker_type == MarkerTypes.STAMP:
+	if marker_type == Aeon.MapMarkerTypes.STAMP:
 		get_parent().to_move_player = [true, extra_info]
