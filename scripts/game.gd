@@ -165,9 +165,11 @@ func _input(event : InputEvent) -> void:
 			menu_state = MenuStates.MENU_LOG
 			dialoguemenu.is_cutscene = false
 			logmenu.show()
+			dialoguemenu.hide()
 		elif menu_state == MenuStates.MENU_LOG:
 			menu_state = MenuStates.MENU_DIALOGUE
 			dialoguemenu.is_cutscene = true
+			dialoguemenu.show()
 			logmenu.hide()
 		
 

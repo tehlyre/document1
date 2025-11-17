@@ -1,7 +1,8 @@
-Label
 Control
-VBoxContainer
+Label
 Panel
+ScrollContainer
+VBoxContainer
 Node2D
 CollisionShape2D
 Area2D
@@ -11,4 +12,3 @@ AudioStreamPlayer
 AudioStreamPlayer2D
 StaticBody2D
 Interactable
-TextureRect

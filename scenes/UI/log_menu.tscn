@@ -12,18 +12,35 @@ grow_vertical = 2
 script = ExtResource("1_mrok2")
 
 [node name="Panel" type="Panel" parent="."]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="Panel2" type="Panel" parent="."]
+modulate = Color(0.39308554, 0.3930855, 0.39308548, 1)
+layout_mode = 0
+offset_left = 247.0
+offset_top = -35.0
+offset_right = 1132.0
+offset_bottom = 737.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 433.0
 offset_top = 66.0
 offset_right = 1120.0
 offset_bottom = 714.0
 
-[node name="Label" type="Label" parent="Panel"]
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="chars" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 31.0
@@ -31,8 +48,3 @@ offset_right = 105.0
 offset_bottom = 76.0
 theme_override_font_sizes/font_size = 32
 text = "Log"
-
-[node name="chars" type="Control" parent="Panel"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0

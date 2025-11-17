@@ -1,13 +1,4 @@
-res://scenes/Levels/container.tscn
-res://scripts/cutscene_trigger.gd
 res://scenes/UI/log_menu.tscn
-res://scripts/UI/dialogue_menu.gd
-res://scripts/UI/log_menu.gd
-res://scenes/main.tscn
-res://scripts/game.gd
-res://scripts/durdan.gd
-res://scenes/UI/dialogue_menu.tscn
-res://scripts/aeon.gd
 res://assets/dialogue.txt
-res://scripts/UI/map_marker.gd
-res://scripts/UI/map_menu.gd
+res://scripts/UI/log_menu.gd
+res://scripts/game.gd
