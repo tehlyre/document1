@@ -4,8 +4,8 @@ extends EditorPlugin
 var toolbar : Control
 var undo_redo : EditorUndoRedoManager
 var enemy = preload("res://scenes/Characters/enemigo.tscn")
-var chest = preload("res://scenes/Hazards and Helps/chest.tscn")
-var wall = preload("res://scenes/Hazards and Helps/wall.tscn")
+#var chest = preload("res://scenes/Hazards/chest.tscn")
+#var wall = preload("res://scenes/Hazards/wall.tscn")
 var instance : Node2D
 var mouse_pressed : bool = false
 var editor_state : EditorState = 0
@@ -21,7 +21,7 @@ enum EditorState {
 }
 
 func _enter_tree() -> void:
-	toolbar = preload("res://scenes/drag.tscn").instantiate()
+	toolbar = preload("res://addons/drag/drag.tscn").instantiate()
 	for i in toolbar.get_child(0).get_children():
 		i.pressed.connect(_on_map_button_pressed)
 	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BL, toolbar)

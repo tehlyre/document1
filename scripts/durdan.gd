@@ -19,14 +19,14 @@ class_name Player
 # |_ playerCollider
 #
 #
-# Note: All functions beginning with "thingy_" relate to player movement or interaction in some way.
+# Note: All functions beginning with "thingy_" relate to plsayer movement or interaction in some way.
 #
 #
 # IMPORTS
 #
 #
 # PackedScene Bullet: The scene for the bullet that is fired off by the player
-@export var bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
+@export var bullet : PackedScene = preload("res://scenes/Universals/bullet.tscn")
 @onready var gun : Gun = $neutralSpecial
 #
 # CONSTANTS

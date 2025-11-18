@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Aeon="*res://scripts/aeon.gd"
+Aeon="*res://scripts/Universals/aeon.gd"
 
 [display]
 

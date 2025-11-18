@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://qv0hmxcgsqlj"]
 
-[ext_resource type="Script" uid="uid://cxagn1rxim1ly" path="res://scenes/Levels/doorkun.gd" id="1_ndq58"]
+[ext_resource type="Script" uid="uid://cxagn1rxim1ly" path="res://scripts/doorkun.gd" id="1_ndq58"]
 [ext_resource type="Texture2D" uid="uid://m7vidltf1igu" path="res://assets/textures/makoto yuki.png" id="2_irn8e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hpvv5"]

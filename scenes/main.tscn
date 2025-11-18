@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://duwmwk20o36rn" path="res://scripts/UI/chestmenu.gd" id="9_o46kr"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://ca7nup0qekyl7" path="res://scenes/UI/map_menu.tscn" id="10_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://cb38y2bvlbksd" path="res://scenes/background_music_player.tscn" id="12_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://cb38y2bvlbksd" path="res://scenes/Universals/background_music_player.tscn" id="12_eb6dy"]
 
 [node name="gameManager" type="Node2D"]
 process_mode = 3

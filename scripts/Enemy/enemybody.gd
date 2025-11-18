@@ -32,7 +32,7 @@ extends CharacterBody2D
 
 var player : CharacterBody2D
 
-@export var Bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
+@export var Bullet : PackedScene = preload("res://scenes/Universals/bullet.tscn")
 
 @onready var healthbar : ProgressBar = $healthbar
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://br74yhnl7m0vp" path="res://scripts/durdan.gd" id="1_bxvgu"]
 [ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
-[ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Other Things/neutral_special.tscn" id="3_qlc2s"]
+[ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="3_qlc2s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
 radius = 10.2078

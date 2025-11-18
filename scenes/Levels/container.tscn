@@ -3,19 +3,19 @@
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="Script" uid="uid://5ou7lynh5rfx" path="res://scripts/camera.gd" id="4_h4gck"]
-[ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards and Helps/goo.tscn" id="4_m1f8i"]
-[ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Hazards and Helps/chest.tscn" id="6_l41vt"]
+[ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_m1f8i"]
+[ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Interactables/chest.tscn" id="6_l41vt"]
 [ext_resource type="Script" uid="uid://ljvv1x31b24r" path="res://scripts/room.gd" id="7_cdtvu"]
 [ext_resource type="Texture2D" uid="uid://4se753nw0uvs" path="res://assets/textures/Wall.png" id="8_imx2c"]
-[ext_resource type="PackedScene" uid="uid://jyymc6g4n643" path="res://scenes/door.tscn" id="9_l41vt"]
-[ext_resource type="PackedScene" uid="uid://qv0hmxcgsqlj" path="res://scenes/door_rotated.tscn" id="10_l6q4n"]
-[ext_resource type="PackedScene" uid="uid://cw3q6imsosios" path="res://scenes/pot.tscn" id="10_n3v2s"]
-[ext_resource type="Script" uid="uid://dxnvxj0v2bi5h" path="res://scenes/Levels/wall.gd" id="10_n5cux"]
-[ext_resource type="PackedScene" uid="uid://dgejbcjs0l80s" path="res://scenes/stamp.tscn" id="10_qiya0"]
+[ext_resource type="PackedScene" uid="uid://jyymc6g4n643" path="res://scenes/Interactables/door.tscn" id="9_l41vt"]
+[ext_resource type="PackedScene" uid="uid://qv0hmxcgsqlj" path="res://scenes/Interactables/door_rotated.tscn" id="10_l6q4n"]
+[ext_resource type="PackedScene" uid="uid://cw3q6imsosios" path="res://scenes/Interactables/pot.tscn" id="10_n3v2s"]
+[ext_resource type="Script" uid="uid://dxnvxj0v2bi5h" path="res://scripts/wall.gd" id="10_n5cux"]
+[ext_resource type="PackedScene" uid="uid://dgejbcjs0l80s" path="res://scenes/Interactables/stamp.tscn" id="10_qiya0"]
 [ext_resource type="Texture2D" uid="uid://dlxv0v0psypes" path="res://assets/textures/EnemySpawn.png" id="11_h4gck"]
-[ext_resource type="Script" uid="uid://c4rmlrdtubg0c" path="res://scripts/enemy_spawn.gd" id="11_n5cux"]
-[ext_resource type="PackedScene" uid="uid://dm5j1hftae6gs" path="res://scenes/cutscene_trigger.tscn" id="15_g862p"]
+[ext_resource type="Script" uid="uid://c4rmlrdtubg0c" path="res://scripts/Enemy/enemy_spawn.gd" id="11_n5cux"]
 [ext_resource type="Script" uid="uid://d0r8wop71ad5q" path="res://scripts/triggers.gd" id="15_wctgd"]
+[ext_resource type="PackedScene" uid="uid://ve2teaboq3m1" path="res://scenes/Hazards/word_train.tscn" id="16_wctgd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -126,8 +126,7 @@ walls = NodePath("../Wall")
 [node name="Triggers" type="Node2D" parent="."]
 script = ExtResource("15_wctgd")
 
-[node name="CutsceneTrigger" parent="Triggers" instance=ExtResource("15_g862p")]
-position = Vector2(1398.0002, 128.99998)
-scale = Vector2(-28.082275, 126.79765)
-
 [node name="Bullets" type="Node2D" parent="."]
+
+[node name="WordTrain" parent="." instance=ExtResource("16_wctgd")]
+position = Vector2(799, 950)

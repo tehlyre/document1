@@ -5,7 +5,7 @@ class_name Gun
 #
 #
 # PackedScene Bullet: The scene for the bullet that is fired off by the player
-@export var bullet : PackedScene = preload("res://scenes/Other Things/bullet.tscn")
+@export var bullet : PackedScene = preload("res://scenes/Universals/bullet.tscn")
 #
 #
 # FLAGS
