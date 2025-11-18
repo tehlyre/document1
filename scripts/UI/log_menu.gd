@@ -7,10 +7,24 @@ var current_character : Aeon.Characters = Aeon.Characters.DURDAN
 var previous_character : Aeon.Characters = Aeon.Characters.DURDAN
 var is_hiding = false
 var current_label : Label
+var vbox_init_posy : float
+var char_init_posy : float
+var is_adding_dialogue : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
 	dialog_menu.add_to_log.connect(_on_log_add)
+	$VScrollBar.min_value = $VBoxContainer.position.y
+	$VScrollBar.max_value = $VBoxContainer.position.y
+	vbox_init_posy = $VBoxContainer.position.y
+	char_init_posy = $chars.position.y
+
+func _input(event : InputEvent):
+	if event.is_pressed() and event is InputEventMouseButton and is_visible_in_tree():
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			$VScrollBar.value -= 25
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			$VScrollBar.value += 25
 
 func _on_log_add(chars, lin):
 	var l_ = Label.new()
@@ -26,6 +40,7 @@ func _on_log_add(chars, lin):
 		show()
 		is_hiding = true
 		current_label = l_
+	is_adding_dialogue = true
 
 func add_character_label(chars : Aeon.Characters, y_pos : Label):
 	var l_ = Label.new()
@@ -42,7 +57,13 @@ func _process(_delta: float) -> void:
 		hide()
 		add_character_label(current_character, current_label)
 		is_hiding = false
-	if $VBoxContainer.get_children()[-1].global_position.y >  get_viewport_rect().size.y-60:
+	if $VBoxContainer.get_children()[-1].global_position.y >  get_viewport_rect().size.y-60 and is_adding_dialogue:
 		print("global crisis avengers level threat neutralize irontomb")
-		$VBoxContainer.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y-60
-		$chars.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y-60
+		$VScrollBar.max_value += $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
+		$chars.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
+		$VBoxContainer.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
+		$VScrollBar.value = $VScrollBar.max_value
+		is_adding_dialogue = false
+	$chars.global_position.y = char_init_posy - $VScrollBar.value
+	$VBoxContainer.global_position.y = vbox_init_posy - $VScrollBar.value
+	

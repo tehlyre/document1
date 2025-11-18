@@ -48,3 +48,10 @@ offset_right = 105.0
 offset_bottom = 76.0
 theme_override_font_sizes/font_size = 32
 text = "Log"
+
+[node name="VScrollBar" type="VScrollBar" parent="."]
+layout_mode = 0
+offset_left = 1122.0
+offset_top = 5.0
+offset_right = 1130.0
+offset_bottom = 712.0

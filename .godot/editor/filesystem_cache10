@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1763345268
+::res://::1763427187
 icon.svg::CompressedTexture2D/CompressedTexture2D::7399799570421521073::1697563746::1752001759::1::::<><><>0<>0<>0d7b8bcb13e110a31cbfa6a9b0eaf5dd<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://addons/::1762050258
 ::res://addons/drag/::1762743859
@@ -9,8 +9,8 @@ rwall.gd::GDScript/GDScript::4681521804309306441::1753244492::0::1::::WallHandle
 ::res://addons/wallhandling/::1762050258
 plugin.cfg::TextFile/TextFile::-1::1753246397::0::1::::<><><>0<>0<><>::
 wallhandling.gd::GDScript/GDScript::8838998066591543482::1753389294::0::1::::<>EditorPlugin<><>0<>1<><>::
-::res://assets/::1763268843
-dialogue.txt::TextFile::-1::1763268843::0::1::::<><><>0<>0<><>::
+::res://assets/::1763345459
+dialogue.txt::TextFile::-1::1763345458::0::1::::<><><>0<>0<><>::
 ::res://assets/textures/::1763183743
 background_tile.png::CompressedTexture2D/CompressedTexture2D::3779113072425843576::1740629795::1752001759::1::::<><><>0<>0<>9d222055735478862b0c0fbf357f7eac<>res://.godot/imported/background_tile.png-075787f427bff618eda2d75d6e8d10dc.ctex::
 bullet.png::CompressedTexture2D/CompressedTexture2D::446595315770855593::1741402834::1752001759::1::::<><><>0<>0<>a06864bc60eb53ed70f0944c384ee5d1<>res://.godot/imported/bullet.png-941c892f74ea1b566c4c87087cc02fc9.ctex::
@@ -88,19 +88,19 @@ wall.gd::GDScript/GDScript::8801759007985269691::1762123543::0::1::::Wall<>TileM
 bullet.tscn::PackedScene::6987748190088326131::1762807549::0::1::::<><><>0<>0<><>::uid://gmlmhx2tod4d::::res://assets/textures/bullet.png<>uid://cqwr1janno75u::::res://scripts/bullet.gd
 neutral_special.tscn::PackedScene::324242721580421956::1762556260::0::1::::<><><>0<>0<><>::uid://cy4u4ua4i5vhu::::res://assets/textures/neutral special.png<>uid://1pa06st4d6j3::::res://scripts/neutral_special.gd
 room.tscn::PackedScene/PackedScene::655062654420392753::1759702293::0::1::::<><><>0<>0<><>::uid://ljvv1x31b24r::::res://scripts/room.gd
-::res://scenes/UI/::1763268913
+::res://scenes/UI/::1763427126
 chest_pop_up_menu.tscn::PackedScene::6709423573846700578::1762744688::0::1::::<><><>0<>0<><>::
 deathmenu.tscn::PackedScene/PackedScene::1447732856267144613::1754671682::0::1::::<><><>0<>0<><>::
 dialogue_menu.tscn::PackedScene::8413202399682895136::1763267535::0::1::::<><><>0<>0<><>::uid://bb8rcdqiin7pd::::res://scripts/UI/dialogue_menu.gd<>uid://d2f86bd5c6ohc::::res://assets/textures/enter_sprite.png<>uid://bnmer1xpnl6cl::::res://assets/textures/sprites/celia_sprite.png
 hud.tscn::PackedScene/PackedScene::7713038601948674268::1759702293::0::1::::<><><>0<>0<><>::uid://brygg006yot8t::::res://scripts/UI/hud.gd
-log_menu.tscn::PackedScene::7845429001704453176::1763268913::0::1::::<><><>0<>0<><>::uid://7k311534y250::::res://scripts/UI/log_menu.gd
+log_menu.tscn::PackedScene::7845429001704453176::1763427126::0::1::::<><><>0<>0<><>::uid://7k311534y250::::res://scripts/UI/log_menu.gd
 map_marker.tscn::PackedScene::6226864414528904453::1762743813::0::1::::<><><>0<>0<><>::uid://c280kp42nfs74::::res://assets/textures/marker_door.png<>uid://bb71hjw6jv04k::::res://scripts/UI/map_marker.gd
 map_menu.tscn::PackedScene::4839727319503272774::1762745150::0::1::::<><><>0<>0<><>::uid://dkvh7libvy76f::::res://scripts/UI/map_menu.gd<>uid://u0ds4dnh5ud::::res://assets/textures/marker.png<>uid://gvimn3v1udci::::res://assets/textures/stupid.png<>uid://cuylsurhulnxl::::res://scenes/UI/map_marker.tscn<>uid://cqoyjkdo48i05::::res://scripts/markers.gd<>uid://bb71hjw6jv04k::::res://scripts/UI/map_marker.gd
 optionsmenu.tscn::PackedScene/PackedScene::4206558272162581974::1752001795::0::1::::<><><>0<>0<><>::uid://p4ygsx6qjp32::::res://scripts/UI/optionsmenu.gd
 optionsmenuoverlay.tscn::PackedScene/PackedScene::6542511324418574502::1758398768::0::1::::<><><>0<>0<><>::uid://p4ygsx6qjp32::::res://scripts/UI/optionsmenu.gd
 pausemenu.tscn::PackedScene/PackedScene::5474780238297850203::1758398768::0::1::::<><><>0<>0<><>::uid://juwi6y5cqsur::::res://scripts/UI/pausemenu.gd
 startmenu.tscn::PackedScene/PackedScene::2749788625872300548::1752001795::0::1::::<><><>0<>0<><>::uid://bjcfy728ry6gm::::res://scripts/UI/startmenu.gd
-::res://scripts/::1763267521
+::res://scripts/::1763346897
 aeon.gd::GDScript::2609608312961207674::1763267521::0::1::::<>Node<><>0<>0<><>::
 bullet.gd::GDScript::5942358269021364976::1762884517::0::1::::Bullet<>Area2D<><>0<>0<><>::
 camera.gd::GDScript::2135838698391465733::1762798997::0::1::::<>Camera2D<><>0<>0<><>::
@@ -118,7 +118,7 @@ enemy_fire.gd::GDScript/GDScript::7650786695401756423::1753572788::0::1::::Enemy
 enemy_mover.gd::GDScript/GDScript::4110488793590041200::1753733769::0::1::::EnemyMover<>Timer<><>0<>0<><>::
 enemy_parent.gd::GDScript/GDScript::2730328459726672056::1753732985::0::1::::<>RefCounted<><>0<>0<><>::
 enemy_spawn.gd::GDScript/GDScript::6844161400775721428::1754536266::0::1::::EnemySpawn<>TileMapLayer<><>0<>0<><>::
-game.gd::GDScript::3966086947499143008::1763266518::0::1::::GameManager<>Node2D<><>0<>0<><>::
+game.gd::GDScript::3966086947499143008::1763346897::0::1::::GameManager<>Node2D<><>0<>0<><>::
 goo.gd::GDScript/GDScript::8326025931673925706::1753049404::0::1::::<>Area2D<><>0<>0<><>::
 Interactable.gd::GDScript/GDScript::6811368857342896288::1762052992::0::1::::Interactable<>StaticBody2D<><>0<>0<><>::
 interaction.gd::GDScript/GDScript::7169870951350929537::1733256027::0::1::::<>Area2D<><>0<>0<><>::
@@ -136,12 +136,12 @@ wall.gd::GDScript/GDScript::3362363477691795356::1753573578::0::1::::<>TileMapLa
 ::res://scripts/supplemental tools/::1762050262
 debug_window.gd::GDScript/GDScript::2590058226919157509::1753049170::0::1::::DebugWindow<>Window<><>0<>0<><>::
 editor_button.gd::GDScript/GDScript::1431924339197853316::1753147030::0::1::::<>TextureButton<><>0<>1<><>::
-::res://scripts/UI/::1763268913
+::res://scripts/UI/::1763427126
 chestmenu.gd::GDScript::8609223693907323115::1762745150::0::1::::<>Control<><>0<>0<><>::
 deathmenu.gd::GDScript/GDScript::2029302242698864906::1753676593::0::1::::<>Control<><>0<>0<><>::
 dialogue_menu.gd::GDScript::2525769936341589353::1763267535::0::1::::DialogueMenu<>Control<><>0<>0<><>::
 hud.gd::GDScript/GDScript::3629552461502121937::1754281364::0::1::::<>CanvasLayer<><>0<>0<><>::
-log_menu.gd::GDScript::2268434693659779729::1763268913::0::1::::LogMenu<>Control<><>0<>0<><>::
+log_menu.gd::GDScript::2268434693659779729::1763427126::0::1::::LogMenu<>Control<><>0<>0<><>::
 map_marker.gd::GDScript::2524261265947537504::1763267686::0::1::::Marker<>Control<><>0<>0<><>::
 map_menu.gd::GDScript::7904985174838970963::1763267162::0::1::::MapMenu<>Control<><>0<>0<><>::
 optionsmenu.gd::GDScript/GDScript::1114168514409099511::1702839708::0::1::::<>Control<><>0<>0<><>::
