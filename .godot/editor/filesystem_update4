@@ -1,5 +1,3 @@
-res://scenes/UI/log_menu.tscn
+res://scenes/Levels/container.tscn
 res://scripts/UI/log_menu.gd
 res://scripts/game.gd
-res://scenes/main.tscn
-res://scenes/Levels/container.tscn

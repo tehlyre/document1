@@ -14,10 +14,10 @@ var is_adding_dialogue : bool = false
 func _ready() -> void:
 	hide()
 	dialog_menu.add_to_log.connect(_on_log_add)
-	$VScrollBar.min_value = $VBoxContainer.position.y
-	$VScrollBar.max_value = $VBoxContainer.position.y
-	vbox_init_posy = $VBoxContainer.position.y
-	char_init_posy = $chars.position.y
+	$VScrollBar.min_value = 0
+	$VScrollBar.max_value = 0
+	vbox_init_posy = $VBoxContainer.global_position.y
+	char_init_posy = $chars.global_position.y
 
 func _input(event : InputEvent):
 	if event.is_pressed() and event is InputEventMouseButton and is_visible_in_tree():
@@ -53,11 +53,13 @@ func add_character_label(chars : Aeon.Characters, y_pos : Label):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	print($VScrollBar.min_value)
+	print($VScrollBar.max_value)
 	if is_hiding:
 		hide()
 		add_character_label(current_character, current_label)
 		is_hiding = false
-	if $VBoxContainer.get_children()[-1].global_position.y >  get_viewport_rect().size.y-60 and is_adding_dialogue:
+	if $VBoxContainer.get_children()[-1].global_position.y > get_viewport_rect().size.y-60 and is_adding_dialogue:
 		print("global crisis avengers level threat neutralize irontomb")
 		$VScrollBar.max_value += $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
 		$chars.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
