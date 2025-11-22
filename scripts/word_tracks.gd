@@ -2,6 +2,7 @@ extends Node2D
 class_name WordTracks
 
 @export var train : WordTrain
+@export var correct_room : Vector2i
 @onready var origin_marker = $origin_marker
 var is_train : bool = false
 # Called when the node enters the scene tree for the first time.
@@ -9,14 +10,9 @@ func _ready() -> void:
 	$TrainTimer.wait_time = 5
 	$TrainTimer.start()
 	$TrainTimer.timeout.connect(train_across_tracks)
-	train.global_position = $origin_marker.global_position
-	train.rotation = rotation
-	train.scale = scale
 
 
 func train_across_tracks():
-	print("ioapierjtpoaiehrtpoiah")
-	prints(train.caboose.global_position.x, $exotale_marker.global_position.x)
 	$TrainTimer.stop()
 	is_train = true
 

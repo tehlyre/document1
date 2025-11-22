@@ -85,7 +85,7 @@ func _on_train_button_pressed():
 	print(train.global_position)
 	train.global_position = obj.get_node("origin_marker").global_position
 	train.rotation = obj.rotation
-	train.scale = obj.scale
+	train.scale.y = obj.scale.y
 
 #func do_make_enemy(event : InputEventMouseButton) -> void:
 	#instance.position = EditorInterface.get_editor_viewport_2d().get_mouse_position()

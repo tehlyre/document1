@@ -1,7 +1,8 @@
 res://scenes/Levels/container.tscn
-res://addons/drag/drag.gd
-res://scenes/Hazards/word_train.tscn
-res://scripts/word_train.gd
 res://scripts/word_tracks.gd
+res://addons/drag/drag.gd
+res://scripts/word_train.gd
 res://scenes/Hazards/word_tracks.tscn
+res://scenes/Hazards/word_train.tscn
+res://scenes/Interactables/stamp.tscn
 res://scripts/durdan.gd

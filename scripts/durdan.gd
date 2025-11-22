@@ -54,6 +54,7 @@ var is_sprinting : bool = false
 var is_in_illinois_for : int = 0
 var is_movin_over : bool = false
 var movin_rotation : float
+var dja_flip_it : bool = false
 
 
 # STATUS VARIABLES
@@ -164,9 +165,14 @@ func flick_stick_angle() -> float:
 	return atan2(direction.y, direction.x)
 
 
-func move_a_little_over(rot):
+func move_a_little_over(rot : float, flip : bool):
 	is_movin_over = true
-	movin_rotation = rot
+	if flip:
+		movin_rotation = -rot
+		dja_flip_it = true
+	else:
+		movin_rotation = rot
+		dja_flip_it = false
 
 
 
@@ -204,7 +210,7 @@ func thingy_hazard() -> void:
 func thingy_velocity(delta) -> void:
 	input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
 	if is_movin_over:
-		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2)
+		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2) if !dja_flip_it else (Vector2.ONE*MAX_SPEED).rotated(movin_rotation-PI/2)
 		is_movin_over = false
 	if input_vector == Vector2.ZERO:
 		if velocity.length() > current_acceleration*delta:
