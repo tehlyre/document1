@@ -15,7 +15,7 @@ signal sig_change_rooms(cell : Vector2i)
 
 func _ready() -> void:
 	wall.sig_this_room.connect(_on_room_callback)
-	wall._on_player_change_rooms((player.global_position / size).floor())
+	wall._on_player_change_rooms.call_deferred((player.global_position / size).floor())
 	last_cell = (player.global_position/size).floor()
 
 func update_position() -> void:
@@ -31,9 +31,9 @@ func update_position() -> void:
 				tweenx = get_tree().create_tween()
 				tweenx.tween_property(self, "global_position:x", global_position.x+player.velocity.x/40, 0.033)
 		elif global_position.x+1280-player.global_position.x > 400 and player.velocity.x < 0:
-			print("eight nine")
-			tweenx = get_tree().create_tween()
-			tweenx.tween_property(self, "global_position:x", global_position.x+player.velocity.x/40, 0.033)
+			if global_position.x > limit_left:
+				tweenx = get_tree().create_tween()
+				tweenx.tween_property(self, "global_position:x", global_position.x+player.velocity.x/40, 0.033)
 		else:
 			if tweenx != null:
 				tweenx.kill()
@@ -43,8 +43,10 @@ func update_position() -> void:
 				tweeny = get_tree().create_tween()
 				tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
 		elif global_position.y+720-player.global_position.y > 200 and player.velocity.y < 0:
-			tweeny = get_tree().create_tween()
-			tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
+			if global_position.y > limit_top:
+				tweeny = get_tree().create_tween()
+				tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
+				print(position)
 		else:
 			if tweeny != null:
 				tweeny.kill()
@@ -56,12 +58,12 @@ func update_position() -> void:
 	if global_position.x > limit_right-2560: global_position.x = limit_right-2560
 	elif global_position.x < limit_left: global_position.x = limit_left
 #
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#prints(limit_left, limit_right, limit_top, limit_bottom)
 	update_position()
 	
 
-func _on_room_callback(rooms : Array[Vector2i], coords : Vector2i) -> void:
+func _on_room_callback(rooms : Array[Vector2i], _coords : Vector2i) -> void:
 	#print(rooms)
 	current_room = rooms
 	var cool_arrayx : Array[int] = []

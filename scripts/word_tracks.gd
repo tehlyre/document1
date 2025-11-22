@@ -4,13 +4,28 @@ class_name WordTracks
 @export var train : WordTrain
 @export var correct_room : Vector2i
 @onready var origin_marker = $origin_marker
+@export var wall : Wall
 var is_train : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	wall = get_parent().wall
+	wall.sig_this_room.connect.call_deferred(_on_change_rooms)
 	$TrainTimer.wait_time = 5
 	$TrainTimer.start()
 	$TrainTimer.timeout.connect(train_across_tracks)
 
+func _on_change_rooms(room_coords, _coords):
+	print("guwu")
+	if correct_room in room_coords:
+		show()
+		train.show()
+		train.benign = false
+		$TrainTimer.start()
+	else:
+		hide()
+		train.hide()
+		train.benign = true
+		$TrainTimer.stop()
 
 func train_across_tracks():
 	$TrainTimer.stop()

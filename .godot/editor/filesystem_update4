@@ -6,3 +6,6 @@ res://scenes/Hazards/word_tracks.tscn
 res://scenes/Hazards/word_train.tscn
 res://scenes/Interactables/stamp.tscn
 res://scripts/durdan.gd
+res://scripts/wall.gd
+res://scripts/camera.gd
+res://scripts/trainens.gd

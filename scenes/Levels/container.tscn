@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=27 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dlxv0v0psypes" path="res://assets/textures/EnemySpawn.png" id="11_h4gck"]
 [ext_resource type="Script" uid="uid://c4rmlrdtubg0c" path="res://scripts/Enemy/enemy_spawn.gd" id="11_n5cux"]
 [ext_resource type="Script" uid="uid://d0r8wop71ad5q" path="res://scripts/triggers.gd" id="15_wctgd"]
+[ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="PackedScene" uid="uid://ve2teaboq3m1" path="res://scenes/Hazards/word_tracks.tscn" id="16_wctgd"]
 [ext_resource type="PackedScene" uid="uid://clkxl6pjtcs2r" path="res://scenes/Hazards/word_train.tscn" id="17_groel"]
 
@@ -130,15 +131,27 @@ script = ExtResource("15_wctgd")
 
 [node name="Bullets" type="Node2D" parent="."]
 
-[node name="Trainens" type="Node2D" parent="."]
-
-[node name="WordTracks" parent="Trainens" node_paths=PackedStringArray("train") instance=ExtResource("16_wctgd")]
-position = Vector2(1041, 8.0000305)
-rotation = -2.5959747
-scale = Vector2(13.592268, -7.3060136)
-train = NodePath("../WordTrain")
+[node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
+script = ExtResource("16_do0wj")
+wall = NodePath("../Wall")
 
 [node name="WordTrain" parent="Trainens" instance=ExtResource("17_groel")]
-position = Vector2(-411.34534, -873.7073)
-rotation = -2.5959747
-scale = Vector2(6.938494, -7.3060136)
+position = Vector2(923.7815, 1419.3804)
+rotation = 0.42901835
+scale = Vector2(2.8120685, 3.3857064)
+
+[node name="WordTracks" parent="Trainens" node_paths=PackedStringArray("train") instance=ExtResource("16_wctgd")]
+position = Vector2(253.99997, 1112.9999)
+rotation = 0.42901835
+scale = Vector2(5.892239, 3.3857064)
+train = NodePath("../WordTrain")
+
+[node name="WordTracks2" parent="Trainens" node_paths=PackedStringArray("train") instance=ExtResource("16_wctgd")]
+position = Vector2(1247, 2384)
+scale = Vector2(9.839998, 2.353995)
+train = NodePath("../WordTrain2")
+correct_room = Vector2i(0, 1)
+
+[node name="WordTrain2" parent="Trainens" instance=ExtResource("17_groel")]
+position = Vector2(2476.9998, 2384)
+scale = Vector2(6.239363, 2.353995)

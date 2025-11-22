@@ -13,7 +13,7 @@ func is_on_border_of_screen(tile_coords : Vector2i, current_cell : Vector2i, cel
 	#prints(tile_coords, tile_coords.x%cell_screen_size.x, is_x)
 	return (is_x or is_y) and correct_cell
 
-func which_side(tile_coords : Vector2i, current_cell : Vector2i, cell_screen_size : Vector2i = Vector2i(32,18)) -> Side:
+func which_side(tile_coords : Vector2i, _current_cell : Vector2i, cell_screen_size : Vector2i = Vector2i(32,18)) -> Side:
 	if tile_coords.x % cell_screen_size.x == 0:
 		return SIDE_LEFT
 	elif tile_coords.x % cell_screen_size.x == cell_screen_size.x-1 or tile_coords.x % cell_screen_size.x == -1:
@@ -23,7 +23,7 @@ func which_side(tile_coords : Vector2i, current_cell : Vector2i, cell_screen_siz
 	elif tile_coords.y % cell_screen_size.y == cell_screen_size.y-1 or tile_coords.y % cell_screen_size.y == -1:
 		return SIDE_BOTTOM
 	else:
-		@warning_ignore("int_as_enum_without_match")
+		@warning_ignore("int_as_enum_without_match", "int_as_enum_without_cast")
 		return 9
 
 func _ready() -> void:
@@ -34,6 +34,7 @@ func _ready() -> void:
 func _on_player_change_rooms(coords : Vector2i):
 	room = []
 	load_section(coords, coords)
+	print(room)
 	sig_this_room.emit(room, coords)
 			#print(edge)
 			#cam.set_limit(which_side(i, coords), )
