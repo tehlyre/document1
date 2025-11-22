@@ -1,13 +1,7 @@
 res://scenes/Levels/container.tscn
-res://scripts/UI/log_menu.gd
-res://scripts/game.gd
-res://scenes/door.tscn
 res://addons/drag/drag.gd
-res://scenes/Characters/durdan.tscn
-res://scenes/main.tscn
-res://scripts/durdan.gd
-res://scripts/neutral_special.gd
 res://scenes/Hazards/word_train.tscn
-res://scripts/enemybody.gd
-res://scenes/Characters/enemigo.tscn
 res://scripts/word_train.gd
+res://scripts/word_tracks.gd
+res://scenes/Hazards/word_tracks.tscn
+res://scripts/durdan.gd

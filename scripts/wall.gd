@@ -23,12 +23,12 @@ func which_side(tile_coords : Vector2i, current_cell : Vector2i, cell_screen_siz
 	elif tile_coords.y % cell_screen_size.y == cell_screen_size.y-1 or tile_coords.y % cell_screen_size.y == -1:
 		return SIDE_BOTTOM
 	else:
+		@warning_ignore("int_as_enum_without_match")
 		return 9
 
 func _ready() -> void:
 	cam.sig_change_rooms.connect(_on_player_change_rooms)
 	#print(JSON.stringify(get_used_cells()))
-	var output : Array = []
 	#OS.execute("python", ["C:\\Users\\718983\\Desktop\\yay.py", get_used_cells_by_id(0)], output)
 
 func _on_player_change_rooms(coords : Vector2i):
@@ -45,7 +45,6 @@ func load_section(this_load : Vector2i, last_load : Vector2i):
 	var left : int = 0
 	var right : int = 0
 	for i in get_used_cells():
-		var edge : float
 		if (is_on_border_of_screen(i, this_load)):
 			match which_side(i, this_load):
 				SIDE_TOP: top+=1

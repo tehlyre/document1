@@ -52,6 +52,8 @@ var is_in_illinois : bool = false
 var is_using_mouse : bool = true
 var is_sprinting : bool = false
 var is_in_illinois_for : int = 0
+var is_movin_over : bool = false
+var movin_rotation : float
 
 
 # STATUS VARIABLES
@@ -162,7 +164,9 @@ func flick_stick_angle() -> float:
 	return atan2(direction.y, direction.x)
 
 
-
+func move_a_little_over(rot):
+	is_movin_over = true
+	movin_rotation = rot
 
 
 
@@ -199,6 +203,9 @@ func thingy_hazard() -> void:
 # according to acceleration up to current_max_speed. All vectors are normalized before tampered with.
 func thingy_velocity(delta) -> void:
 	input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
+	if is_movin_over:
+		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2)
+		is_movin_over = false
 	if input_vector == Vector2.ZERO:
 		if velocity.length() > current_acceleration*delta:
 			velocity -= velocity.normalized()*current_acceleration*delta*11/16

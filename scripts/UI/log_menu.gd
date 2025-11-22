@@ -53,8 +53,6 @@ func add_character_label(chars : Aeon.Characters, y_pos : Label):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	print($VScrollBar.min_value)
-	print($VScrollBar.max_value)
 	if is_hiding:
 		hide()
 		add_character_label(current_character, current_label)

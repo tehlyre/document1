@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ve2teaboq3m1"]
+
+[ext_resource type="Script" uid="uid://bh086a2ft2djq" path="res://scripts/word_tracks.gd" id="1_stvrs"]
+[ext_resource type="Texture2D" uid="uid://2ao387nye1w" path="res://assets/textures/tracks.png" id="2_0rw5f"]
+
+[node name="WordTracks" type="Node2D"]
+script = ExtResource("1_stvrs")
+
+[node name="Tracks" type="Sprite2D" parent="."]
+texture = ExtResource("2_0rw5f")
+
+[node name="TrainTimer" type="Timer" parent="."]
+
+[node name="origin_marker" type="Marker2D" parent="."]
+position = Vector2(125, 0)
+
+[node name="exotale_marker" type="Marker2D" parent="."]
+position = Vector2(-125, 0)

@@ -19,14 +19,19 @@ enum EditorState {
 	CHEST,
 	GOO
 }
+var obj : Object
+
+var button_connections : Array[Callable] = [_on_map_button_pressed, _on_train_button_pressed]
 
 func _enter_tree() -> void:
 	toolbar = preload("res://addons/drag/drag.tscn").instantiate()
 	for i in toolbar.get_child(0).get_children():
-		i.pressed.connect(_on_map_button_pressed)
+		i.pressed.connect(button_connections[i.get_index()])
 	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BL, toolbar)
 
 func _on_map_button_pressed():
+	if obj is not Level:
+		return
 	var wall_node = get_tree().edited_scene_root.get_node("Wall")
 	var chests_node = get_tree().edited_scene_root.get_node("Chests")
 	OS.execute("python", ["yay.py", wall_node.get_used_cells_by_id(0), "stupid.png"])
@@ -71,6 +76,16 @@ func _on_map_button_pressed():
 	print("lmao")
 	for door in wall_node.get_used_cells_by_id(3):
 		print("ooooh")
+
+func _on_train_button_pressed():
+	print(obj)
+	if obj is not WordTracks:
+		return
+	var train = obj.train
+	print(train.global_position)
+	train.global_position = obj.get_node("origin_marker").global_position
+	train.rotation = obj.rotation
+	train.scale = obj.scale
 
 #func do_make_enemy(event : InputEventMouseButton) -> void:
 	#instance.position = EditorInterface.get_editor_viewport_2d().get_mouse_position()
@@ -125,7 +140,8 @@ func _on_map_button_pressed():
 	#return false
 
 func _handles(object: Object) -> bool:
-	return object is Level
+	obj = object
+	return object is Level or object is WordTracks
 
 #func _change_editor_state(state : int):
 	#editor_state = state

@@ -1,22 +1,16 @@
-extends Node2D
+extends Area2D
+class_name WordTrain
 
+@onready var caboose : Marker2D = $caboose
+var velocity : Vector2 = Vector2.ZERO
 
-var is_train : bool = false
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	$TrainTimer.wait_time = 1
-	$TrainTimer.start()
-	$TrainTimer.timeout.connect(train_across_tracks)
+func _ready():
+	body_entered.connect(_on_body_entered)
 
+func _on_body_entered(body : PhysicsBody2D):
+	if body.is_in_group("player"):
+		body.thingy_damage(50)
+		body.move_a_little_over(rotation)
 
-func train_across_tracks():
-	is_train = true
-
-func _process(delta):
-	if is_train:
-		$CharacterBody2D.velocity.x = -1000
-	else:
-		$CharacterBody2D.velocity.x = 0
-	$CharacterBody2D.move_and_slide()
-	if $CharacterBody2D.position.x < -375:
-		is_train = false
+func _process(_delta: float) -> void:
+	position += velocity

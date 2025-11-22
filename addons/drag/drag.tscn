@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkmyg20b8wtl3"]
+[gd_scene load_steps=6 format=3 uid="uid://dkmyg20b8wtl3"]
 
 [ext_resource type="Script" uid="uid://unvt44p8axo3" path="res://scripts/supplemental tools/editor_button.gd" id="1_1pw8o"]
 [ext_resource type="Texture2D" uid="uid://6n4n5ets5xdt" path="res://assets/textures/plugin/wall.png" id="1_gyllu"]
 [ext_resource type="Texture2D" uid="uid://df1cwbwamu8tl" path="res://assets/textures/plugin/wall_pressed.png" id="2_q8ftw"]
+[ext_resource type="Texture2D" uid="uid://d3yaq857dw5pv" path="res://assets/textures/plugin/train.png" id="4_ehvag"]
+[ext_resource type="Texture2D" uid="uid://5kb5ddk68xhl" path="res://assets/textures/plugin/train_pressed.png" id="5_ghs1b"]
 
 [node name="Drag" type="Control"]
 layout_mode = 3
@@ -18,11 +20,21 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Wall" type="TextureButton" parent="VBoxContainer"]
+[node name="Map" type="TextureButton" parent="VBoxContainer"]
 custom_minimum_size = Vector2(120, 34)
 layout_mode = 2
 texture_normal = ExtResource("1_gyllu")
 texture_pressed = ExtResource("2_q8ftw")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("1_1pw8o")
+object = 1
+
+[node name="Tracks" type="TextureButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(120, 34)
+layout_mode = 2
+texture_normal = ExtResource("4_ehvag")
+texture_pressed = ExtResource("5_ghs1b")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("1_1pw8o")
