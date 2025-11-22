@@ -9,3 +9,5 @@ res://scripts/durdan.gd
 res://scripts/wall.gd
 res://scripts/camera.gd
 res://scripts/trainens.gd
+res://scripts/Enemy/mover.gd
+res://scenes/Characters/h_boss.tscn
