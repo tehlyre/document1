@@ -1,9 +1,9 @@
+CharacterBody2D
 HBossMover
 Node2D
 Area2D
 Marker2D
 CollisionShape2D
-CharacterBody2D
 Timer
 VScrollBar
 Control
@@ -12,4 +12,3 @@ Panel
 ScrollContainer
 VBoxContainer
 MarginContainer
-TextEdit

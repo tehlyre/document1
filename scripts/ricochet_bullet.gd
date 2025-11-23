@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Bullet
+class_name RicochetBullet
 
 # Bullet Script
 #
@@ -17,6 +17,8 @@ class_name Bullet
 @export var SPEED_WHEN_PLAYER : float = 15
 @export var SPEED_WHEN_ENEMY : float = 5
 
+var is_ricocheting : bool = false
+
 # FLAGS
 
 # bool is_fired_by_player: Stores whether or not 
@@ -31,13 +33,18 @@ func _ready() -> void:
 
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
-func on_body_entered(body : Node2D) -> void:
+func on_body_entered(body : Node2D, normal : Vector2) -> void:
 	if(body.is_in_group("enemies")):
 		body.thingy_damage(100/body.DAMAGE_SCALE)
 	elif(body.is_in_group("player")):
 		body.thingy_damage(10)
 	elif(body.is_in_group("walls")):
-		pass
+		if !is_ricocheting:
+			ricochet(normal)
+			is_ricocheting = true
+		else:
+			is_ricocheting = false
+		return
 	elif(body.is_in_group("breakables")):
 		body.smash()
 	queue_free()
@@ -45,18 +52,42 @@ func on_body_entered(body : Node2D) -> void:
 
 # PROCESS
 
-
+func ricochet(normal : Vector2):
+	prints(rotation, atan2(normal.y, normal.x),"uwu")
+	if rotation-atan2(normal.y, normal.x)<PI/2 and rotation-atan2(normal.y, normal.x)>0:
+		print("a")
+		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
+	elif abs(rotation-atan2(normal.y, normal.x))<PI/2 and rotation+atan2(normal.y, normal.x)>0:
+		print("b")
+		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(PI/4).x)
+	elif rotation-atan2(normal.y, normal.x)>PI/2 and rotation-atan2(normal.y, normal.x)<PI:
+		print("c")
+		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(PI/4).y, normal.rotated(PI/4).x)
+	elif rotation-atan2(normal.y, normal.x)<-PI/2 and rotation-atan2(normal.y, normal.x)>-PI:
+		print("q")
+		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
+	elif rotation-atan2(normal.y, normal.x)>PI:
+		print("d")
+		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
+	elif rotation-atan2(normal.y, normal.x)<-PI:
+		print("d")
+		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
+		rotation = atan2(normal.rotated(PI/4).y, normal.rotated(PI/4).x)
 
 # Changes the position of the bullet by the speed of the bullet, thereby moving the bullet. This is done
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float) -> void:
-	print("jjoijij")
 	if is_fired_by_player:
 		velocity = transform.x*SPEED_WHEN_PLAYER
 	else:
 		velocity = transform.x * SPEED_WHEN_ENEMY
 	collision = move_and_collide(velocity)
 	if collision != null:
-		on_body_entered(collision.get_collider())
+		on_body_entered(collision.get_collider(), collision.get_normal())
 		print(collision.get_normal())

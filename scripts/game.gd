@@ -267,6 +267,7 @@ func _on_teleportation(pos) -> void:
 		prints(is_opening_map, "owo", pos)
 		get_tree().paused = !get_tree().paused
 		menu_state = MenuStates.MENU_NONE
+		hud_hidden = false
 
 
 	

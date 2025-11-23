@@ -14,6 +14,12 @@ enum MapMarkerTypes {
 	STAMP
 }
 
+enum BulletTypes {
+	NONE,
+	BASIC,
+	RICOCHET
+}
+
 var name_map = {Aeon.Characters.DURDAN: "Durdan", Aeon.Characters.CELIA: "Celia", Aeon.Characters.JOSEPHUS: "Josephus"}
 
 # Called when the node enters the scene tree for the first time.

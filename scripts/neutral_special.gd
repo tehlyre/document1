@@ -5,7 +5,7 @@ class_name Gun
 #
 #
 # PackedScene Bullet: The scene for the bullet that is fired off by the player
-@export var bullet : PackedScene = preload("res://scenes/Universals/bullet.tscn")
+@export var bullet : PackedScene = preload("res://scenes/Universals/ricochet_bullet.tscn")
 #
 #
 # FLAGS
@@ -28,7 +28,7 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 # fire and directs it in the direction the marker is facing. It has no adjustment function
 func fire() -> void:
 	if !is_in_illinois:
-		var b_ : Bullet = bullet.instantiate()
+		var b_ = bullet.instantiate()
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
 		else:

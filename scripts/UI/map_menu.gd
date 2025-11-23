@@ -50,11 +50,7 @@ func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
 		if $Panel/map/markers.get_child($Panel/map/markers.youarehere) != null:
 			$Panel/map/markers.get_child($Panel/map/markers.youarehere).queue_free()
 		
-	
 
-func _process(delta):
-	pass
-	#print($Panel/map.position)
 	
 
 func _on_marker_select(selection) -> void:

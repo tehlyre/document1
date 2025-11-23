@@ -19,6 +19,8 @@ func _on_body_entered(body : PhysicsBody2D):
 				body.move_a_little_over(rotation, true)
 		elif body.is_in_group("enemy"):
 			body.thingy_damage(100/body.DAMAGE_SCALE)
+		elif body.is_in_group("bullet"):
+			body.queue_free()
 
 
 func _process(_delta: float) -> void:
