@@ -32,6 +32,7 @@ shape = SubResource("CircleShape2D_yki5q")
 [node name="neutralSpecial" parent="." instance=ExtResource("2_4kvev")]
 position = Vector2(32, 20)
 scale = Vector2(0.0645161, 0.0588235)
+bullet_type = 1
 
 [node name="toPlayer" type="RayCast2D" parent="."]
 collision_mask = 65

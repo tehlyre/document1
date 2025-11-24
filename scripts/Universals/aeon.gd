@@ -21,6 +21,9 @@ enum BulletTypes {
 }
 
 var name_map = {Aeon.Characters.DURDAN: "Durdan", Aeon.Characters.CELIA: "Celia", Aeon.Characters.JOSEPHUS: "Josephus"}
+var room : Array
+
+var STANDARD_BULLET_SIZE = Vector2(1.25, 1.25)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

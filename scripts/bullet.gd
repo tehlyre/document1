@@ -28,6 +28,7 @@ var collision : KinematicCollision2D
 func _ready() -> void:
 	if is_fired_by_player: collision_mask -= 1
 	else: collision_mask -= 2
+	print(global_scale)
 
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
@@ -51,7 +52,6 @@ func on_body_entered(body : Node2D) -> void:
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float) -> void:
-	print("jjoijij")
 	if is_fired_by_player:
 		velocity = transform.x*SPEED_WHEN_PLAYER
 	else:

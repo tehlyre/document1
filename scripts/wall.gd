@@ -34,7 +34,7 @@ func _ready() -> void:
 func _on_player_change_rooms(coords : Vector2i):
 	room = []
 	load_section(coords, coords)
-	print(room)
+	Aeon.room = room
 	sig_this_room.emit(room, coords)
 			#print(edge)
 			#cam.set_limit(which_side(i, coords), )

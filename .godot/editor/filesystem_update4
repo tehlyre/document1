@@ -1,13 +1,2 @@
 res://scenes/Characters/h_boss.tscn
-res://scripts/Universals/aeon.gd
-res://scenes/Universals/ricochet_bullet.tscn
-res://scripts/bullet.gd
 res://scripts/ricochet_bullet.gd
-res://scenes/Universals/bullet.tscn
-res://scenes/Hazards/word_train.tscn
-res://scenes/Levels/container.tscn
-res://scripts/word_train.gd
-res://scripts/durdan.gd
-res://scripts/neutral_special.gd
-res://scripts/game.gd
-res://scripts/UI/map_menu.gd

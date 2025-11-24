@@ -13,6 +13,7 @@ func _ready() -> void:
 	$TrainTimer.wait_time = 5
 	$TrainTimer.start()
 	$TrainTimer.timeout.connect(train_across_tracks)
+	_on_change_rooms(Aeon.room, "687")
 
 func _on_change_rooms(room_coords, _coords):
 	print("guwu")

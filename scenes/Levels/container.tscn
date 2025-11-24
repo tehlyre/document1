@@ -81,7 +81,7 @@ wall = NodePath("../Wall")
 enemy_spawn = NodePath("../enemySpawn")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(851, 508)
+position = Vector2(843, 2005)
 collision_mask = 75
 
 [node name="Level" type="Node2D" parent="."]

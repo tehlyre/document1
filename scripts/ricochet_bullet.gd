@@ -18,11 +18,13 @@ class_name RicochetBullet
 @export var SPEED_WHEN_ENEMY : float = 5
 
 var is_ricocheting : bool = false
+var ricochet_counter : int = 0
 
 # FLAGS
 
 # bool is_fired_by_player: Stores whether or not 
 var is_fired_by_player : bool
+var is_fired_by_hboss : bool
 var collision : KinematicCollision2D
 
 
@@ -30,6 +32,7 @@ var collision : KinematicCollision2D
 func _ready() -> void:
 	if is_fired_by_player: collision_mask -= 1
 	else: collision_mask -= 2
+	print(global_scale)
 
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
@@ -40,6 +43,10 @@ func on_body_entered(body : Node2D, normal : Vector2) -> void:
 		body.thingy_damage(10)
 	elif(body.is_in_group("walls")):
 		if !is_ricocheting:
+			ricochet_counter += 1
+			if ricochet_counter > 2:
+				queue_free()
+				return
 			ricochet(normal)
 			is_ricocheting = true
 		else:
@@ -55,27 +62,21 @@ func on_body_entered(body : Node2D, normal : Vector2) -> void:
 func ricochet(normal : Vector2):
 	prints(rotation, atan2(normal.y, normal.x),"uwu")
 	if rotation-atan2(normal.y, normal.x)<PI/2 and rotation-atan2(normal.y, normal.x)>0:
-		print("a")
 		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
 	elif abs(rotation-atan2(normal.y, normal.x))<PI/2 and rotation+atan2(normal.y, normal.x)>0:
-		print("b")
 		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(PI/4).x)
 	elif rotation-atan2(normal.y, normal.x)>PI/2 and rotation-atan2(normal.y, normal.x)<PI:
-		print("c")
 		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(PI/4).y, normal.rotated(PI/4).x)
 	elif rotation-atan2(normal.y, normal.x)<-PI/2 and rotation-atan2(normal.y, normal.x)>-PI:
-		print("q")
 		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
 	elif rotation-atan2(normal.y, normal.x)>PI:
-		print("d")
 		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)
 	elif rotation-atan2(normal.y, normal.x)<-PI:
-		print("d")
 		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(PI/4).y, normal.rotated(PI/4).x)
 
@@ -90,4 +91,3 @@ func _physics_process(_delta : float) -> void:
 	collision = move_and_collide(velocity)
 	if collision != null:
 		on_body_entered(collision.get_collider(), collision.get_normal())
-		print(collision.get_normal())
