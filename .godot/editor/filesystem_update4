@@ -1,2 +1,2 @@
-res://scenes/Characters/h_boss.tscn
-res://scripts/ricochet_bullet.gd
+res://scenes/Characters/durdan.tscn
+res://scripts/durdan.gd

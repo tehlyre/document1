@@ -53,8 +53,7 @@ var is_using_mouse : bool = true
 var is_sprinting : bool = false
 var is_in_illinois_for : int = 0
 var is_movin_over : bool = false
-var movin_rotation : float
-var dja_flip_it : bool = false
+var is_push_flipped : bool = false
 
 
 # STATUS VARIABLES
@@ -64,6 +63,7 @@ var dja_flip_it : bool = false
 # on the maximum speed under normal conditions.
 var current_max_speed : float = MAX_SPEED
 var current_acceleration : float = ACCELERATION
+var movin_rotation : float
 
 # int health: The health of the player.
 var health : int = 100
@@ -82,7 +82,7 @@ var interactables : Array[Interactable] = []
 
 var inventory : Dictionary = {}
 
-var cutscene_running = false
+var is_cutscene_running : bool = false
 
 
 
@@ -169,10 +169,10 @@ func move_a_little_over(rot : float, flip : bool):
 	is_movin_over = true
 	if flip:
 		movin_rotation = -rot
-		dja_flip_it = true
+		is_push_flipped = true
 	else:
 		movin_rotation = rot
-		dja_flip_it = false
+		is_push_flipped = false
 
 
 
@@ -210,7 +210,7 @@ func thingy_hazard() -> void:
 func thingy_velocity(delta) -> void:
 	input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
 	if is_movin_over:
-		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2) if !dja_flip_it else (Vector2.ONE*MAX_SPEED).rotated(movin_rotation-PI/2)
+		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2) if !is_push_flipped else (Vector2.ONE*MAX_SPEED).rotated(movin_rotation-PI/2)
 		is_movin_over = false
 	if input_vector == Vector2.ZERO:
 		if velocity.length() > current_acceleration*delta:
@@ -239,7 +239,7 @@ func thingy_velocity(delta) -> void:
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
-	if !cutscene_running:
+	if !is_cutscene_running:
 		sig_query_inventory.emit()
 		# For facing the mouse {
 		

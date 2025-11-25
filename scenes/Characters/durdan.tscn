@@ -33,5 +33,5 @@ rotation = -0.270105
 bullet_type = 1
 is_on_player = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="playerCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4wifr")

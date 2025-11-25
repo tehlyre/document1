@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1763953979
+::res://::1764042039
 icon.svg::CompressedTexture2D/CompressedTexture2D::7399799570421521073::1697563746::1752001759::1::::<><><>0<>0<>0d7b8bcb13e110a31cbfa6a9b0eaf5dd<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1763438593::0::1::::<><><>0<>0<><>::
 ::res://addons/::1762050258
@@ -67,10 +67,10 @@ README.md::TextFile/TextFile::-1::1703304872::0::1::::<><><>0<>0<><>::
 ::res://scenes/::1763439070
 debug_window.tscn::PackedScene/PackedScene::104823042384515666::1752806652::0::1::::<><><>0<>0<><>::uid://bc5v467rudpvh::::res://scripts/supplemental tools/debug_window.gd
 main.tscn::PackedScene::1436345888032593477::1763438716::0::1::::<><><>0<>0<><>::uid://bwrg4wxune0y3::::res://scripts/game.gd<>uid://b4rpkbb7pbeqj::::res://scenes/Levels/container.tscn<>uid://dj1ncmi0g0gke::::res://scenes/UI/log_menu.tscn<>uid://ckaa3ih3v8cyl::::res://scenes/UI/pausemenu.tscn<>uid://dr4ohj1mjxsei::::res://scenes/UI/dialogue_menu.tscn<>uid://uvj7iu2qje8l::::res://scenes/UI/deathmenu.tscn<>uid://36akublft1tu::::res://scripts/UI/deathmenu.gd<>uid://c0hig8yqsr4ak::::res://scenes/UI/optionsmenuoverlay.tscn<>uid://dj5varljnsd4k::::res://scripts/UI/optionsmenuoverlay.gd<>uid://c2udhxi146lk1::::res://scenes/UI/chest_pop_up_menu.tscn<>uid://duwmwk20o36rn::::res://scripts/UI/chestmenu.gd<>uid://dh5ivbowm0f1m::::res://scenes/UI/hud.tscn<>uid://ca7nup0qekyl7::::res://scenes/UI/map_menu.tscn<>uid://cb38y2bvlbksd::::res://scenes/Universals/background_music_player.tscn
-::res://scenes/Characters/::1763953788
+::res://scenes/Characters/::1763954466
 durdan.tscn::PackedScene::3935021291853927780::1763864324::0::1::::<><><>0<>0<><>::uid://br74yhnl7m0vp::::res://scripts/durdan.gd<>uid://du7oqvxms11k3::::res://assets/textures/duuuururrurrdan.png<>uid://evch3f3ad4o3::::res://scenes/Universals/neutral_special.tscn
 enemigo.tscn::PackedScene::1070424029647662094::1763950945::0::1::::<><><>0<>0<><>::uid://08p27gac5v54::::res://scripts/Enemy/enemy.gd<>uid://evch3f3ad4o3::::res://scenes/Universals/neutral_special.tscn<>uid://bc72o7r0pj7fx::::res://assets/textures/enieamy.png
-h_boss.tscn::PackedScene::3793134660812397247::1763953788::0::1::::<><><>0<>0<><>::uid://jm2lf0hg88mp::::res://assets/textures/h-boss_node.png<>uid://evch3f3ad4o3::::res://scenes/Universals/neutral_special.tscn<>uid://dgqi75s5bedex::::res://assets/textures/h-boss.png<>uid://bn4uso6oc5oj5::::res://scripts/Enemy/hboss_mover.gd<>uid://d30ejkklcfbv1::::res://scripts/Enemy/hboss_fire.gd
+h_boss.tscn::PackedScene::3793134660812397247::1763954466::0::1::::<><><>0<>0<><>::uid://jm2lf0hg88mp::::res://assets/textures/h-boss_node.png<>uid://evch3f3ad4o3::::res://scenes/Universals/neutral_special.tscn<>uid://dgqi75s5bedex::::res://assets/textures/h-boss.png<>uid://bn4uso6oc5oj5::::res://scripts/Enemy/hboss_mover.gd<>uid://d30ejkklcfbv1::::res://scripts/Enemy/hboss_fire.gd
 ::res://scenes/Hazards/::1763864484
 goo.tscn::PackedScene::3293155290536947191::1752862561::0::1::::<><><>0<>0<><>::uid://dqvgov3ffvsde::::res://scripts/goo.gd
 word_tracks.tscn::PackedScene::1483896726462013090::1763864484::0::1::::<><><>0<>0<><>::uid://bh086a2ft2djq::::res://scripts/word_tracks.gd<>uid://2ao387nye1w::::res://assets/textures/tracks.png
@@ -102,7 +102,7 @@ background_music_player.tscn::PackedScene::4902880728597072423::1762886332::0::1
 bullet.tscn::PackedScene::6987748190088326131::1763855506::0::1::::<><><>0<>0<><>::uid://gmlmhx2tod4d::::res://assets/textures/bullet.png<>uid://cqwr1janno75u::::res://scripts/bullet.gd
 neutral_special.tscn::PackedScene::324242721580421956::1762556260::0::1::::<><><>0<>0<><>::uid://cy4u4ua4i5vhu::::res://assets/textures/neutral special.png<>uid://1pa06st4d6j3::::res://scripts/neutral_special.gd
 ricochet_bullet.tscn::PackedScene::1182197965106962686::1763863893::0::1::::<><><>0<>0<><>::uid://b57uukgrhvdax::::res://scripts/ricochet_bullet.gd<>uid://gmlmhx2tod4d::::res://assets/textures/bullet.png
-::res://scripts/::1763953788
+::res://scripts/::1763954466
 bullet.gd::GDScript::5942358269021364976::1763952197::0::1::::Bullet<>CharacterBody2D<><>0<>0<><>::
 camera.gd::GDScript::2135838698391465733::1763788682::0::1::::<>Camera2D<><>0<>0<><>::
 chest.gd::GDScript::6565317711435174591::1762743966::0::1::::Chest<>Interactable<><>0<>0<><>::
@@ -120,7 +120,7 @@ neutral_special.gd::GDScript::1855921902679875858::1763953020::0::1::::Gun<>Spri
 newnintendoenemydsxl.gd::GDScript/GDScript::5049590038334277756::1719111774::0::1::::<>CharacterBody2D<><>0<>0<><>::
 PlayerRayCast.gd::GDScript/GDScript::6172727560795174458::1703381442::0::1::::<>RayCast2D<><>0<>0<><>::
 pot.gd::GDScript::7692348709973565286::1762808429::0::1::::<>StaticBody2D<><>0<>0<><>::
-ricochet_bullet.gd::GDScript::4559396671982325979::1763953788::0::1::::RicochetBullet<>CharacterBody2D<><>0<>0<><>::
+ricochet_bullet.gd::GDScript::4559396671982325979::1763954466::0::1::::RicochetBullet<>CharacterBody2D<><>0<>0<><>::
 room.gd::GDScript/GDScript::791970640769606207::1753572696::0::1::::Room<>Area2D<><>0<>0<><>::
 siekerstan.gd::GDScript/GDScript::5745018950104197265::1748137578::0::1::::<>Node2D<><>0<>0<><>::
 stamp.gd::GDScript/GDScript::6136584655302699623::1762052992::0::1::::Stamp<>Interactable<><>0<>0<><>::
