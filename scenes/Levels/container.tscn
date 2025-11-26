@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=27 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="PackedScene" uid="uid://ve2teaboq3m1" path="res://scenes/Hazards/word_tracks.tscn" id="16_wctgd"]
 [ext_resource type="PackedScene" uid="uid://clkxl6pjtcs2r" path="res://scenes/Hazards/word_train.tscn" id="17_groel"]
-[ext_resource type="PackedScene" uid="uid://bubomx8dujl4r" path="res://scenes/Characters/h_boss.tscn" id="19_oe70c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -81,7 +80,7 @@ wall = NodePath("../Wall")
 enemy_spawn = NodePath("../enemySpawn")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(843, 2005)
+position = Vector2(909, 913)
 collision_mask = 75
 
 [node name="Level" type="Node2D" parent="."]
@@ -139,13 +138,10 @@ wall = NodePath("../Wall")
 [node name="WordTrain" parent="Trainens" instance=ExtResource("17_groel")]
 position = Vector2(923.7815, 1419.3804)
 rotation = 0.42901835
-scale = Vector2(2.8120685, 3.3857064)
+scale = Vector2(9.492266, 3.3857064)
 
 [node name="WordTracks" parent="Trainens" node_paths=PackedStringArray("train") instance=ExtResource("16_wctgd")]
 position = Vector2(253.99997, 1112.9999)
 rotation = 0.42901835
 scale = Vector2(5.892239, 3.3857064)
 train = NodePath("../WordTrain")
-
-[node name="HBoss" parent="." instance=ExtResource("19_oe70c")]
-position = Vector2(1202, 2316)

@@ -25,8 +25,6 @@ class_name Player
 # IMPORTS
 #
 #
-# PackedScene Bullet: The scene for the bullet that is fired off by the player
-@export var bullet : PackedScene = preload("res://scenes/Universals/ricochet_bullet.tscn")
 @onready var gun : Gun = $neutralSpecial
 #
 # CONSTANTS
@@ -48,13 +46,11 @@ var THETA : float = 0.9
 # bool illinois: Whether or not the gun is allowed to fire.
 # bool is_using_mouse: Determines if the player is using a mouse or a controller.
 var is_in_goo : bool = false
-var is_in_illinois : bool = false
 var is_using_mouse : bool = true
 var is_sprinting : bool = false
-var is_in_illinois_for : int = 0
 var is_movin_over : bool = false
 var is_push_flipped : bool = false
-
+var is_cutscene_running : bool = false
 
 # STATUS VARIABLES
 
@@ -64,6 +60,7 @@ var is_push_flipped : bool = false
 var current_max_speed : float = MAX_SPEED
 var current_acceleration : float = ACCELERATION
 var movin_rotation : float
+var cutscene_firing_buffer : int = 0
 
 # int health: The health of the player.
 var health : int = 100
@@ -72,9 +69,6 @@ var health : int = 100
 # is directly on top of the player or another action that would otherwise result in gay behavior.
 var previous_rotation : float = 0
 
-# Vector2 input_vector: The direction the player is holding on the arrow keys, WASD, D-pad or
-# joystick.
-var input_vector : Vector2 = Vector2.ZERO
 
 # Array interactables: An array of all the interactable things that the player can interact with in
 # his current position.
@@ -82,7 +76,7 @@ var interactables : Array[Interactable] = []
 
 var inventory : Dictionary = {}
 
-var is_cutscene_running : bool = false
+
 
 
 
@@ -91,6 +85,7 @@ var is_cutscene_running : bool = false
 #
 # signal you_died: Sent out by thingy_damage when the player dies. Received by the game manager in
 # 		on_player_death
+# signal open_chest(int chestID): Sent out when the player opens a chest. Received by the game
 # signal open_chest(int chestID): Sent out when the player opens a chest. Received by the game
 # 		manager in on_player_opened_chest.
 signal sig_you_died()
@@ -165,7 +160,7 @@ func flick_stick_angle() -> float:
 	return atan2(direction.y, direction.x)
 
 
-func move_a_little_over(rot : float, flip : bool):
+func thingy_large_push(rot : float, flip : bool) -> void:
 	is_movin_over = true
 	if flip:
 		movin_rotation = -rot
@@ -208,7 +203,7 @@ func thingy_hazard() -> void:
 # it is, the velocity will decrease according to acceleration. If not, the velocity will increase
 # according to acceleration up to current_max_speed. All vectors are normalized before tampered with.
 func thingy_velocity(delta) -> void:
-	input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
+	var input_vector  = Vector2(-Input.get_action_strength("left")+Input.get_action_strength("right"), -Input.get_action_strength("up")+Input.get_action_strength("down")).normalized()
 	if is_movin_over:
 		velocity = (Vector2.ONE*MAX_SPEED).rotated(movin_rotation+PI/2) if !is_push_flipped else (Vector2.ONE*MAX_SPEED).rotated(movin_rotation-PI/2)
 		is_movin_over = false
@@ -244,13 +239,12 @@ func _physics_process(delta) -> void:
 		# For facing the mouse {
 		
 		if is_using_mouse:
-			pass
 			look_at(get_global_mouse_position())
 		elif !is_using_mouse:
 			if (is_nan(flick_stick_angle())):
-				self.set_rotation_degrees(previous_rotation)
+				set_rotation(previous_rotation)
 			else:
-				self.set_rotation(flick_stick_angle())
+				set_rotation(flick_stick_angle())
 		
 	#	}
 
@@ -259,13 +253,13 @@ func _physics_process(delta) -> void:
 		thingy_velocity(delta)
 		gun.adjust(get_global_mouse_position(), THETA)
 		if Input.is_action_just_pressed("neutral special"):
-			if !is_in_illinois and is_in_illinois_for == 0:
+			if cutscene_firing_buffer == 0:
 				gun.fire()
-			elif !is_in_illinois and is_in_illinois_for > 0:
-				is_in_illinois_for -= 1
+			elif cutscene_firing_buffer > 0:
+				cutscene_firing_buffer -= 1
 		
 		move_and_slide()
-		previous_rotation = rotation_degrees
+		previous_rotation = rotation
 	else:
 		velocity = Vector2.ZERO
-		is_in_illinois_for = 1
+		cutscene_firing_buffer = 1

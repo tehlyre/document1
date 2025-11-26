@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ve2teaboq3m1"]
+[gd_scene load_steps=4 format=3 uid="uid://ve2teaboq3m1"]
 
 [ext_resource type="Script" uid="uid://bh086a2ft2djq" path="res://scripts/word_tracks.gd" id="1_stvrs"]
 [ext_resource type="Texture2D" uid="uid://2ao387nye1w" path="res://assets/textures/tracks.png" id="2_0rw5f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stvrs"]
+size = Vector2(250, 30)
 
 [node name="WordTracks" type="Node2D"]
 z_index = -5
@@ -17,3 +20,8 @@ position = Vector2(125, 0)
 
 [node name="exotale_marker" type="Marker2D" parent="."]
 position = Vector2(-125, 0)
+
+[node name="NoNoSquare" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoNoSquare"]
+shape = SubResource("RectangleShape2D_stvrs")
