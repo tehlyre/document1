@@ -38,7 +38,7 @@ func fire() -> void:
 		else:
 			owner.get_parent().find_child("Bullets").owner.add_child(b_)
 		b_.transform = $gunner.global_transform
-		#b_.global_scale = Aeon.STANDARD_BULLET_SIZE
+		b_.global_scale = Aeon.STANDARD_BULLET_SIZE
 
 		b_.is_fired_by_player = is_on_player
 

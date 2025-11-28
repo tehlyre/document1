@@ -1,11 +1,12 @@
 extends Node2D
-@export var target : Vector2D
+
+@onready var mover : HBossMover = $HBossMover
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _process(delta: float) -> void:
+	mover.tick(delta)

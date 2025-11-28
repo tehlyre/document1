@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bubomx8dujl4r"]
+[gd_scene load_steps=8 format=3 uid="uid://bubomx8dujl4r"]
 
+[ext_resource type="Script" uid="uid://o8pj8akg42ax" path="res://scenes/Characters/h_boss.gd" id="1_2myd6"]
 [ext_resource type="Texture2D" uid="uid://jm2lf0hg88mp" path="res://assets/textures/h-boss_node.png" id="1_38rpk"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="2_kkt0w"]
 [ext_resource type="Texture2D" uid="uid://dgqi75s5bedex" path="res://assets/textures/h-boss.png" id="2_s8cyw"]
@@ -10,6 +11,7 @@
 radius = 63.560993
 
 [node name="HBoss" type="Node2D"]
+script = ExtResource("1_2myd6")
 
 [node name="HBossNode" type="Sprite2D" parent="."]
 position = Vector2(89, 1)
@@ -21,7 +23,6 @@ texture = ExtResource("1_38rpk")
 
 [node name="HBoss" type="CharacterBody2D" parent="."]
 position = Vector2(88, 3)
-rotation = 1.5707964
 collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoss"]
@@ -64,8 +65,13 @@ right = NodePath("../HBossNode")
 fire = NodePath("../HBossFire")
 metadata/_custom_type_script = "uid://bn4uso6oc5oj5"
 
-[node name="HBossFire" type="Timer" parent="." node_paths=PackedStringArray("mover", "gun_root")]
+[node name="HBossFire" type="Timer" parent="." node_paths=PackedStringArray("mover", "hboss", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun", "gun_root")]
 script = ExtResource("5_gcgtl")
 mover = NodePath("../HBossMover")
+hboss = NodePath("../HBoss")
+top_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial")
+top_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial2")
+butt_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial4")
+butt_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial3")
 gun_root = NodePath("../HBoss/gunnies")
 metadata/_custom_type_script = "uid://d30ejkklcfbv1"

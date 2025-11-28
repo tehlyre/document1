@@ -1,8 +1,7 @@
-res://scenes/Characters/enemigo.tscn
-res://scenes/Characters/durdan.tscn
-res://scenes/Hazards/word_train.tscn
-res://scenes/Hazards/word_tracks.tscn
-res://scripts/word_tracks.gd
+res://scenes/Characters/h_boss.tscn
+res://scripts/Enemy/hboss_mover.gd
+res://scenes/Characters/h_boss.gd
 res://scenes/Levels/container.tscn
-res://scripts/word_train.gd
-res://scripts/durdan.gd
+res://scripts/Enemy/hboss_fire.gd
+res://scripts/bullet.gd
+res://scripts/neutral_special.gd

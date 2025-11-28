@@ -28,7 +28,7 @@ var collision : KinematicCollision2D
 func _ready() -> void:
 	if is_fired_by_player: collision_mask -= 1
 	else: collision_mask -= 2
-	print(global_scale)
+	global_scale = Aeon.STANDARD_BULLET_SIZE
 
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.

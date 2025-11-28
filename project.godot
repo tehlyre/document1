@@ -142,9 +142,10 @@ open_log={
 2d_physics/layer_3="bullet"
 2d_physics/layer_4="interaction"
 2d_physics/layer_5="room"
-2d_physics/layer_6="train_collision"
+2d_physics/layer_6="train_head_on"
 2d_physics/layer_7="walls"
 2d_physics/layer_8="inactive aura"
+2d_physics/layer_9="train_on_side"
 
 [rendering]
 
