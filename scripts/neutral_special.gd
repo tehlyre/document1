@@ -30,7 +30,6 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 # This function instantiates a bullet scene from the firing point every time the entity desires to 
 # fire and directs it in the direction the marker is facing. It has no adjustment function
 func fire() -> void:
-	print(is_in_illinois)
 	if !is_in_illinois:
 		var b_ = bullet.instantiate()
 		if is_on_player:
@@ -54,3 +53,10 @@ func adjust(point : Vector2, theta : float) -> void:
 	var cool_number = (question_mark-0.9)*180/PI
 	if d > 112:
 		rotation_degrees = -cool_number*0.9
+
+func get_proper_adjustment(point : Vector2, theta : float) -> float:
+	var d = global_position.distance_to(point)
+	var s = global_position.distance_to(get_parent().global_position)
+	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
+	var cool_number = (question_mark-0.9)*180/PI
+	return -cool_number*0.9

@@ -32,7 +32,6 @@ var collision : KinematicCollision2D
 func _ready() -> void:
 	if is_fired_by_player: collision_mask -= 1
 	else: collision_mask -= 2
-	print(global_scale)
 
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
@@ -60,7 +59,6 @@ func on_body_entered(body : Node2D, normal : Vector2) -> void:
 # PROCESS
 
 func ricochet(normal : Vector2):
-	prints(rotation, atan2(normal.y, normal.x),"uwu")
 	if rotation-atan2(normal.y, normal.x)<PI/2 and rotation-atan2(normal.y, normal.x)>0:
 		velocity = normal.rotated(-PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(-PI/4).y, normal.rotated(-PI/4).x)

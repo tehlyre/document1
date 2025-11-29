@@ -1,7 +1,11 @@
 res://scenes/Characters/h_boss.tscn
 res://scripts/Enemy/hboss_mover.gd
+res://scripts/neutral_special.gd
 res://scenes/Characters/h_boss.gd
 res://scenes/Levels/container.tscn
 res://scripts/Enemy/hboss_fire.gd
-res://scripts/bullet.gd
-res://scripts/neutral_special.gd
+res://scripts/durdan.gd
+res://scripts/ricochet_bullet.gd
+res://scripts/word_train.gd
+res://scenes/Hazards/word_train.tscn
+res://scripts/word_tracks.gd

@@ -30,6 +30,7 @@ var time_to_rotate : float
 var rotate_lerp_weight : float
 var is_rotating_to_player : bool = false
 var is_facing_player : bool = false
+var is_lerping_gun : bool = false
 
 signal sig_done_rotating()
 signal sig_facing_player()
@@ -84,22 +85,22 @@ func rotate_to(angle : float, time : float) -> void:
 # Else if the enemy is rotating towards the player: lerp based on delta itself and lerp the enemy
 #		rotation thataway. If the lerp is over, reset all the variables and stop rotating.
 func thingy_rotate(delta : float) -> void:
-	#if is_rotating_to_player:
-		#rotate_lerp_weight += delta*2
-		#enemy.rotation = lerp_angle(fmod(starting_rotation,2*PI), (player.global_position-enemy.global_position).angle(), rotate_lerp_weight)
-	#else:
-	var weightperframe : float = delta*(angle_to_rotate/time_to_rotate)/angle_to_rotate
-	rotate_lerp_weight += weightperframe
-	hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), fmod(starting_rotation+angle_to_rotate,2*PI), rotate_lerp_weight)
-	if rotate_lerp_weight > 1.0 or is_equal_approx(rotate_lerp_weight, 1.0):
-		rotate_lerp_weight = 0.0
-		is_rotating = false
-		angle_to_rotate = 0
-		time_to_rotate = 0
-		#if is_rotating_to_player:
-			#sig_facing_player.emit()
-			#return
-		sig_done_rotating.emit()
+	if is_rotating_to_player:
+		rotate_lerp_weight += delta*2
+		hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), (player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
+	else:
+		var weightperframe : float = delta*(angle_to_rotate/time_to_rotate)/angle_to_rotate
+		rotate_lerp_weight += weightperframe
+		hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), fmod(starting_rotation+angle_to_rotate,2*PI), rotate_lerp_weight)
+		if rotate_lerp_weight > 1.0 or is_equal_approx(rotate_lerp_weight, 1.0):
+			rotate_lerp_weight = 0.0
+			is_rotating = false
+			angle_to_rotate = 0
+			time_to_rotate = 0
+			if is_rotating_to_player:
+				sig_facing_player.emit()
+				return
+			sig_done_rotating.emit()
 
 # Rotates the enemy back to the player. Uses the same process as rotate_to but uses specific
 #		signals and flags.

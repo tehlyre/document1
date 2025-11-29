@@ -128,7 +128,6 @@ func _input(event : InputEvent) -> void:
 	elif (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		is_using_mouse = false
 	if (event.is_action_pressed("interact") and interactables != []):
-		print("uwu")
 		if interactables[0] is Chest:
 			print("openous intentions")
 			sig_open_chest.emit(interactables[0])

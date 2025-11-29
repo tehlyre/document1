@@ -4,12 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://dcg45wet4i3bs" path="res://assets/textures/train.png" id="1_71gpj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e1pwp"]
-size = Vector2(250, 24)
+size = Vector2(250, 38)
 
 [node name="WordTrain" type="Area2D" groups=["walls"]]
 z_index = 5
 collision_layer = 0
-collision_mask = 260
+collision_mask = 384
 script = ExtResource("1_1r7ka")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -23,8 +23,8 @@ texture = ExtResource("1_71gpj")
 [node name="caboose" type="Marker2D" parent="."]
 position = Vector2(250, 0)
 
-[node name="TrainCharacterBody" type="StaticBody2D" parent="."]
-collision_layer = 32
+[node name="TrainCharacterBody" type="StaticBody2D" parent="." groups=["walls"]]
+collision_layer = 36
 collision_mask = 0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="TrainCharacterBody"]

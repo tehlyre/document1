@@ -33,13 +33,14 @@ func _on_change_rooms(room_coords, _coords):
 
 func _on_nonosquare_enter(body : Node2D):
 	if body.is_in_group("player") or body.is_in_group("enemies"):
-		body.collision_layer += 256
-		body.collision_mask -= 64
+		body.collision_layer += 128
+		body.collision_mask -= 32
+		
 
 func _on_nonosquare_exit(body : Node2D):
 	if body.is_in_group("player") or body.is_in_group("enemies"):
-		body.collision_mask += 64
-		body.collision_layer -= 256
+		body.collision_mask += 32
+		body.collision_layer -= 128
 
 func train_across_tracks():
 	$TrainTimer.stop()

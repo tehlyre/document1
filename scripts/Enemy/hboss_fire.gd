@@ -49,7 +49,7 @@ func ccw_sprinkler() -> void:
 		await mover.rotate_to(-PI/4, 0.5)
 		butt_left_gun.fire()
 		butt_right_gun.fire()
-		await mover.rotate_to(-PI/4, 0.5)
+		await mover.back_to_player()
 
 func homing() -> void:
 	current_action = "homing"

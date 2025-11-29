@@ -66,7 +66,7 @@ player = NodePath("Durdan")
 metadata/_edit_group_ = true
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("player", "wall", "enemy_spawn")]
-position = Vector2(-24, 1394)
+position = Vector2(14, 1402)
 anchor_mode = 0
 zoom = Vector2(0.5, 0.5)
 position_smoothing_speed = 3.96
@@ -81,7 +81,7 @@ wall = NodePath("../Wall")
 enemy_spawn = NodePath("../enemySpawn")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(1673, 1775)
+position = Vector2(407, 2222)
 collision_layer = 1
 collision_mask = 107
 
@@ -148,5 +148,6 @@ rotation = 0.42901835
 scale = Vector2(5.892239, 3.3857064)
 train = NodePath("../WordTrain")
 
-[node name="HBoss" parent="." instance=ExtResource("19_oe70c")]
+[node name="HBoss" parent="." node_paths=PackedStringArray("player") instance=ExtResource("19_oe70c")]
 position = Vector2(1186, 2186)
+player = NodePath("../Durdan")
