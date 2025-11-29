@@ -7,6 +7,10 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @export var right : Sprite2D
 @export var fire : HBossFire
 @export var player : Player
+@export var top_right_gun : Gun
+@export var top_left_gun : Gun
+@export var butt_right_gun : Gun
+@export var butt_left_gun : Gun
 enum MoveStates {
 	NOT,
 	LEFT,
@@ -22,18 +26,24 @@ var move_state : MoveStates = MoveStates.NOT:
 			hboss.global_position = right.global_position
 	get:
 		return move_state
-signal did_move(state : MoveStates)
 var starting_rotation : float
 var is_rotating : bool
 var angle_to_rotate : float
 var time_to_rotate : float
+var time_to_gun : float
+var value_to_gun : float
+var starting_gun : float
 var rotate_lerp_weight : float
 var is_rotating_to_player : bool = false
 var is_facing_player : bool = false
 var is_lerping_gun : bool = false
+var is_returning_backwards : bool = false
+var gun_lerp_weight : float = 0
+var is_gun_to_player : bool = false
 
 signal sig_done_rotating()
 signal sig_facing_player()
+signal sig_done_gun()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -63,8 +73,30 @@ func cue_movement():
 	if move_state == MoveStates.LEFT: move_state = MoveStates.RIGHT
 	elif move_state == MoveStates.RIGHT: move_state = MoveStates.LEFT
 
-func lerp_gun_adjust():
-	pass
+func lerp_gun_adjust(gun : Gun):
+	starting_gun = gun.get_rotation()
+	print(starting_gun)
+	is_lerping_gun = true
+	value_to_gun = gun.get_proper_adjustment(player.position, 0.9)
+	print(value_to_gun)
+	time_to_gun = 0.5
+	await sig_done_gun
+
+func thingy_gun_adjust(gun : Gun, delta : float):
+	var weightperframe : float = delta*(value_to_gun/time_to_gun)/value_to_gun
+	gun_lerp_weight += weightperframe
+	print(gun_lerp_weight)
+	gun.rotation = lerp_angle(fmod(starting_gun,2*PI), fmod(value_to_gun,2*PI), gun_lerp_weight)
+	#print(gun.rotation)
+	if gun_lerp_weight > 1.0 or is_equal_approx(gun_lerp_weight, 1.0):
+		gun_lerp_weight = 0.0
+		is_lerping_gun = false
+		value_to_gun = 0
+		time_to_gun = 0
+		sig_done_gun.emit()
+		is_gun_to_player = true
+		
+	
 
 # ROTATION
 
@@ -87,20 +119,23 @@ func rotate_to(angle : float, time : float) -> void:
 func thingy_rotate(delta : float) -> void:
 	if is_rotating_to_player:
 		rotate_lerp_weight += delta*2
-		hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), (player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
+		if !is_returning_backwards:
+			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), (PI/2)+(player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
+		elif is_returning_backwards:
+			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), 3*(PI/2)+(player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
 	else:
 		var weightperframe : float = delta*(angle_to_rotate/time_to_rotate)/angle_to_rotate
 		rotate_lerp_weight += weightperframe
 		hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), fmod(starting_rotation+angle_to_rotate,2*PI), rotate_lerp_weight)
-		if rotate_lerp_weight > 1.0 or is_equal_approx(rotate_lerp_weight, 1.0):
-			rotate_lerp_weight = 0.0
-			is_rotating = false
-			angle_to_rotate = 0
-			time_to_rotate = 0
-			if is_rotating_to_player:
-				sig_facing_player.emit()
-				return
-			sig_done_rotating.emit()
+	if rotate_lerp_weight > 1.0 or is_equal_approx(rotate_lerp_weight, 1.0):
+		rotate_lerp_weight = 0.0
+		is_rotating = false
+		angle_to_rotate = 0
+		time_to_rotate = 0
+		if is_rotating_to_player:
+			sig_facing_player.emit()
+			return
+		sig_done_rotating.emit()
 
 # Rotates the enemy back to the player. Uses the same process as rotate_to but uses specific
 #		signals and flags.
@@ -108,6 +143,11 @@ func back_to_player() -> void:
 	is_rotating_to_player = true
 	is_rotating = true
 	time_to_rotate = 0.5
+	if (player.global_position-hboss.global_position).angle() > 0:
+		is_returning_backwards = false
+	elif (player.global_position-hboss.global_position).angle() <= 0:
+		is_returning_backwards = true
+	print("---------------------------")
 	starting_rotation = hboss.get_rotation()
 	await sig_facing_player
 	is_facing_player = true
@@ -125,8 +165,13 @@ func tick(delta : float) -> void:
 	#elif move_state == MoveStates.ENDWANDER: back_to_player()
 	if is_facing_player:
 		hboss.look_at(player.position)
+		hboss.rotation += PI/2
 	if is_rotating:
 		thingy_rotate(delta)
+	if is_lerping_gun:
+		thingy_gun_adjust(top_left_gun, delta)
+		thingy_gun_adjust(top_right_gun, delta)
+		#thingy_gun_adjust(gun)
 	#if current_action:
 		#enemy.velocity = Callable(self, current_action).call()
 	#if is_stoppedf:

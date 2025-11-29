@@ -9,3 +9,4 @@ res://scripts/ricochet_bullet.gd
 res://scripts/word_train.gd
 res://scenes/Hazards/word_train.tscn
 res://scripts/word_tracks.gd
+res://scenes/Characters/durdan.tscn

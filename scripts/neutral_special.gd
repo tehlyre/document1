@@ -50,13 +50,13 @@ func adjust(point : Vector2, theta : float) -> void:
 	var d = global_position.distance_to(point)
 	var s = global_position.distance_to(get_parent().global_position)
 	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
-	var cool_number = (question_mark-0.9)*180/PI
+	var cool_number = question_mark-0.9
 	if d > 112:
-		rotation_degrees = -cool_number*0.9
+		rotation = -cool_number*0.9
 
 func get_proper_adjustment(point : Vector2, theta : float) -> float:
 	var d = global_position.distance_to(point)
 	var s = global_position.distance_to(get_parent().global_position)
 	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
-	var cool_number = (question_mark-0.9)*180/PI
+	var cool_number = question_mark-0.9
 	return -cool_number*0.9

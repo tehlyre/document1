@@ -32,5 +32,4 @@ func _on_body_entered(body : PhysicsBody2D):
 
 
 func _process(_delta: float) -> void:
-	print(charbody.collision_layer)
 	position += velocity

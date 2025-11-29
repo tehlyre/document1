@@ -57,12 +57,16 @@ rotation = 1.579523
 scale = Vector2(0.25, 0.25)
 bullet_type = 2
 
-[node name="HBossMover" type="Timer" parent="." node_paths=PackedStringArray("hboss", "left", "right", "fire")]
+[node name="HBossMover" type="Timer" parent="." node_paths=PackedStringArray("hboss", "left", "right", "fire", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun")]
 script = ExtResource("3_s8cyw")
 hboss = NodePath("../HBoss")
 left = NodePath("../HBossNode2")
 right = NodePath("../HBossNode")
 fire = NodePath("../HBossFire")
+top_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial")
+top_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial2")
+butt_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial4")
+butt_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial3")
 metadata/_custom_type_script = "uid://bn4uso6oc5oj5"
 
 [node name="HBossFire" type="Timer" parent="." node_paths=PackedStringArray("mover", "hboss", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun", "gun_root")]
