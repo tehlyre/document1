@@ -40,10 +40,13 @@ var is_lerping_gun : bool = false
 var is_returning_backwards : bool = false
 var gun_lerp_weight : float = 0
 var is_gun_to_player : bool = false
+var gorpees = []
+var adjustees = []
+
 
 signal sig_done_rotating()
 signal sig_facing_player()
-signal sig_done_gun()
+signal sig_done_gorping()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -73,28 +76,35 @@ func cue_movement():
 	if move_state == MoveStates.LEFT: move_state = MoveStates.RIGHT
 	elif move_state == MoveStates.RIGHT: move_state = MoveStates.LEFT
 
-func lerp_gun_adjust(gun : Gun):
+func gorp_to_player(gun : Gun):
+	print("gorp", gun)
 	starting_gun = gun.get_rotation()
 	print(starting_gun)
-	is_lerping_gun = true
-	value_to_gun = gun.get_proper_adjustment(player.position, 0.9)
+	value_to_gun = gun.get_proper_adjustment(player.position, 10)
+	gorpees.append({"gun":gun, "gorp_weight":0.0, "starting_gorp":starting_gun, "ending_gorp":value_to_gun, "time_to_gorp":0.5})
 	print(value_to_gun)
 	time_to_gun = 0.5
-	await sig_done_gun
+	await sig_done_gorping
 
-func thingy_gun_adjust(gun : Gun, delta : float):
-	var weightperframe : float = delta*(value_to_gun/time_to_gun)/value_to_gun
-	gun_lerp_weight += weightperframe
-	print(gun_lerp_weight)
-	gun.rotation = lerp_angle(fmod(starting_gun,2*PI), fmod(value_to_gun,2*PI), gun_lerp_weight)
+func thingy_gorp(gun : Dictionary, delta : float):
+	var weightperframe : float = delta*(gun["ending_gorp"]/gun["time_to_gorp"])/gun["ending_gorp"]
+	gorpees.erase(gun)
+	gun["gorp_weight"] += weightperframe
+	#print(gun_lerp_weight)
+	#print(gun)
+	print(gun["gun"].rotation)
+	gun["gun"].rotation = lerp_angle(fmod(gun["starting_gorp"],2*PI), fmod(gun["starting_gorp"]+gun["ending_gorp"],2*PI), gun["gorp_weight"])
+	print(gun["gun"].rotation, "u")
 	#print(gun.rotation)
-	if gun_lerp_weight > 1.0 or is_equal_approx(gun_lerp_weight, 1.0):
+	gorpees.append(gun)
+	if gun["gorp_weight"] > 1.0 or is_equal_approx(gun["gorp_weight"], 1.0) or is_nan(gun["gorp_weight"]):
 		gun_lerp_weight = 0.0
-		is_lerping_gun = false
+		gorpees.erase(gun)
 		value_to_gun = 0
 		time_to_gun = 0
-		sig_done_gun.emit()
+		sig_done_gorping.emit()
 		is_gun_to_player = true
+		adjustees.append(gun["gun"])
 		
 	
 
@@ -168,9 +178,11 @@ func tick(delta : float) -> void:
 		hboss.rotation += PI/2
 	if is_rotating:
 		thingy_rotate(delta)
-	if is_lerping_gun:
-		thingy_gun_adjust(top_left_gun, delta)
-		thingy_gun_adjust(top_right_gun, delta)
+	print(gorpees)
+	for i in gorpees:
+		thingy_gorp(i, delta)
+	for i in adjustees:
+		i.adjust(player.position)
 		#thingy_gun_adjust(gun)
 	#if current_action:
 		#enemy.velocity = Callable(self, current_action).call()

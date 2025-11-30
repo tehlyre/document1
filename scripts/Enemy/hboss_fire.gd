@@ -49,8 +49,9 @@ func ccw_sprinkler() -> void:
 		#butt_left_gun.fire()
 		#butt_right_gun.fire()
 	await mover.back_to_player()
-	await mover.lerp_gun_adjust(top_left_gun)
-	await mover.lerp_gun_adjust(top_right_gun)
+	mover.gorp_to_player(top_left_gun)
+	mover.gorp_to_player(top_right_gun)
+	await mover.sig_done_gorping
 
 #func homing() -> void:
 	#current_action = "homing"

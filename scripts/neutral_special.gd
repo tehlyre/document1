@@ -46,17 +46,11 @@ func fire() -> void:
 # cursor. The algorithm is mostly just magic, but it works. It stops attempting to adjust when the
 # cursor gets within 112 pixels, which was tested to be a reasonable distance. This was literally
 # made with a teensy bit of precalculus and a lot of trial and error.
-func adjust(point : Vector2, theta : float) -> void:
+func adjust(point : Vector2) -> void:
 	var d = global_position.distance_to(point)
-	var s = global_position.distance_to(get_parent().global_position)
-	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
-	var cool_number = question_mark-0.9
 	if d > 112:
-		rotation = -cool_number*0.9
+		look_at(point)
+		#rotation = -(total_angle_on_gun-angle_on_gun)
 
 func get_proper_adjustment(point : Vector2, theta : float) -> float:
-	var d = global_position.distance_to(point)
-	var s = global_position.distance_to(get_parent().global_position)
-	var question_mark = asin(d*sin(theta)/sqrt(pow(d,2)+pow(s,2)-2*d*s*cos(theta)))
-	var cool_number = question_mark-0.9
-	return -cool_number*0.9
+	return get_angle_to(point)

@@ -92,7 +92,7 @@ func _physics_process(delta : float) -> void:
 	$toPlayer.target_position = to_local(player.position)
 	thingy_hazard()
 	mover.tick(delta)
-	gun.adjust(player.global_position, THETA)
+	gun.adjust(player.global_position)
 	move_and_slide()
 	$enemyHealthBar.value = health
 	if is_zero_approx(health):

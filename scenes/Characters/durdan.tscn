@@ -30,7 +30,6 @@ texture = ExtResource("2_ovms2")
 
 [node name="neutralSpecial" parent="." instance=ExtResource("3_qlc2s")]
 position = Vector2(432.587, 342.758)
-rotation = -0.270105
 bullet_type = 1
 is_on_player = true
 

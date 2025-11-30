@@ -250,7 +250,8 @@ func _physics_process(delta) -> void:
 	#   Thingy Calls (no particular order)
 		thingy_hazard()
 		thingy_velocity(delta)
-		gun.adjust(get_global_mouse_position(), THETA)
+		gun.adjust(get_global_mouse_position())
+		
 		if Input.is_action_just_pressed("neutral special"):
 			if cutscene_firing_buffer == 0:
 				gun.fire()
