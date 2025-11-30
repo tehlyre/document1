@@ -63,12 +63,8 @@ var inventory : Dictionary = {'keys':0, 'coins':0}
 # PackedScend debug: This is a pointer to the debug_window I tried to implement at one point.
 var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
 
-# bool is_player_dead: Whether or not the player has died in this current timespace continuum.
-var is_player_dead : bool = false
+
 var d_ : DebugWindow
-var is_opening_chest : bool = false
-var is_on_options : bool = false
-var is_opening_map : bool = false
 var menu_state : MenuStates = MenuStates.MENU_NONE
 
 var hud_hidden : bool = false:
@@ -90,7 +86,7 @@ signal sig_toggle_pause(is_paused : bool)
 signal sig_open_map(is_opening : bool, player_position : Vector2)
 
 var current_cutscene_trigger
-var delete_trigger_on_end = true
+var is_deleting_cutscene_trigger_on_end = true
 
 enum MenuStates {
 	MENU_NONE,
@@ -130,10 +126,6 @@ func _ready() -> void:
 		d_.ready_labels(2)
 	
 
-func can_pause_game() -> bool:
-	return !is_player_dead and !is_opening_chest and !is_on_options and !is_opening_map
-func can_open_map() -> bool:
-	return !is_game_paused and !is_player_dead and !is_opening_chest and !is_on_options
 
 # Called when an input is pressed. Pauses/resumes the game when escape is pressed so long as the 
 # player is alive. The pause button cannot be activated when the player is dead. Pauses the game 
@@ -142,7 +134,7 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("cancel") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP]):
 		if menu_state == MenuStates.MENU_MAP:
 			sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
-			is_opening_map = !is_opening_map
+			#is_opening_map = !is_opening_map
 		else:
 			hud_hidden = !hud_hidden
 			get_tree().paused = !get_tree().paused
@@ -150,11 +142,11 @@ func _input(event : InputEvent) -> void:
 		sig_toggle_pause.emit(is_game_paused)
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
-		is_opening_map = !is_opening_map
+		#is_opening_map = !is_opening_map
 		hud_hidden = !hud_hidden
 		print(hud_hidden)
 		get_tree().paused = !get_tree().paused
-		if is_opening_map:
+		if menu_state == MenuStates.MENU_NONE:
 			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
 			menu_state = MenuStates.MENU_MAP
 		else:
@@ -205,7 +197,7 @@ func _on_cutscene_trigger(code : String, trigger):
 
 func _on_cutscene_end():
 	hud_hidden = !hud_hidden
-	if delete_trigger_on_end:
+	if is_deleting_cutscene_trigger_on_end:
 		current_cutscene_trigger.queue_free()
 	menu_state = MenuStates.MENU_NONE
 	player.cutscene_running = false
@@ -249,7 +241,6 @@ func _on_player_death() -> void:
 func _on_game_restart() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
-	is_player_dead = false
 
 func _on_change_inventory(type : String, bywhat : int) -> void:
 	inventory[type] = inventory[type] + bywhat
@@ -263,8 +254,8 @@ func _on_player_change_health(health : float) -> void:
 func _on_teleportation(pos) -> void:
 	if pos is Vector2:
 		sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
-		is_opening_map = !is_opening_map
-		prints(is_opening_map, "owo", pos)
+		#is_opening_map = !is_opening_map
+		#prints(is_opening_map, "owo", pos)
 		get_tree().paused = !get_tree().paused
 		menu_state = MenuStates.MENU_NONE
 		hud_hidden = false

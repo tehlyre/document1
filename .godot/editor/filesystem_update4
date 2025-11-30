@@ -7,3 +7,4 @@ res://scenes/Hazards/word_train.tscn
 res://scenes/Characters/durdan.tscn
 res://scripts/Enemy/hboss_fire.gd
 res://scripts/Enemy/enemy.gd
+res://scripts/game.gd
