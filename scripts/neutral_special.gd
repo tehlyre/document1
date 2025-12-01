@@ -7,6 +7,7 @@ class_name Gun
 # PackedScene Bullet: The scene for the bullet that is fired off by the player
 var bullet : PackedScene
 @export var bullet_type : Aeon.BulletTypes
+var original_rotation : float
 #
 #
 # FLAGS
@@ -19,6 +20,7 @@ func _ready() -> void:
 	bullet = bullet_sprite_map[bullet_type]
 	$noGunZone.body_entered.connect(_on_noGunZone_body_entered)
 	$noGunZone.body_exited.connect(_on_noGunZone_body_exited)
+	original_rotation = rotation
 
 func _on_noGunZone_body_entered(_body : Node2D) -> void:
 	print("currently gooning")
@@ -35,7 +37,7 @@ func fire() -> void:
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
 		else:
-			owner.get_parent().find_child("Bullets").owner.add_child(b_)
+			owner.get_parent().owner.find_child("Bullets").add_child(b_)
 		b_.transform = $gunner.global_transform
 		b_.global_scale = Aeon.STANDARD_BULLET_SIZE
 
@@ -52,5 +54,8 @@ func adjust(point : Vector2) -> void:
 		look_at(point)
 		#rotation = -(total_angle_on_gun-angle_on_gun)
 
-func get_proper_adjustment(point : Vector2, theta : float) -> float:
+func reset_adjustment() -> void:
+	rotation = original_rotation
+
+func get_proper_adjustment(point : Vector2) -> float:
 	return get_angle_to(point)

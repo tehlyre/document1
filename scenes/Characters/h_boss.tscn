@@ -24,6 +24,7 @@ texture = ExtResource("1_38rpk")
 [node name="HBoss" type="CharacterBody2D" parent="."]
 position = Vector2(88, 3)
 collision_layer = 2
+collision_mask = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoss"]
 texture = ExtResource("2_s8cyw")
@@ -56,6 +57,12 @@ position = Vector2(-64, 96)
 rotation = 1.579523
 scale = Vector2(0.25, 0.25)
 bullet_type = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoss"]
+offset_left = 74.0
+offset_top = 6.0
+offset_right = 170.0
+offset_bottom = 33.0
 
 [node name="HBossMover" type="Timer" parent="." node_paths=PackedStringArray("hboss", "left", "right", "fire", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun")]
 script = ExtResource("3_s8cyw")

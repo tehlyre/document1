@@ -75,14 +75,17 @@ func cue_movement():
 	stop()
 	if move_state == MoveStates.LEFT: move_state = MoveStates.RIGHT
 	elif move_state == MoveStates.RIGHT: move_state = MoveStates.LEFT
+	top_left_gun.reset_adjustment()
+	top_right_gun.reset_adjustment()
+	butt_right_gun.reset_adjustment()
+	butt_left_gun.reset_adjustment()
+	is_facing_player = false
+	adjustees.clear()
 
 func gorp_to_player(gun : Gun):
-	print("gorp", gun)
 	starting_gun = gun.get_rotation()
-	print(starting_gun)
-	value_to_gun = gun.get_proper_adjustment(player.position, 10)
+	value_to_gun = gun.get_proper_adjustment(player.position)
 	gorpees.append({"gun":gun, "gorp_weight":0.0, "starting_gorp":starting_gun, "ending_gorp":value_to_gun, "time_to_gorp":0.5})
-	print(value_to_gun)
 	time_to_gun = 0.5
 	await sig_done_gorping
 
@@ -92,9 +95,7 @@ func thingy_gorp(gun : Dictionary, delta : float):
 	gun["gorp_weight"] += weightperframe
 	#print(gun_lerp_weight)
 	#print(gun)
-	print(gun["gun"].rotation)
 	gun["gun"].rotation = lerp_angle(fmod(gun["starting_gorp"],2*PI), fmod(gun["starting_gorp"]+gun["ending_gorp"],2*PI), gun["gorp_weight"])
-	print(gun["gun"].rotation, "u")
 	#print(gun.rotation)
 	gorpees.append(gun)
 	if gun["gorp_weight"] > 1.0 or is_equal_approx(gun["gorp_weight"], 1.0) or is_nan(gun["gorp_weight"]):
@@ -178,7 +179,6 @@ func tick(delta : float) -> void:
 		hboss.rotation += PI/2
 	if is_rotating:
 		thingy_rotate(delta)
-	print(gorpees)
 	for i in gorpees:
 		thingy_gorp(i, delta)
 	for i in adjustees:
