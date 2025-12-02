@@ -26,10 +26,3 @@ var room : Array
 var STANDARD_BULLET_SIZE = Vector2(1.25, 1.25)
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

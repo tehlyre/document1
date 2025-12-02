@@ -34,7 +34,7 @@ func _on_map_button_pressed():
 		return
 	var wall_node = get_tree().edited_scene_root.get_node("Wall")
 	var chests_node = get_tree().edited_scene_root.get_node("Chests")
-	OS.execute("python", ["yay.py", wall_node.get_used_cells_by_id(0), "stupid.png"])
+	OS.execute("python", ["yay.py", wall_node.get_used_cells_by_id(0), "the_map.png"])
 	var w_x = []
 	var w_y = []
 	for i in wall_node.get_used_cells_by_id(0):

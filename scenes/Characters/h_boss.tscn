@@ -1,30 +1,34 @@
-[gd_scene load_steps=8 format=3 uid="uid://bubomx8dujl4r"]
+[gd_scene load_steps=7 format=3 uid="uid://bubomx8dujl4r"]
 
 [ext_resource type="Script" uid="uid://o8pj8akg42ax" path="res://scenes/Characters/h_boss.gd" id="1_2myd6"]
 [ext_resource type="Texture2D" uid="uid://jm2lf0hg88mp" path="res://assets/textures/h-boss_node.png" id="1_38rpk"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="2_kkt0w"]
 [ext_resource type="Texture2D" uid="uid://dgqi75s5bedex" path="res://assets/textures/h-boss.png" id="2_s8cyw"]
-[ext_resource type="Script" uid="uid://bn4uso6oc5oj5" path="res://scripts/Enemy/hboss_mover.gd" id="3_s8cyw"]
-[ext_resource type="Script" uid="uid://d30ejkklcfbv1" path="res://scripts/Enemy/hboss_fire.gd" id="5_gcgtl"]
+[ext_resource type="Script" uid="uid://ded0c8tnbfuuq" path="res://scenes/Characters/hbosscharacter.gd" id="3_e8ura"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s8cyw"]
 radius = 63.560993
 
-[node name="HBoss" type="Node2D"]
+[node name="HBoss" type="Node2D" node_paths=PackedStringArray("top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun")]
 script = ExtResource("1_2myd6")
+top_right_gun = NodePath("HBoss/gunnies/NeutralSpecial")
+top_left_gun = NodePath("HBoss/gunnies/NeutralSpecial2")
+butt_right_gun = NodePath("HBoss/gunnies/NeutralSpecial4")
+butt_left_gun = NodePath("HBoss/gunnies/NeutralSpecial3")
 
-[node name="HBossNode" type="Sprite2D" parent="."]
+[node name="right" type="Sprite2D" parent="."]
 position = Vector2(89, 1)
 texture = ExtResource("1_38rpk")
 
-[node name="HBossNode2" type="Sprite2D" parent="."]
+[node name="left" type="Sprite2D" parent="."]
 position = Vector2(-83, 1)
 texture = ExtResource("1_38rpk")
 
-[node name="HBoss" type="CharacterBody2D" parent="."]
+[node name="HBoss" type="CharacterBody2D" parent="." groups=["enemies"]]
 position = Vector2(88, 3)
 collision_layer = 2
 collision_mask = 5
+script = ExtResource("3_e8ura")
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoss"]
 texture = ExtResource("2_s8cyw")
@@ -58,31 +62,10 @@ rotation = 1.579523
 scale = Vector2(0.25, 0.25)
 bullet_type = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="HBoss"]
-offset_left = 74.0
-offset_top = 6.0
-offset_right = 170.0
-offset_bottom = 33.0
-
-[node name="HBossMover" type="Timer" parent="." node_paths=PackedStringArray("hboss", "left", "right", "fire", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun")]
-script = ExtResource("3_s8cyw")
-hboss = NodePath("../HBoss")
-left = NodePath("../HBossNode2")
-right = NodePath("../HBossNode")
-fire = NodePath("../HBossFire")
-top_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial")
-top_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial2")
-butt_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial4")
-butt_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial3")
-metadata/_custom_type_script = "uid://bn4uso6oc5oj5"
-
-[node name="HBossFire" type="Timer" parent="." node_paths=PackedStringArray("mover", "hboss", "top_right_gun", "top_left_gun", "butt_right_gun", "butt_left_gun", "gun_root")]
-script = ExtResource("5_gcgtl")
-mover = NodePath("../HBossMover")
-hboss = NodePath("../HBoss")
-top_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial")
-top_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial2")
-butt_right_gun = NodePath("../HBoss/gunnies/NeutralSpecial4")
-butt_left_gun = NodePath("../HBoss/gunnies/NeutralSpecial3")
-gun_root = NodePath("../HBoss/gunnies")
-metadata/_custom_type_script = "uid://d30ejkklcfbv1"
+[node name="HBossHealthBar" type="ProgressBar" parent="HBoss"]
+offset_left = -47.0
+offset_top = -14.0
+offset_right = 49.0
+offset_bottom = 13.0
+value = 100.0
+show_percentage = false

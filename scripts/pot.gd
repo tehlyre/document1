@@ -14,11 +14,9 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func smash():
+	@warning_ignore("int_as_enum_without_cast")
 	pot_state += 1
 	switch_sprite()
 

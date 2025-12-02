@@ -59,4 +59,3 @@ func _physics_process(_delta : float) -> void:
 	collision = move_and_collide(velocity)
 	if collision != null:
 		on_body_entered(collision.get_collider())
-		print(collision.get_normal())

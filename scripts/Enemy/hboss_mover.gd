@@ -48,6 +48,16 @@ signal sig_done_rotating()
 signal sig_facing_player()
 signal sig_done_gorping()
 
+func _init(h_ : HBossChar, p_ : Player, trg : Gun, tlg : Gun, brg : Gun, blg : Gun, ln : Sprite2D, rn : Sprite2D) -> void:
+	hboss = h_
+	player = p_
+	top_left_gun = tlg
+	top_right_gun = trg
+	butt_left_gun = blg
+	butt_right_gun = brg
+	left = ln
+	right = rn
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#timeout.connect(_on_timeout)

@@ -3,18 +3,27 @@ class_name HBossFire
 
 
 @export var mover : HBossMover
-@export var hboss : CharacterBody2D
+var hboss : CharacterBody2D
 @export var top_right_gun : Gun
 @export var top_left_gun : Gun
 @export var butt_right_gun : Gun
 @export var butt_left_gun : Gun
-@export var player : Player
+var player : Player
 
 @export var gun_root : Node2D
 
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 var current_action = "none"
+
+func _init(h_ : HBossChar, p_ : Player, trg : Gun, tlg : Gun, brg : Gun, blg : Gun, m_ : HBossMover) -> void:
+	hboss = h_
+	player = p_
+	top_left_gun = tlg
+	top_right_gun = trg
+	butt_left_gun = blg
+	butt_right_gun = brg
+	mover = m_
 
 func _ready() -> void:
 	timeout.connect(_on_timeout)

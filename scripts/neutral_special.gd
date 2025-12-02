@@ -34,14 +34,13 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 func fire() -> void:
 	if !is_in_illinois:
 		var b_ = bullet.instantiate()
+		b_.is_fired_by_player = is_on_player
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
 		else:
 			owner.get_parent().owner.find_child("Bullets").add_child(b_)
 		b_.transform = $gunner.global_transform
 		b_.global_scale = Aeon.STANDARD_BULLET_SIZE
-
-		b_.is_fired_by_player = is_on_player
 
 
 # Called every frame to adjust the (player's) gun so that when fired, the bullets pass through the

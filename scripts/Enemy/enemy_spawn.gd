@@ -4,6 +4,7 @@ class_name EnemySpawn
 @export var cam : Camera2D
 var CAMERA_TO_TILE : Vector2i = Vector2i(32, 18)
 var enemy : PackedScene = preload("res://scenes/Characters/enemigo.tscn")
+var hboss : PackedScene = preload("res://scenes/Characters/h_boss.tscn")
 @export var enemy_root : Node2D
 @export var player : Player
 @export var walls : Wall
@@ -31,9 +32,15 @@ func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
 	var bright_bound : Vector2i = (Vector2i(cool_arrayx.max(), cool_arrayy.max())+Vector2i.ONE)*CAMERA_TO_TILE
 	for child in enemy_root.get_children():
 		child.queue_free()
-	for i in get_used_cells():
+	for i in get_used_cells_by_id(0):
 		if bounded_by_rectangle(i, tleft_bound, bright_bound):
 			var e_ = enemy.instantiate()
+			e_.player = player
+			e_.position = map_to_local(i)
+			enemy_root.add_child(e_)
+	for i in get_used_cells_by_id(1):
+		if bounded_by_rectangle(i, tleft_bound, bright_bound):
+			var e_ = hboss.instantiate()
 			e_.player = player
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
