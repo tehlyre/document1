@@ -5,12 +5,14 @@ class_name EnemySpawn
 var CAMERA_TO_TILE : Vector2i = Vector2i(32, 18)
 var enemy : PackedScene = preload("res://scenes/Characters/enemigo.tscn")
 var hboss : PackedScene = preload("res://scenes/Characters/h_boss.tscn")
-@export var enemy_root : Node2D
+@export var enemy_root : EnemyRoot
 @export var player : Player
 @export var walls : Wall
+var dnr : Array[Vector2i] = []
 
 
 func _ready() -> void:
+	enemy_root.do_not_resuscitate.connect(_on_miniboss_death)
 	walls.sig_this_room.connect(_on_player_change_rooms)
 	_on_player_change_rooms([Vector2i.ZERO], Vector2i.ZERO)
 	for i in get_used_cells():
@@ -21,6 +23,10 @@ func bounded_by_rectanglei(arg_ : Vector2i, tleft : Vector2i, bright : Vector2i)
 
 func bounded_by_rectangle(arg_ : Vector2, tleft : Vector2, bright : Vector2) -> bool:
 	return arg_.x > tleft.x and arg_.y > tleft.y and arg_.x < bright.x and arg_.y < bright.y
+
+func _on_miniboss_death(coords):
+	if coords is Vector2i:
+		dnr.append(coords)
 
 func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
 	var cool_arrayx : Array[int] = []
@@ -39,8 +45,10 @@ func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
 	for i in get_used_cells_by_id(1):
-		if bounded_by_rectangle(i, tleft_bound, bright_bound):
-			var e_ = hboss.instantiate()
+		print(dnr, "uwu")
+		if bounded_by_rectangle(i, tleft_bound, bright_bound) and i not in dnr:
+			var e_ : HBoss = hboss.instantiate()
 			e_.player = player
+			e_.spawn_coords = i
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)

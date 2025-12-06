@@ -58,7 +58,7 @@ func debug(debugger : DebugWindow) -> void:
 
 # Dictionary inventory: This is a dictionary of the array of everything in the player's
 # inventory.
-var inventory : Dictionary = {'keys':0, 'coins':0}
+var inventory : Dictionary = {'keys':1, 'coins':0}
 
 # PackedScend debug: This is a pointer to the debug_window I tried to implement at one point.
 var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")

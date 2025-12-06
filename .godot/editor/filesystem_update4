@@ -2,3 +2,8 @@ res://scenes/UI/pausemenu.tscn
 res://scripts/Enemy/hboss_mover.gd
 res://scripts/Enemy/hboss_fire.gd
 res://scenes/Characters/h_boss.tscn
+res://scenes/Levels/container.tscn
+res://scenes/Levels/enemy_root.gd
+res://scenes/Characters/h_boss.gd
+res://scripts/Enemy/enemy_spawn.gd
+res://scripts/game.gd

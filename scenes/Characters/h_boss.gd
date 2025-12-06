@@ -10,6 +10,7 @@ var fire : HBossFire
 @export var top_left_gun : Gun
 @export var butt_right_gun : Gun
 @export var butt_left_gun : Gun
+@export var spawn_coords : Vector2i
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _process(delta: float) -> void:
 	mover.tick(delta)
 	$HBoss/HBossHealthBar.value = health
 	if is_zero_approx(health):
+		get_parent().miniboss_dead = [true, spawn_coords]
 		queue_free()
 
 # Damages the enemy when hit with a bullet. Called by bullet.gd

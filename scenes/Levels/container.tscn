@@ -1,10 +1,11 @@
-[gd_scene load_steps=29 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=30 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="Script" uid="uid://5ou7lynh5rfx" path="res://scripts/camera.gd" id="4_h4gck"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Interactables/chest.tscn" id="6_l41vt"]
+[ext_resource type="Script" uid="uid://j0t8gfgtn0r7" path="res://scenes/Levels/enemy_root.gd" id="7_2xe36"]
 [ext_resource type="Script" uid="uid://ljvv1x31b24r" path="res://scripts/room.gd" id="7_cdtvu"]
 [ext_resource type="Texture2D" uid="uid://4se753nw0uvs" path="res://assets/textures/Wall.png" id="8_imx2c"]
 [ext_resource type="PackedScene" uid="uid://jyymc6g4n643" path="res://scenes/Interactables/door.tscn" id="9_l41vt"]
@@ -110,6 +111,7 @@ script = ExtResource("7_cdtvu")
 player = NodePath("../Durdan")
 
 [node name="enemies" type="Node2D" parent="Room"]
+script = ExtResource("7_2xe36")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room"]
 visible = false
