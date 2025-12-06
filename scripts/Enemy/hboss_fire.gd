@@ -76,14 +76,15 @@ func homing() -> void:
 	current_action = "homing"
 	await mover.back_to_player()
 	var guns_to_fire = []
-	if (top_right_gun.global_position-player.global_position).length_squared() < abs(butt_right_gun.global_position-player.global_position).length_squared():
+	if mover.front_side == mover.FrontSides.TOP:
 		mover.gorp_to_player(top_right_gun)
 		mover.gorp_to_player(top_left_gun)
 		await mover.sig_done_gorping
 		await mover.sig_done_gorping
 		guns_to_fire.append(top_left_gun)
 		guns_to_fire.append(top_right_gun)
-	else:
+	elif mover.front_side == mover.FrontSides.BUTT:
+		print("sigma")
 		mover.gorp_to_player(butt_right_gun)
 		mover.gorp_to_player(butt_left_gun)
 		await mover.sig_done_gorping

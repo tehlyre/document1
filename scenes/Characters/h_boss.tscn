@@ -69,3 +69,9 @@ offset_right = 49.0
 offset_bottom = 13.0
 value = 100.0
 show_percentage = false
+
+[node name="backward" type="Marker2D" parent="HBoss"]
+position = Vector2(0, 100)
+
+[node name="forward" type="Marker2D" parent="HBoss"]
+position = Vector2(0, -100)

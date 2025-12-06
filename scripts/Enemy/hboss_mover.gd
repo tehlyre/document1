@@ -16,7 +16,12 @@ enum MoveStates {
 	LEFT,
 	RIGHT
 }
-
+enum FrontSides {
+	TOP,
+	BUTT
+}
+var front_side : FrontSides = FrontSides.TOP
+var up_vector : Vector2
 var move_state : MoveStates = MoveStates.NOT:
 	set(new_state):
 		move_state = new_state
@@ -140,10 +145,10 @@ func rotate_to(angle : float, time : float) -> void:
 func thingy_rotate(delta : float) -> void:
 	if is_rotating_to_player:
 		rotate_lerp_weight += delta*2
-		if !is_returning_backwards:
-			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), (PI/2)+(player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
-		elif is_returning_backwards:
-			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), 3*(PI/2)+(player.global_position-hboss.global_position).angle(), rotate_lerp_weight)
+		if front_side == FrontSides.TOP:
+			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), fmod(starting_rotation,2*PI)+(up_vector).angle_to(hboss.global_position-player.global_position), rotate_lerp_weight)
+		elif front_side == FrontSides.BUTT:
+			hboss.rotation = lerp_angle(fmod(starting_rotation,2*PI), fmod(starting_rotation, 2*PI)+(up_vector).angle_to(hboss.global_position-player.global_position), rotate_lerp_weight)
 	else:
 		var weightperframe : float = delta*(angle_to_rotate/time_to_rotate)/angle_to_rotate
 		rotate_lerp_weight += weightperframe
@@ -163,12 +168,13 @@ func thingy_rotate(delta : float) -> void:
 func back_to_player() -> void:
 	is_rotating_to_player = true
 	is_rotating = true
-	time_to_rotate = 0.5
-	if (player.global_position-hboss.global_position).angle() > 0:
-		is_returning_backwards = false
-	elif (player.global_position-hboss.global_position).angle() <= 0:
-		is_returning_backwards = true
-	print("---------------------------")
+	time_to_rotate = 5
+	if top_right_gun.global_position.distance_squared_to(player.global_position) < butt_right_gun.global_position.distance_squared_to(player.position):
+		front_side = FrontSides.TOP
+		up_vector = hboss.global_position-hboss.get_node("forward").global_position
+	elif top_right_gun.position.distance_squared_to(player.global_position) > butt_right_gun.global_position.distance_squared_to(player.position):
+		front_side = FrontSides.BUTT
+		up_vector = hboss.global_position-hboss.get_node("backward").global_position
 	starting_rotation = hboss.get_rotation()
 	await sig_facing_player
 	is_facing_player = true
@@ -187,6 +193,8 @@ func tick(delta : float) -> void:
 	if is_facing_player:
 		hboss.look_at(player.position)
 		hboss.rotation += PI/2
+		if front_side == FrontSides.BUTT:
+			hboss.rotation += PI
 	if is_rotating:
 		thingy_rotate(delta)
 	for i in gorpees:
