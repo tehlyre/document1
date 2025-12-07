@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 	mover.tick(delta)
 	$HBoss/HBossHealthBar.value = health
 	if is_zero_approx(health):
-		get_parent().miniboss_dead = [true, spawn_coords]
+		get_parent().miniboss_dead = [true, spawn_coords, self]
+		await get_parent().relay
 		queue_free()
 
 # Damages the enemy when hit with a bullet. Called by bullet.gd

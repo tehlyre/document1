@@ -24,7 +24,7 @@ func bounded_by_rectanglei(arg_ : Vector2i, tleft : Vector2i, bright : Vector2i)
 func bounded_by_rectangle(arg_ : Vector2, tleft : Vector2, bright : Vector2) -> bool:
 	return arg_.x > tleft.x and arg_.y > tleft.y and arg_.x < bright.x and arg_.y < bright.y
 
-func _on_miniboss_death(coords):
+func _on_miniboss_death(coords, _miniboss):
 	if coords is Vector2i:
 		dnr.append(coords)
 

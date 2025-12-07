@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=31 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="PackedScene" uid="uid://ve2teaboq3m1" path="res://scenes/Hazards/word_tracks.tscn" id="16_wctgd"]
 [ext_resource type="PackedScene" uid="uid://clkxl6pjtcs2r" path="res://scenes/Hazards/word_train.tscn" id="17_groel"]
+[ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -110,8 +111,9 @@ collision_mask = 2
 script = ExtResource("7_cdtvu")
 player = NodePath("../Durdan")
 
-[node name="enemies" type="Node2D" parent="Room"]
+[node name="enemies" type="Node2D" parent="Room" node_paths=PackedStringArray("bullet_root")]
 script = ExtResource("7_2xe36")
+bullet_root = NodePath("../../Bullets")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room"]
 visible = false
@@ -140,7 +142,9 @@ walls = NodePath("../Wall")
 [node name="Triggers" type="Node2D" parent="."]
 script = ExtResource("15_wctgd")
 
-[node name="Bullets" type="Node2D" parent="."]
+[node name="Bullets" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+script = ExtResource("18_poti2")
+enemy_root = NodePath("../Room/enemies")
 
 [node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
 script = ExtResource("16_do0wj")

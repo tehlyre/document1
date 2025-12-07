@@ -20,13 +20,13 @@ class_name Bullet
 # FLAGS
 
 # bool is_fired_by_player: Stores whether or not 
-var is_fired_by_player : bool
+var firee : Node2D
 var collision : KinematicCollision2D
 
 
 # Called when bullet is fired/node is instantiated. Connects the body_entered signal to on_body_entered().
 func _ready() -> void:
-	if is_fired_by_player: collision_mask -= 1
+	if firee is Player: collision_mask -= 1
 	else: collision_mask -= 2
 	global_scale = Aeon.STANDARD_BULLET_SIZE
 
@@ -52,7 +52,7 @@ func on_body_entered(body : Node2D) -> void:
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float) -> void:
-	if is_fired_by_player:
+	if firee is Player:
 		velocity = transform.x*SPEED_WHEN_PLAYER
 	else:
 		velocity = transform.x * SPEED_WHEN_ENEMY

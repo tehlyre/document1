@@ -34,7 +34,8 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 func fire() -> void:
 	if !is_in_illinois:
 		var b_ = bullet.instantiate()
-		b_.is_fired_by_player = is_on_player
+		b_.firee = owner
+		print(b_.firee)
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
 		else:
