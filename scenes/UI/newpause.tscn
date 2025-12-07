@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://d16h21e2xwsh"]
+
+[ext_resource type="Script" uid="uid://juwi6y5cqsur" path="res://scripts/UI/pausemenu.gd" id="1_06dgy"]
+[ext_resource type="Texture2D" uid="uid://cdxlb4ea4425h" path="res://assets/textures/paused.png" id="2_37kvf"]
+[ext_resource type="Texture2D" uid="uid://dgtw6ll7tx75o" path="res://assets/textures/save.png" id="3_8rqa4"]
+[ext_resource type="Texture2D" uid="uid://dgxn5xkch5r2n" path="res://assets/textures/load.png" id="4_26tb5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my3fk"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_qti3k"]
+Panel/styles/panel = SubResource("StyleBoxFlat_my3fk")
+VBoxContainer/constants/separation = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84fyi"]
+bg_color = Color(0.3366076, 0.33660764, 0.33660752, 1)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_06dgy")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_qti3k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_top = 54.0
+offset_right = 259.0
+offset_bottom = 720.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture = ExtResource("2_37kvf")
+
+[node name="Save" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("3_8rqa4")
+
+[node name="Load" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("4_26tb5")
+
+[node name="Panel" type="Panel" parent="Panel"]
+z_index = 1
+layout_mode = 0
+offset_left = -24.0
+offset_top = 53.0
+offset_right = 260.0
+offset_bottom = 730.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_84fyi")

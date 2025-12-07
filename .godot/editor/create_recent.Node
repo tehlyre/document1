@@ -1,3 +1,8 @@
+TextureButton
+Panel
+TextureRect
+Button
+VBoxContainer
 Marker2D
 ProgressBar
 StaticBody2D
@@ -8,7 +13,3 @@ HBossFire
 Node2D
 Timer
 Gun
-Sprite2D
-HBossMover
-VScrollBar
-Control

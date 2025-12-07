@@ -12,3 +12,4 @@ res://scripts/bullet.gd
 res://scripts/ricochet_bullet.gd
 res://scenes/Levels/bullet_root.gd
 res://scripts/neutral_special.gd
+res://scenes/UI/newpause.tscn
