@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="69.099991mm"
+   height="24.099998mm"
+   viewBox="0 0 69.099991 24.099998"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="main_menu.svg"
+   inkscape:export-filename="..\textures\main_menu.png"
+   inkscape:export-xdpi="95.204063"
+   inkscape:export-ydpi="95.204063"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#dcd1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.7332701"
+     inkscape:cx="111.03915"
+     inkscape:cy="59.452595"
+     inkscape:window-width="1366"
+     inkscape:window-height="697"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <rect
+       x="40.875167"
+       y="17.074437"
+       width="56.914789"
+       height="55.362568"
+       id="rect10" />
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect6"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+       radius="0"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="1"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-55.900002,-86.199997)">
+    <path
+       id="rect1"
+       style="fill:none;stroke:#0000ff;stroke-width:0.607;stroke-dasharray:none;stroke-opacity:1"
+       d="M 56.163035 86.47905 L 56.163035 110.0311 L 124.74438 110.0311 L 124.74438 86.47905 L 124.19971 86.47905 L 124.19971 109.48178 L 56.775401 109.48178 L 56.775401 86.47905 L 56.163035 86.47905 z " />
+    <text
+       xml:space="preserve"
+       style="font-size:11.2889px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="69.599998"
+       y="95.699997"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1"
+         x="69.599998"
+         y="95.699997" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       x="88.106209"
+       y="100.43214"
+       id="text2"><tspan
+         sodipodi:role="line"
+         style="font-size:7.05556px;stroke-width:1"
+         x="88.106209"
+         y="100.43214"
+         id="tspan3">Main Menu</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,55.900002,86.199997)"
+       id="text10"
+       style="font-size:53.3333px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect10);display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.48315;stroke-opacity:1" />
+    <path
+       id="path10"
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.659432;stroke-opacity:1"
+       inkscape:transform-center-x="-8.4383686e-06"
+       inkscape:transform-center-y="-0.99105629"
+       d="m 74.760494,91.597891 -3.011606,2.972855 -3.011593,2.973435 h 2.196829 v 6.014519 h 2.631092 v -4.091213 h 2.352387 v 4.091213 h 2.669845 v -6.014519 h 2.196243 l -3.011606,-2.973435 z" />
+  </g>
+</svg>
