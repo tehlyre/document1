@@ -8,10 +8,10 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="drawing.svg"
-   inkscape:export-filename="textures\paused.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
+   sodipodi:docname="paused.svg"
+   inkscape:export-filename="..\textures\paused.png"
+   inkscape:export-xdpi="59.415203"
+   inkscape:export-ydpi="59.415203"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1.1481103"
-     inkscape:cx="321.83318"
-     inkscape:cy="137.18194"
+     inkscape:zoom="1.3547943"
+     inkscape:cx="43.918106"
+     inkscape:cy="89.681511"
      inkscape:window-width="1366"
      inkscape:window-height="697"
      inkscape:window-x="-8"
@@ -65,7 +65,7 @@
        d="M 53.399999,110.4 Z"
        id="path1" />
     <path
-       style="fill:#0000ff;stroke-width:0.264583"
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-dasharray:none;stroke-opacity:1"
        id="rect1"
        width="68.400002"
        height="22.799999"
@@ -74,20 +74,21 @@
        ry="0"
        inkscape:path-effect="#path-effect4"
        sodipodi:type="rect"
-       d="M 37.799999,127.2 H 100.63537 A 5.5646312,5.5646312 45 0 1 106.2,132.76463 V 150 H 37.799999 Z" />
+       d="M 37.799999,127.2 H 100.63537 A 5.5646312,5.5646312 45 0 1 106.2,132.76463 V 150 H 37.799999 Z"
+       transform="matrix(0.97697524,0,0,0.93944963,1.7174364,8.4302744)" />
     <path
        style="fill:#0000ff;stroke-width:0.264583"
        d="m 93.178994,127.12012 c 12.940056,6.62913 0,0 0,0 z"
        id="path2" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.1719px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;stroke-width:0.35559"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke-width:0.35559"
        x="50.549831"
        y="143.2906"
        id="text4"
        transform="scale(0.99617432,1.0038404)"><tspan
          id="tspan4"
-         style="font-size:15.1719px;fill:#ffffff;stroke-width:0.35559"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.7px;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';fill:#000000;fill-opacity:1;stroke-width:0.35559"
          x="50.549831"
          y="143.2906"
          sodipodi:role="line">Paused</tspan></text>

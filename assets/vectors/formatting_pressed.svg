@@ -10,8 +10,8 @@
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    sodipodi:docname="formatting_pressed.svg"
    inkscape:export-filename="..\textures\formatting_pressed.png"
-   inkscape:export-xdpi="95.204063"
-   inkscape:export-ydpi="95.204063"
+   inkscape:export-xdpi="58.813324"
+   inkscape:export-ydpi="58.813324"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
      inkscape:deskcolor="#dcd1d1"
      inkscape:document-units="mm"
      inkscape:zoom="2.9215956"
-     inkscape:cx="122.70692"
+     inkscape:cx="148.37782"
      inkscape:cy="29.607109"
      inkscape:window-width="1366"
      inkscape:window-height="697"
@@ -66,7 +66,7 @@
        inkscape:label="Layer 2"
        transform="translate(55.900002,86.199997)">
       <rect
-         style="fill:#0000ff;stroke-width:0.657"
+         style="fill:#000000;stroke-width:0.657;fill-opacity:1"
          id="rect3"
          width="78.878838"
          height="35.500008"
@@ -74,10 +74,6 @@
          y="79.86071"
          transform="translate(-55.900002,-86.199996)" />
     </g>
-    <path
-       id="rect1"
-       style="fill:none;stroke:#0000ff;stroke-width:0.607;stroke-dasharray:none;stroke-opacity:1"
-       d="M 56.163035 86.47905 L 56.163035 110.0311 L 124.74438 110.0311 L 124.74438 86.47905 L 124.19971 86.47905 L 124.19971 109.48178 L 56.775401 109.48178 L 56.775401 86.47905 L 56.163035 86.47905 z " />
     <text
        xml:space="preserve"
        style="font-size:11.2889px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
@@ -91,12 +87,12 @@
          y="95.699997" /></text>
     <text
        xml:space="preserve"
-       style="font-size:7.40833px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       style="font-size:6.35px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="87.633842"
        y="100.16045"
        id="text2"><tspan
          sodipodi:role="line"
-         style="font-size:7.40833px;stroke-width:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';fill:#ffffff;fill-opacity:1;stroke-width:1"
          x="87.633842"
          y="100.16045"
          id="tspan3">Formatting</tspan></text>

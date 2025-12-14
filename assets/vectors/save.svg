@@ -10,15 +10,15 @@
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    sodipodi:docname="save.svg"
    inkscape:export-filename="..\textures\save.png"
-   inkscape:export-xdpi="95.204063"
-   inkscape:export-ydpi="95.204063"
+   inkscape:export-xdpi="58.813324"
+   inkscape:export-ydpi="58.813324"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#000000"
+     pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
      inkscape:showpageshadow="2"
@@ -26,15 +26,16 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#dcd1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.9215956"
-     inkscape:cx="94.982345"
-     inkscape:cy="52.197505"
+     inkscape:zoom="1.4607978"
+     inkscape:cx="154.3677"
+     inkscape:cy="-1.0268362"
      inkscape:window-width="1366"
      inkscape:window-height="697"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showguides="false" />
   <defs
      id="defs1">
     <inkscape:path-effect
@@ -78,15 +79,11 @@
      id="layer1"
      transform="translate(-55.900002,-86.199997)">
     <path
-       id="rect1"
-       style="fill:none;stroke:#0000ff;stroke-width:0.607;stroke-dasharray:none;stroke-opacity:1"
-       d="M 56.163035 86.47905 L 56.163035 110.0311 L 124.74438 110.0311 L 124.74438 86.47905 L 124.19971 86.47905 L 124.19971 109.48178 L 56.775401 109.48178 L 56.775401 86.47905 L 56.163035 86.47905 z " />
-    <path
        id="rect2"
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        d="M 66.7986,90.894215 V 103.64382 H 79.248487 V 93.205187 l -2.515092,-2.310971 z" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.55;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.55;stroke-dasharray:none;stroke-opacity:1"
        id="rect4-7"
        width="6.9159393"
        height="5.186954"
@@ -97,7 +94,7 @@
        d="m 65.573349,93.109032 h 6.915939 v 5.186954 h -6.915939 z"
        transform="translate(3.9486886,-1.9559296)" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.55;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.55;stroke-dasharray:none;stroke-opacity:1"
        id="rect5"
        width="8.5808878"
        height="4.5465894"
@@ -116,12 +113,12 @@
          y="95.699997" /></text>
     <text
        xml:space="preserve"
-       style="font-size:11.2889px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ffe6e6;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
+       style="font-size:11.2889px;font-family:Carlito;-inkscape-font-specification:Carlito;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
        x="87.299995"
        y="101.7"
        id="text2"><tspan
          sodipodi:role="line"
-         style="stroke-width:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';fill:#000000;fill-opacity:1;stroke-width:1"
          x="87.299995"
          y="101.7"
          id="tspan3">Save</tspan></text>

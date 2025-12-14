@@ -24,12 +24,28 @@ extends Control
 
 @export var game : GameManager
 @export var level : Node2D
-@export var options_menu : Control
+@onready var options_menu : Control = $Panel/Menus/Options
 
 @onready var options_button : TextureButton = $Panel/VBoxContainer/Options
 @onready var resume_button : TextureButton = $Panel/VBoxContainer/Resume
 @onready var quit_button : TextureButton = $Panel/VBoxContainer/MainMenu
+@onready var formatting_button : TextureButton = $Panel/VBoxContainer/Formatting
+@onready var save_button : TextureButton = $Panel/VBoxContainer/Save
+@onready var load_button : TextureButton = $Panel/VBoxContainer/Load
 
+@onready var resume_menu : Control = $Panel/Menus/Resume
+@onready var save_menu : Control = $Panel/Menus/Save
+
+enum PauseMenuTabs {
+	NONE,
+	RESUME,
+	SAVE,
+	LOAD,
+	FORMATTING,
+	OPTIONS,
+	MAIN_MENU
+}
+@export var pause_menu_tab : PauseMenuTabs = PauseMenuTabs.NONE
 
 
 var died : bool = false
@@ -41,9 +57,20 @@ signal resume()
 func _ready() -> void:
 	hide()
 	game.connect("sig_toggle_pause", on_game_paused)
-	options_button.connect("pressed", on_options_pressed)
+	#options_button.connect("pressed", on_options_pressed)
 	resume_button.connect("pressed", on_resume_pressed)
 	quit_button.connect("pressed", on_quit_pressed)
+	resume_button.connect("toggled", on_toggled.bind(PauseMenuTabs.RESUME))
+	save_button.connect("toggled", on_toggled.bind(PauseMenuTabs.SAVE))
+	load_button.connect("toggled", on_toggled.bind(PauseMenuTabs.LOAD))
+	formatting_button.connect("toggled", on_toggled.bind(PauseMenuTabs.FORMATTING))
+	options_button.connect("toggled", on_toggled.bind(PauseMenuTabs.OPTIONS))
+	quit_button.connect("toggled", on_toggled.bind(PauseMenuTabs.MAIN_MENU))
+
+func on_toggled(which_one : PauseMenuTabs):
+	pause_menu_tab = which_one
+	for i in $Panel/VBoxContainer.get_children():
+		if i is TextureButton: i.button_pressed = false
 
 # Function void on_game_paused(bool is_paused): Connected to game.toggle_paused. If the game is paused, show the menu,
 # else, hide the menu.
@@ -61,6 +88,7 @@ func on_game_paused(is_paused : bool) -> void:
 # manager to unpause the game.
 func on_resume_pressed() -> void:
 	resume.emit()
+	pause_menu_tab = PauseMenuTabs.NONE
 
 # Function void on_options_pressed(): Connected to options_button.pressed. Simply hides the pause menu and shows the
 # options menu.
@@ -74,3 +102,22 @@ func on_options_pressed() -> void:
 func on_quit_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/UI/startmenu.tscn")
+
+func _process(_delta: float) -> void:
+	for i in $Panel/VBoxContainer.get_children():
+		if i is TextureButton:
+			i.texture_normal = i.textnorm
+	for i in $Panel/Menus.get_children():
+		i.hide()
+	match pause_menu_tab:
+		PauseMenuTabs.NONE:
+			resume_menu.show()
+		PauseMenuTabs.RESUME:
+			resume_menu.show()
+		PauseMenuTabs.LOAD: pass
+		PauseMenuTabs.SAVE:
+			save_menu.show()
+		PauseMenuTabs.FORMATTING: pass
+		PauseMenuTabs.OPTIONS:
+			options_menu.show()
+		PauseMenuTabs.MAIN_MENU: pass

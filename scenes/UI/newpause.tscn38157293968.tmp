@@ -1,0 +1,151 @@
+[gd_scene load_steps=19 format=3 uid="uid://d16h21e2xwsh"]
+
+[ext_resource type="Script" uid="uid://45jrh0oot5dh" path="res://scenes/UI/newpause.gd" id="1_my3fk"]
+[ext_resource type="Texture2D" uid="uid://cdxlb4ea4425h" path="res://assets/textures/paused.png" id="2_37kvf"]
+[ext_resource type="Texture2D" uid="uid://dgtw6ll7tx75o" path="res://assets/textures/save.png" id="3_8rqa4"]
+[ext_resource type="Texture2D" uid="uid://bemx3shdu4xvt" path="res://assets/textures/resume.png" id="3_qti3k"]
+[ext_resource type="Texture2D" uid="uid://dgxn5xkch5r2n" path="res://assets/textures/load.png" id="4_26tb5"]
+[ext_resource type="Texture2D" uid="uid://dogeib4iooqm" path="res://assets/textures/resume_pressed.png" id="4_84fyi"]
+[ext_resource type="Script" uid="uid://roeh3bxynx47" path="res://scenes/UI/pausemenubutton.gd" id="5_iu50n"]
+[ext_resource type="Texture2D" uid="uid://d30nwbw138sck" path="res://assets/textures/formatting.png" id="5_qti3k"]
+[ext_resource type="Texture2D" uid="uid://cgvgoregqqlkt" path="res://assets/textures/options.png" id="6_84fyi"]
+[ext_resource type="Texture2D" uid="uid://c3arpdrimhjp0" path="res://assets/textures/save_pressed.png" id="6_ef0cy"]
+[ext_resource type="Texture2D" uid="uid://dscic41353jyw" path="res://assets/textures/main_menu.png" id="7_ls5hu"]
+[ext_resource type="Texture2D" uid="uid://dmvpbjipi77p7" path="res://assets/textures/load_pressed.png" id="8_iu50n"]
+[ext_resource type="Texture2D" uid="uid://dnqtvci572ogf" path="res://assets/textures/formatting_pressed.png" id="10_bo8yn"]
+[ext_resource type="Texture2D" uid="uid://g0pft8w1gomq" path="res://assets/textures/options_pressed.png" id="12_v8s2u"]
+[ext_resource type="Texture2D" uid="uid://chwvitfkr3qql" path="res://assets/textures/main_menu_pressed.png" id="14_n0o2i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my3fk"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_qti3k"]
+Panel/styles/panel = SubResource("StyleBoxFlat_my3fk")
+VBoxContainer/constants/separation = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84fyi"]
+bg_color = Color(0.3366076, 0.33660764, 0.33660752, 1)
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_my3fk")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_qti3k")
+
+[node name="Panel" type="Panel" parent="Panel"]
+z_index = 1
+layout_mode = 0
+offset_left = -124.0
+offset_top = 88.0
+offset_right = 160.0
+offset_bottom = 765.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_84fyi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_top = 54.0
+offset_right = 160.0
+offset_bottom = 720.0
+mouse_filter = 0
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture = ExtResource("2_37kvf")
+stretch_mode = 2
+
+[node name="Resume" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_qti3k")
+texture_pressed = ExtResource("4_84fyi")
+texture_hover = ExtResource("4_84fyi")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("3_qti3k")
+
+[node name="Save" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("3_8rqa4")
+texture_pressed = ExtResource("6_ef0cy")
+texture_hover = ExtResource("6_ef0cy")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("3_8rqa4")
+
+[node name="Load" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("4_26tb5")
+texture_pressed = ExtResource("8_iu50n")
+texture_hover = ExtResource("8_iu50n")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("4_26tb5")
+
+[node name="Formatting" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("5_qti3k")
+texture_pressed = ExtResource("10_bo8yn")
+texture_hover = ExtResource("10_bo8yn")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("5_qti3k")
+
+[node name="Options" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("6_84fyi")
+texture_pressed = ExtResource("12_v8s2u")
+texture_hover = ExtResource("12_v8s2u")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("6_84fyi")
+
+[node name="MainMenu" type="TextureButton" parent="Panel/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+texture_normal = ExtResource("7_ls5hu")
+texture_pressed = ExtResource("14_n0o2i")
+texture_hover = ExtResource("14_n0o2i")
+script = ExtResource("5_iu50n")
+textnorm = ExtResource("7_ls5hu")
+
+[node name="Menus" type="Control" parent="Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Resume" type="Control" parent="Panel/Menus"]
+visible = false
+anchors_preset = 0
+offset_left = 178.0
+offset_top = 103.0
+offset_right = 1243.0
+offset_bottom = 705.0
+
+[node name="Label" type="Label" parent="Panel/Menus/Resume"]
+layout_mode = 0
+offset_left = 399.0
+offset_top = 12.0
+offset_right = 1327.0
+offset_bottom = 2192.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 320
+text = "a"
+
+[node name="Save" type="Control" parent="Panel/Menus"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
