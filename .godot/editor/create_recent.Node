@@ -1,10 +1,10 @@
-HSlider
 Label
+Button
 Panel
+HSlider
 Control
 TextureButton
 TextureRect
-Button
 VBoxContainer
 Marker2D
 ProgressBar
@@ -12,4 +12,3 @@ StaticBody2D
 CharacterBody2D
 CollisionShape2D
 Area2D
-HBossFire
