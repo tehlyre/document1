@@ -89,6 +89,7 @@ func thingy_damage(damage : int) -> void:
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta : float) -> void:
+	
 	$toPlayer.target_position = to_local(player.position)
 	thingy_hazard()
 	mover.tick(delta)

@@ -38,3 +38,6 @@ bullet_type = 1
 collision_mask = 65
 
 [node name="enemyGunTimer" type="Timer" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-11.5, -11.5, 23.5, 23)

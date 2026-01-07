@@ -116,9 +116,10 @@ collision_mask = 2
 script = ExtResource("7_cdtvu")
 player = NodePath("../Durdan")
 
-[node name="enemies" type="Node2D" parent="Room" node_paths=PackedStringArray("bullet_root")]
+[node name="enemies" type="Node2D" parent="Room" node_paths=PackedStringArray("bullet_root", "cam")]
 script = ExtResource("7_2xe36")
 bullet_root = NodePath("../../Bullets")
+cam = NodePath("../../Camera")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room"]
 visible = false
@@ -136,7 +137,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAASAAwAAgAAAAAAAAAYAAwAAgAAAAAAAAAPAAQAAgAAAAAAAAAFAAsAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")

@@ -1,2 +1,8 @@
 res://scenes/main.tscn
 res://scripts/game.gd
+res://scenes/Characters/dummy.tscn
+res://scenes/Characters/dummy.gd
+res://scenes/Levels/enemy_root.gd
+res://scenes/Levels/container.tscn
+res://scripts/Enemy/enemy.gd
+res://scripts/camera.gd

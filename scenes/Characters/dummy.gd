@@ -26,6 +26,7 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var gun : Gun = $neutralSpecial
 @onready var player_raycast = $toPlayer
 
+
 # CONSTANTS
 
 # float MAX_SPEED: The maximum speed of the enemy under normal conditions
@@ -52,9 +53,11 @@ var health : float = 100.0
 
 # Creates and adds the mover and the fire managers.
 func _ready() -> void:
-	pass
+	$VisibleOnScreenNotifier2D.screen_entered.connect(_xd_lol)
 	#print(get_parent())
 
+func _xd_lol():
+	get_parent().enemy_on_screen = [true, self]
 
 
 # Halves maximum speed if the enemy is in goo.
@@ -83,7 +86,7 @@ func thingy_damage(damage : int) -> void:
 # Called every frame.. First sets the behavior state, then sets the maximum speed with thingy_hazard(). Afterwards, the appropriate function
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
-func _physics_process(delta : float) -> void:
+func _physics_process(_delta : float) -> void:
 	thingy_hazard()
 	$enemyHealthBar.value = health
 	if is_zero_approx(health):

@@ -54,6 +54,8 @@ func debug(debugger : DebugWindow) -> void:
 @onready var logmenu : Control = $menuLayer/logMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
+@onready var enemyroot : Node2D = $container/Room/enemies
+@onready var camera : Camera2D = $container/Camera
 @export var is_debugging : bool = false
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
@@ -288,6 +290,11 @@ func _on_alignment_chosen(alignment : String):
 	get_tree().paused = !get_tree().paused
 	alignmentmenu.hide()
 	disable_release_once.append("q")
-	print(alignment)
+	if alignment == "left":
+		for enemy in enemyroot.enemies_on_screen:
+			print(enemy.global_position)
+			print((2.0/3)*enemy.get_global_transform_with_canvas().origin.x)
+			@warning_ignore("integer_division")
+			enemy.global_position.x = (2.0/3)*(enemy.get_global_transform_with_canvas().origin.x) + camera.position.x
 
 	
