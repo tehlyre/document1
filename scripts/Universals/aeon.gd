@@ -20,6 +20,17 @@ enum BulletTypes {
 	RICOCHET
 }
 
+enum PlayerAbilities {
+	NONE,
+	ALIGNMENT,
+	FONT_SIZE
+}
+
+var player_inventory : Dictionary = {'keys':1, 'coins':0}
+var equipped_abilities : Dictionary = {'q': PlayerAbilities.ALIGNMENT, "e" : PlayerAbilities.FONT_SIZE}
+
+var player_abilities_map : Dictionary = {PlayerAbilities.NONE : "None", PlayerAbilities.ALIGNMENT : "Alignment", PlayerAbilities.FONT_SIZE : "Font Size"}
+
 var name_map = {Aeon.Characters.DURDAN: "Durdan", Aeon.Characters.CELIA: "Celia", Aeon.Characters.JOSEPHUS: "Josephus"}
 var room : Array
 

@@ -74,9 +74,16 @@ var previous_rotation : float = 0
 # his current position.
 var interactables : Array[Interactable] = []
 
-var inventory : Dictionary = {}
+#var ability_callable_map : Dictionary = {Aeon.PlayerAbilities.NONE : "none", Aeon.PlayerAbilities.ALIGNMENT : "alignment", Aeon.PlayerAbilities.FONT_SIZE : "font_size"}
 
 
+
+enum AlignmentStyles {
+	ALIGN_LEFT,
+	ALIGN_CENTER,
+	ALIGN_RIGHT,
+	ALIGN_JUSTIFY
+}
 
 
 
@@ -91,8 +98,6 @@ var inventory : Dictionary = {}
 signal sig_you_died()
 signal sig_open_chest(chest : Chest)
 signal sig_open_door(doorID : int)
-signal sig_change_inventory(item : String, bywhat : int)
-signal sig_query_inventory()
 signal sig_set_healthbar(health : float)
 
 
@@ -132,11 +137,11 @@ func _input(event : InputEvent) -> void:
 			print("openous intentions")
 			sig_open_chest.emit(interactables[0])
 			interactables[0].is_opened = true
-		elif interactables[0] is Door and inventory["keys"] >= 1:
+		elif interactables[0] is Door and Aeon.inventory["keys"] >= 1:
 			print("openous intentions")
 			sig_open_door.emit(interactables[0])
 			interactables[0].is_opened = true
-			sig_change_inventory.emit("keys", -1)
+			Aeon.inventory["keys"] -= 1
 	elif (event.is_action_pressed("sprint")) and is_sprinting == false:
 		is_sprinting = true
 		current_max_speed = MAX_SPEED*2
@@ -144,7 +149,24 @@ func _input(event : InputEvent) -> void:
 	elif (event.is_action_released("sprint")) and is_sprinting == true:
 		is_sprinting = false
 		current_max_speed = MAX_SPEED/2
+		print("ooiejpgqiohporeihgqpoweihgpoi")
 		current_acceleration = ACCELERATION/2
+	elif (event.is_action_pressed("special_q")):
+		match Aeon.equipped_abilities["q"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				alignment(AlignmentStyles.ALIGN_LEFT)
+			Aeon.PlayerAbilities.FONT_SIZE:
+				font_size(67)
+	elif (event.is_action_pressed("special_e")):
+		match Aeon.equipped_abilities["e"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				alignment(AlignmentStyles.ALIGN_LEFT)
+			Aeon.PlayerAbilities.FONT_SIZE:
+				font_size(67)
 
 
 
@@ -221,6 +243,29 @@ func thingy_velocity(delta) -> void:
 			velocity = velocity.normalized() * current_max_speed
 
 
+# SPECIALS
+
+func alignment(direction : AlignmentStyles):
+	print("aligning fufufufu")
+	match direction:
+		AlignmentStyles.ALIGN_LEFT:
+			pass
+		AlignmentStyles.ALIGN_CENTER:
+			pass
+		AlignmentStyles.ALIGN_RIGHT:
+			pass
+		AlignmentStyles.ALIGN_JUSTIFY:
+			pass
+
+func font_size(size : int):
+	print("sizing xdxdxdxd: ", size)
+	pass
+
+
+
+
+
+
 
 
 # PROCESS
@@ -234,7 +279,6 @@ func thingy_velocity(delta) -> void:
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
 	if !is_cutscene_running:
-		sig_query_inventory.emit()
 		# For facing the mouse {
 		
 		if is_using_mouse:
@@ -248,7 +292,7 @@ func _physics_process(delta) -> void:
 	#	}
 
 	#   Thingy Calls (no particular order)
-		thingy_hazard()
+		#thingy_hazard()
 		thingy_velocity(delta)
 		gun.adjust(get_global_mouse_position())
 		
@@ -257,7 +301,7 @@ func _physics_process(delta) -> void:
 				gun.fire()
 			elif cutscene_firing_buffer > 0:
 				cutscene_firing_buffer -= 1
-		
+		if velocity.length() > current_max_speed: velocity = velocity.normalized()*current_max_speed
 		move_and_slide()
 		previous_rotation = rotation
 	else:

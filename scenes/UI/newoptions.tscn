@@ -1,0 +1,121 @@
+[gd_scene load_steps=14 format=3 uid="uid://5xky34nuo8gj"]
+
+[ext_resource type="Texture2D" uid="uid://d17jkru7fka46" path="res://assets/textures/slider.png" id="1_adr2f"]
+[ext_resource type="Script" uid="uid://o1msbslomyx4" path="res://scripts/UI/newoptions.gd" id="1_jvjlt"]
+
+[sub_resource type="SystemFont" id="SystemFont_jvjlt"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6hbe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o26yd"]
+bg_color = Color(0.418, 0.63460004, 0.76, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awts7"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vdynl"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_wyr6a"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jg05w"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_2qqdp"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_majfb"]
+content_margin_left = 9.0
+content_margin_right = 9.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ardkv"]
+content_margin_left = 9.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.51, 0.51, 0.51, 1)
+
+[sub_resource type="Theme" id="Theme_jvjlt"]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 25
+Button/fonts/font = SubResource("SystemFont_jvjlt")
+Button/styles/focus = SubResource("StyleBoxEmpty_y6hbe")
+Button/styles/hover = SubResource("StyleBoxFlat_o26yd")
+Button/styles/normal = SubResource("StyleBoxFlat_awts7")
+Button/styles/pressed = SubResource("StyleBoxFlat_vdynl")
+HSlider/icons/grabber = ExtResource("1_adr2f")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 25
+Label/fonts/font = SubResource("SystemFont_wyr6a")
+Panel/styles/panel = SubResource("StyleBoxFlat_jg05w")
+TabBar/colors/font_selected_color = Color(0, 0, 0, 1)
+TabBar/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabBar/fonts/font = SubResource("SystemFont_2qqdp")
+TabBar/styles/tab_selected = SubResource("StyleBoxFlat_majfb")
+TabBar/styles/tab_unselected = SubResource("StyleBoxFlat_ardkv")
+VBoxContainer/constants/separation = 0
+
+[node name="newoptions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jvjlt")
+
+[node name="Whiteness" type="Panel" parent="."]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = SubResource("Theme_jvjlt")
+
+[node name="Back" type="Button" parent="Whiteness"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 611.0
+offset_right = 176.0
+offset_bottom = 674.0
+theme_override_colors/font_color = Color(0.34158427, 0.34158427, 0.3415842, 1)
+theme_override_font_sizes/font_size = 50
+text = "Back"
+alignment = 0
+
+[node name="Label" type="Label" parent="Whiteness"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 26.0
+offset_right = 246.0
+offset_bottom = 89.0
+theme_override_font_sizes/font_size = 50
+text = "Options"
+
+[node name="HSlider" type="HSlider" parent="Whiteness"]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 155.0
+offset_right = 527.0
+offset_bottom = 174.0
+
+[node name="Label2" type="Label" parent="Whiteness"]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 145.0
+offset_right = 256.0
+offset_bottom = 177.0
+text = "Music"

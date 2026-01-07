@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://o78je4rv0b31"]
+
+[ext_resource type="Texture2D" uid="uid://c5qcx63p86fvh" path="res://assets/textures/tab.png" id="1_7fkow"]
+[ext_resource type="Script" uid="uid://jolmq5pdbo2d" path="res://scenes/Interactables/tab.gd" id="1_d263k"]
+
+[sub_resource type="Animation" id="Animation_d263k"]
+resource_name = "position"
+length = 7.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TabBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 2.5, 6.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -900), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:is_colliding")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 6.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ecpk2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TabBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:is_colliding")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ecpk2"]
+_data = {
+&"RESET": SubResource("Animation_ecpk2"),
+&"position": SubResource("Animation_d263k")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d263k"]
+size = Vector2(110.66667, 12)
+
+[node name="tab" type="Node2D"]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_d263k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ecpk2")
+}
+autoplay = "position"
+
+[node name="TabBody" type="AnimatableBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TabBody"]
+rotation = -1.5707964
+texture = ExtResource("1_7fkow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TabBody"]
+position = Vector2(-0.6666667, -44)
+shape = SubResource("RectangleShape2D_d263k")
+one_way_collision = true

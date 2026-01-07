@@ -17,9 +17,8 @@
 [ext_resource type="Script" uid="uid://c4rmlrdtubg0c" path="res://scripts/Enemy/enemy_spawn.gd" id="11_n5cux"]
 [ext_resource type="Texture2D" uid="uid://btoqtg3sxs4jh" path="res://assets/textures/hboss_spawn.png" id="14_2xe36"]
 [ext_resource type="Script" uid="uid://d0r8wop71ad5q" path="res://scripts/triggers.gd" id="15_wctgd"]
+[ext_resource type="Texture2D" uid="uid://bvbmxpvv3q6n2" path="res://assets/textures/dummy_spawn.png" id="16_88tjj"]
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
-[ext_resource type="PackedScene" uid="uid://ve2teaboq3m1" path="res://scenes/Hazards/word_tracks.tscn" id="16_wctgd"]
-[ext_resource type="PackedScene" uid="uid://clkxl6pjtcs2r" path="res://scenes/Hazards/word_train.tscn" id="17_groel"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
@@ -59,13 +58,19 @@ texture_region_size = Vector2i(40, 40)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_poti2"]
 texture = ExtResource("14_2xe36")
-texture_region_size = Vector2i(80, 80)
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_88tjj"]
+texture = ExtResource("16_88tjj")
+texture_region_size = Vector2i(40, 40)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_qiya0"]
 tile_size = Vector2i(80, 80)
 sources/0 = SubResource("TileSetAtlasSource_n5cux")
 sources/1 = SubResource("TileSetAtlasSource_poti2")
+sources/2 = SubResource("TileSetAtlasSource_88tjj")
 
 [node name="container" type="Node2D" node_paths=PackedStringArray("player")]
 process_mode = 1
@@ -89,7 +94,7 @@ wall = NodePath("../Wall")
 enemy_spawn = NodePath("../enemySpawn")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(614, 1939)
+position = Vector2(897, 976)
 collision_layer = 1
 collision_mask = 107
 
@@ -131,7 +136,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")
@@ -149,14 +154,3 @@ enemy_root = NodePath("../Room/enemies")
 [node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
 script = ExtResource("16_do0wj")
 wall = NodePath("../Wall")
-
-[node name="WordTrain" parent="Trainens" instance=ExtResource("17_groel")]
-position = Vector2(923.7815, 1419.3804)
-rotation = 0.42901835
-scale = Vector2(9.492266, 3.3857064)
-
-[node name="WordTracks" parent="Trainens" node_paths=PackedStringArray("train") instance=ExtResource("16_wctgd")]
-position = Vector2(253.99997, 1112.9999)
-rotation = 0.42901835
-scale = Vector2(5.892239, 3.3857064)
-train = NodePath("../WordTrain")

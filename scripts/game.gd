@@ -47,7 +47,10 @@ func debug(debugger : DebugWindow) -> void:
 @onready var deathmenu : Control = $menuLayer/deathMenu
 @onready var chestmenu : Control = $menuLayer/chestMenu
 @onready var mapmenu : Control = $menuLayer/mapMenu
-@onready var dialoguemenu : Control = $menuLayer/dialogue_menu
+@onready var optionsmenu : Control = $menuLayer/optionsMenu
+@onready var savemenu : Control = $menuLayer/saveMenu
+@onready var dialoguemenu : Control = $menuLayer/dialogueMenu
+@onready var alignmentmenu : AlignmentMenu = $menuLayer/alignmentMenu
 @onready var logmenu : Control = $menuLayer/logMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
@@ -55,6 +58,8 @@ func debug(debugger : DebugWindow) -> void:
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
+
+var disable_release_once : Array
 
 # Dictionary inventory: This is a dictionary of the array of everything in the player's
 # inventory.
@@ -96,7 +101,8 @@ enum MenuStates {
 	MENU_CHEST,
 	MENU_MAP,
 	MENU_DIALOGUE,
-	MENU_LOG
+	MENU_LOG,
+	MENU_SAVE
 }
 
 
@@ -113,12 +119,11 @@ func _ready() -> void:
 	deathmenu.restart.connect(_on_game_restart)
 	player.sig_you_died.connect(_on_player_death)
 	player.sig_open_chest.connect(_on_player_open_chest)
-	player.sig_change_inventory.connect(_on_change_inventory)
-	player.sig_query_inventory.connect(_on_player_query_inventory)
 	player.sig_set_healthbar.connect(_on_player_change_health)
 	mapmarkersroot.teleportation.connect(_on_teleportation)
 	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
 	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
+	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -131,15 +136,21 @@ func _ready() -> void:
 # player is alive. The pause button cannot be activated when the player is dead. Pauses the game 
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
-	if event.is_action_pressed("cancel") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP]):
-		if menu_state == MenuStates.MENU_MAP:
-			sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
-			#is_opening_map = !is_opening_map
-		else:
-			hud_hidden = !hud_hidden
-			get_tree().paused = !get_tree().paused
-		is_game_paused = !is_game_paused
-		sig_toggle_pause.emit(is_game_paused)
+	if event.is_action_pressed("cancel"):
+		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP]):
+			if menu_state == MenuStates.MENU_MAP:
+				sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
+				#is_opening_map = !is_opening_map
+			else:
+				hud_hidden = !hud_hidden
+				get_tree().paused = !get_tree().paused
+			is_game_paused = !is_game_paused
+			sig_toggle_pause.emit(is_game_paused)
+		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
+			optionsmenu.hide()
+			savemenu.hide()
+			pausemenu.show()
+			menu_state = MenuStates.MENU_PAUSE
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
 		#is_opening_map = !is_opening_map
@@ -165,7 +176,24 @@ func _input(event : InputEvent) -> void:
 			dialoguemenu.show()
 			logmenu.hide()
 			logmenu.get_node("VScrollBar").value = logmenu.get_node("VScrollBar").max_value
-		
+	elif (event.is_action_pressed("special_q")):
+		match Aeon.equipped_abilities["q"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				alignmentmenu.show()
+				get_tree().paused = !get_tree().paused
+				
+	elif (event.is_action_released("special_q")):
+		match Aeon.equipped_abilities["q"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				if "q" in disable_release_once:
+					disable_release_once.erase("q")
+					return
+				get_tree().paused = !get_tree().paused
+				alignmentmenu.hide()
 
 
 
@@ -179,8 +207,6 @@ func _input(event : InputEvent) -> void:
 
 # Serves the rudimentary inventory that is a placeholder for things to come.
 func _process(_delta : float) -> void:
-	$hud/playerInventory/keys.text = "Keys: x"+str(int(inventory['keys']))
-	$hud/playerInventory/coins.text = "Coins: "+str(int(inventory['coins']))
 	if is_debugging: debug(d_)
 	#print(is_opening_map)
 
@@ -221,9 +247,9 @@ func _on_game_resume() -> void:
 # Fired when the player opens a chest, connected to player.opened_chest. Puts the contents of the 
 # chest into the player's inventory and then deletes it by setting the chest's is_opened to true.
 func _on_player_open_chest(chest : Chest) -> void:
-	inventory['keys'] += chest.parsed['keys']
-	inventory['coins'] += chest.parsed['coins'] if chest.parsed['coins'] != null else 0
-	inventory['coins'] = int(inventory['coins'])
+	Aeon.player_inventory['keys'] += chest.parsed['keys']
+	Aeon.player_inventory['coins'] += chest.parsed['coins'] if chest.parsed['coins'] != null else 0
+	Aeon.player_inventory['coins'] = int(Aeon.player_inventory['coins'])
 	menu_state = MenuStates.MENU_CHEST
 
 
@@ -232,7 +258,7 @@ func _on_player_open_chest(chest : Chest) -> void:
 func _on_player_death() -> void:
 	$hud/playerHealthBar.value = 0
 	menu_state = MenuStates.MENU_DEATH
-	inventory = {'keys':0, 'coins':0}
+	Aeon.player_inventory = {'keys':0, 'coins':0}
 	
 
 
@@ -242,11 +268,9 @@ func _on_game_restart() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func _on_change_inventory(type : String, bywhat : int) -> void:
-	inventory[type] = inventory[type] + bywhat
 
-func _on_player_query_inventory() -> void:
-	player.inventory = inventory
+
+
 
 func _on_player_change_health(health : float) -> void:
 	$hud/playerHealthBar.value = health
@@ -260,5 +284,10 @@ func _on_teleportation(pos) -> void:
 		menu_state = MenuStates.MENU_NONE
 		hud_hidden = false
 
+func _on_alignment_chosen(alignment : String):
+	get_tree().paused = !get_tree().paused
+	alignmentmenu.hide()
+	disable_release_once.append("q")
+	print(alignment)
 
 	

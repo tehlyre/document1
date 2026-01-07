@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://bke4d8w4p3krb"]
+
+[ext_resource type="Script" uid="uid://3wwm706a1e88" path="res://scenes/UI/specials/alignment_menu.gd" id="1_iw275"]
+
+[node name="AlignmentMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iw275")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.223
+anchor_bottom = 0.27800003
+offset_left = 538.0
+offset_top = 276.0
+offset_right = 360.56
+offset_bottom = 98.83998
+text = "Align Enemies"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.30600002
+anchor_bottom = 0.32700002
+offset_left = 514.0
+offset_top = 307.0
+offset_right = 362.31998
+offset_bottom = 108.55998
+
+[node name="left" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Left"
+
+[node name="center" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Center"
+
+[node name="right" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Right"

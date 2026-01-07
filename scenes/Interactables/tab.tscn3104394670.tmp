@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://o78je4rv0b31"]
+
+[ext_resource type="Texture2D" uid="uid://c5qcx63p86fvh" path="res://assets/textures/tab.png" id="1_7fkow"]
+[ext_resource type="Script" uid="uid://jolmq5pdbo2d" path="res://scenes/Interactables/tab.gd" id="1_d263k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d263k"]
+size = Vector2(12, 61)
+
+[node name="tab" type="AnimatableBody2D"]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_d263k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7fkow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(44, -0.5)
+shape = SubResource("RectangleShape2D_d263k")
+
+[node name="TabTimer" type="Timer" parent="."]

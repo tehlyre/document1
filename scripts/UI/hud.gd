@@ -22,4 +22,10 @@ var game_manager : GameManager
 # Called on startup. Prints the players inventory for debugging purposes.
 func _ready() -> void:
 	game_manager = get_tree().get_root().get_node("gameManager")
-	$playerHealthBar.value = 100.0
+	$hudRoot/playerHealthBar.value = 100.0
+
+func _process(_delta : float) -> void:
+	$hudRoot/playerInventory/keys.text = "Keys: x"+str(int(Aeon.player_inventory['keys']))
+	$hudRoot/playerInventory/coins.text = "Coins: "+str(int(Aeon.player_inventory['coins']))
+	$hudRoot/playerAbilities/q.text = "Q: "+Aeon.player_abilities_map[Aeon.equipped_abilities["q"]]
+	$hudRoot/playerAbilities/e.text = "E: "+Aeon.player_abilities_map[Aeon.equipped_abilities["e"]]

@@ -5,6 +5,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_wtg4a"]
 font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wtg4a"]
 
@@ -19,6 +20,7 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_37kvf"]
 font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my3fk"]
 bg_color = Color(1, 1, 1, 1)
@@ -85,7 +87,7 @@ offset_left = 65.0
 offset_top = 35.0
 offset_right = 540.0
 offset_bottom = 98.0
-theme_override_colors/font_color = Color(0.58431375, 0.58431375, 0.58431375, 1)
+theme_override_colors/font_color = Color(0.78, 0.78, 0.78, 1)
 text = "Paused"
 
 [node name="Resume" type="Button" parent="Whiteness/DocOutline"]

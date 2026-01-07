@@ -1,0 +1,137 @@
+[gd_scene load_steps=16 format=3 uid="uid://bl1ctofn4ryr6"]
+
+[ext_resource type="Script" uid="uid://dxrcmrr88cs1b" path="res://scenes/UI/newsave.gd" id="1_6tas7"]
+[ext_resource type="Texture2D" uid="uid://d17jkru7fka46" path="res://assets/textures/slider.png" id="1_op3sm"]
+[ext_resource type="Texture2D" uid="uid://b0ax5hlynkgby" path="res://assets/vectors/save_icon_red.svg" id="2_op3sm"]
+
+[sub_resource type="SystemFont" id="SystemFont_op3sm"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6tas7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc8xf"]
+bg_color = Color(0.418, 0.63460004, 0.76, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4oke"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2pw75"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_p8oia"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0io3"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_qbpie"]
+font_names = PackedStringArray("Libre Baskerville")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hfas"]
+content_margin_left = 9.0
+content_margin_right = 9.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8l8ke"]
+content_margin_left = 9.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.51, 0.51, 0.51, 1)
+
+[sub_resource type="Theme" id="Theme_8gdmn"]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 25
+Button/fonts/font = SubResource("SystemFont_op3sm")
+Button/styles/focus = SubResource("StyleBoxEmpty_6tas7")
+Button/styles/hover = SubResource("StyleBoxFlat_mc8xf")
+Button/styles/normal = SubResource("StyleBoxFlat_k4oke")
+Button/styles/pressed = SubResource("StyleBoxFlat_2pw75")
+HSlider/icons/grabber = ExtResource("1_op3sm")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 25
+Label/fonts/font = SubResource("SystemFont_p8oia")
+Panel/styles/panel = SubResource("StyleBoxFlat_e0io3")
+TabBar/colors/font_selected_color = Color(0, 0, 0, 1)
+TabBar/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabBar/fonts/font = SubResource("SystemFont_qbpie")
+TabBar/styles/tab_selected = SubResource("StyleBoxFlat_6hfas")
+TabBar/styles/tab_unselected = SubResource("StyleBoxFlat_8l8ke")
+VBoxContainer/constants/separation = 0
+
+[sub_resource type="SystemFont" id="SystemFont_f6ywp"]
+font_names = PackedStringArray("Caveat")
+
+[node name="newsave" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6tas7")
+
+[node name="Whiteness" type="Panel" parent="."]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = SubResource("Theme_8gdmn")
+
+[node name="Back" type="Button" parent="Whiteness"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 26.0
+offset_right = 172.0
+offset_bottom = 89.0
+theme_override_colors/font_color = Color(0.34158427, 0.34158427, 0.3415842, 1)
+theme_override_font_sizes/font_size = 50
+text = "Back"
+alignment = 0
+
+[node name="TextureRect" type="TextureRect" parent="Whiteness"]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 159.0
+offset_right = 966.0
+offset_bottom = 639.0
+texture = ExtResource("2_op3sm")
+
+[node name="Name" type="Label" parent="Whiteness/TextureRect"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 24.0
+offset_right = 242.0
+offset_bottom = 87.0
+theme_override_fonts/font = SubResource("SystemFont_f6ywp")
+theme_override_font_sizes/font_size = 50
+text = "Durdan"
+
+[node name="Level" type="Label" parent="Whiteness/TextureRect"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 83.0
+offset_right = 246.0
+offset_bottom = 146.0
+theme_override_fonts/font = SubResource("SystemFont_f6ywp")
+text = "Level 67"
+
+[node name="Hours" type="Label" parent="Whiteness/TextureRect"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 80.0
+offset_right = 376.0
+offset_bottom = 143.0
+theme_override_fonts/font = SubResource("SystemFont_f6ywp")
+text = "6:07"

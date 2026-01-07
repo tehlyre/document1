@@ -46,7 +46,6 @@ func update_position() -> void:
 			if global_position.y > limit_top:
 				tweeny = get_tree().create_tween()
 				tweeny.tween_property(self, "global_position:y", global_position.y+player.velocity.y/40, 0.033)
-				print(position)
 		else:
 			if tweeny != null:
 				tweeny.kill()

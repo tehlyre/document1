@@ -25,6 +25,7 @@ extends Control
 @export var game : GameManager
 @export var level : Node2D
 @export var options_menu : Control
+@export var save_menu : Control
 
 @onready var options_button : Button = $Whiteness/DocOutline/Options
 @onready var resume_button : Button = $Whiteness/DocOutline/Resume
@@ -60,12 +61,10 @@ func _ready() -> void:
 	#options_button.connect("pressed", on_options_pressed)
 	resume_button.connect("pressed", on_resume_pressed)
 	quit_button.connect("pressed", on_quit_pressed)
-	resume_button.connect("pressed", on_toggled.bind(PauseMenuTabs.RESUME))
-	save_button.connect("pressed", on_toggled.bind(PauseMenuTabs.SAVE))
+	save_button.connect("pressed", on_save_pressed)
 	load_button.connect("pressed", on_toggled.bind(PauseMenuTabs.LOAD))
 	formatting_button.connect("pressed", on_toggled.bind(PauseMenuTabs.FORMATTING))
-	options_button.connect("pressed", on_toggled.bind(PauseMenuTabs.OPTIONS))
-	quit_button.connect("pressed", on_toggled.bind(PauseMenuTabs.MAIN_MENU))
+	options_button.connect("pressed", on_options_pressed)
 
 func on_toggled(which_one : PauseMenuTabs):
 	pause_menu_tab = which_one
@@ -89,6 +88,11 @@ func on_resume_pressed() -> void:
 	resume.emit()
 	pause_menu_tab = PauseMenuTabs.NONE
 
+func on_save_pressed() -> void:
+	hide()
+	save_menu.show()
+	game.menu_state = game.MenuStates.MENU_SAVE
+
 # Function void on_options_pressed(): Connected to options_button.pressed. Simply hides the pause menu and shows the
 # options menu.
 func on_options_pressed() -> void:
@@ -99,7 +103,6 @@ func on_options_pressed() -> void:
 # Function void on_quit_pressed(): Connected to quit_button.pressed. Unpauses the tree and switches the main scene from
 # the game scene to the start menu scene.
 func on_quit_pressed() -> void:
-	print('panic')
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/UI/startmenu.tscn")
 
