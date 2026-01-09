@@ -6,7 +6,7 @@ class_name AlignmentMenu
 @onready var center : Button = $HBoxContainer/center
 
 signal alignment_chosen(alignment)
-var alignment = "none"
+var alignment = Aeon.AlignmentTypes.NONE
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,12 +16,13 @@ func _ready() -> void:
 
 func _on_left_connect():
 	alignment = "left"
-	alignment_chosen.emit("left")
+	print("uwuwijqpoiejfpoqiwjepfoiqjpeiojqpowiejfpowqijef")
+	alignment_chosen.emit(Aeon.AlignmentTypes.LEFT)
 
 func _on_right_connect():
 	alignment = "right"
-	alignment_chosen.emit("right")
+	alignment_chosen.emit(Aeon.AlignmentTypes.RIGHT)
 
 func _on_center_connect():
 	alignment = "center"
-	alignment_chosen.emit("center")
+	alignment_chosen.emit(Aeon.AlignmentTypes.CENTER)

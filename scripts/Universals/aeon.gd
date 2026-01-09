@@ -25,6 +25,12 @@ enum PlayerAbilities {
 	ALIGNMENT,
 	FONT_SIZE
 }
+enum AlignmentTypes {
+	NONE,
+	LEFT,
+	CENTER,
+	RIGHT,
+}
 
 var player_inventory : Dictionary = {'keys':1, 'coins':0}
 var equipped_abilities : Dictionary = {'q': PlayerAbilities.ALIGNMENT, "e" : PlayerAbilities.FONT_SIZE}

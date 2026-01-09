@@ -57,6 +57,9 @@ func debug(debugger : DebugWindow) -> void:
 @onready var enemyroot : Node2D = $container/Room/enemies
 @onready var camera : Camera2D = $container/Camera
 @export var is_debugging : bool = false
+var CAMERA_SCALE = 2
+var ALIGN_MIN_OFFSETS = [0, 80, 450, 880]
+var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
@@ -157,7 +160,6 @@ func _input(event : InputEvent) -> void:
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
 		#is_opening_map = !is_opening_map
 		hud_hidden = !hud_hidden
-		print(hud_hidden)
 		get_tree().paused = !get_tree().paused
 		if menu_state == MenuStates.MENU_NONE:
 			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
@@ -286,15 +288,30 @@ func _on_teleportation(pos) -> void:
 		menu_state = MenuStates.MENU_NONE
 		hud_hidden = false
 
-func _on_alignment_chosen(alignment : String):
+func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
+	if alignment == Aeon.AlignmentTypes.NONE: return
+	
 	get_tree().paused = !get_tree().paused
 	alignmentmenu.hide()
 	disable_release_once.append("q")
-	if alignment == "left":
-		for enemy in enemyroot.enemies_on_screen:
-			print(enemy.global_position)
-			print((2.0/3)*enemy.get_global_transform_with_canvas().origin.x)
-			@warning_ignore("integer_division")
-			enemy.global_position.x = (2.0/3)*(enemy.get_global_transform_with_canvas().origin.x) + camera.position.x
-
+	enemyroot.enemies_on_screen.sort_custom(_sort_enemies_by_x)
+	print(enemyroot.enemies_on_screen)
+	var minimum_enemy_x = (enemyroot.enemies_on_screen[0].global_position.x-camera.position.x)/2
+	print(minimum_enemy_x)
+	var maximum_enemy_x = (enemyroot.enemies_on_screen[-1].global_position.x-camera.position.x)/2
 	
+	
+	for i in len(enemyroot.enemies_on_screen):
+		if i == 0:
+			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*ALIGN_MIN_OFFSETS[alignment]+camera.position.x
+		elif i == len(enemyroot.enemies_on_screen)-1:
+			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*ALIGN_MAX_OFFSETS[alignment]+camera.position.x
+		else:
+			var new_enemy_offset = (enemyroot.enemies_on_screen[i].get_global_transform_with_canvas().origin.x-minimum_enemy_x)*(ALIGN_MAX_OFFSETS[alignment]-ALIGN_MIN_OFFSETS[alignment])/(maximum_enemy_x-minimum_enemy_x)
+			#print(enemyroot.enemies_on_screen[i].global_position.x-minimum_enemy_x)
+			#print((LEFT_ALIGN_MAX_OFFSET-LEFT_ALIGN_MIN_OFFSET)/(maximum_enemy_x-minimum_enemy_x), "wwww")
+			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*(ALIGN_MIN_OFFSETS[alignment]+new_enemy_offset)+camera.position.x
+			
+
+func _sort_enemies_by_x(a, b):
+	return a.position.x < b.position.x

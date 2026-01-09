@@ -151,22 +151,6 @@ func _input(event : InputEvent) -> void:
 		current_max_speed = MAX_SPEED/2
 		print("ooiejpgqiohporeihgqpoweihgpoi")
 		current_acceleration = ACCELERATION/2
-	elif (event.is_action_pressed("special_q")):
-		match Aeon.equipped_abilities["q"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				alignment(AlignmentStyles.ALIGN_LEFT)
-			Aeon.PlayerAbilities.FONT_SIZE:
-				font_size(67)
-	elif (event.is_action_pressed("special_e")):
-		match Aeon.equipped_abilities["e"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				alignment(AlignmentStyles.ALIGN_LEFT)
-			Aeon.PlayerAbilities.FONT_SIZE:
-				font_size(67)
 
 
 
