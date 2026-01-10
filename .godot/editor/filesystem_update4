@@ -1,5 +1,2 @@
 res://scenes/Levels/container.tscn
 res://scripts/game.gd
-res://scripts/Universals/aeon.gd
-res://scenes/UI/specials/alignment_menu.gd
-res://scripts/durdan.gd

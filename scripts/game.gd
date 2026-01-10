@@ -75,7 +75,7 @@ var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
 
 
 var d_ : DebugWindow
-var menu_state : MenuStates = MenuStates.MENU_NONE
+@export var menu_state : MenuStates = MenuStates.MENU_NONE
 
 var hud_hidden : bool = false:
 	set(is_hidden):
@@ -107,7 +107,8 @@ enum MenuStates {
 	MENU_MAP,
 	MENU_DIALOGUE,
 	MENU_LOG,
-	MENU_SAVE
+	MENU_SAVE,
+	MENU_ALIGNMENT
 }
 
 
@@ -142,10 +143,12 @@ func _ready() -> void:
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("cancel"):
-		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP]):
+		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 			if menu_state == MenuStates.MENU_MAP:
 				sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
 				#is_opening_map = !is_opening_map
+			elif menu_state == MenuStates.MENU_ALIGNMENT:
+				_on_alignment_chosen(Aeon.AlignmentTypes.NONE)
 			else:
 				hud_hidden = !hud_hidden
 				get_tree().paused = !get_tree().paused
@@ -180,24 +183,29 @@ func _input(event : InputEvent) -> void:
 			dialoguemenu.show()
 			logmenu.hide()
 			logmenu.get_node("VScrollBar").value = logmenu.get_node("VScrollBar").max_value
-	elif (event.is_action_pressed("special_q")):
+	elif (event.is_action_pressed("special_q")) and menu_state == MenuStates.MENU_NONE:
 		match Aeon.equipped_abilities["q"]:
 			Aeon.PlayerAbilities.NONE:
 				pass
 			Aeon.PlayerAbilities.ALIGNMENT:
 				alignmentmenu.show()
 				get_tree().paused = !get_tree().paused
-				
+				menu_state = MenuStates.MENU_ALIGNMENT
+			Aeon.PlayerAbilities.FONT_SIZE:
+				pass
 	elif (event.is_action_released("special_q")):
 		match Aeon.equipped_abilities["q"]:
 			Aeon.PlayerAbilities.NONE:
 				pass
 			Aeon.PlayerAbilities.ALIGNMENT:
+				menu_state = MenuStates.MENU_NONE
 				if "q" in disable_release_once:
 					disable_release_once.erase("q")
 					return
 				get_tree().paused = !get_tree().paused
 				alignmentmenu.hide()
+			Aeon.PlayerAbilities.FONT_SIZE:
+				pass
 
 
 
@@ -289,10 +297,12 @@ func _on_teleportation(pos) -> void:
 		hud_hidden = false
 
 func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
-	if alignment == Aeon.AlignmentTypes.NONE: return
+	
 	
 	get_tree().paused = !get_tree().paused
 	alignmentmenu.hide()
+	if alignment == Aeon.AlignmentTypes.NONE: 
+		return
 	disable_release_once.append("q")
 	enemyroot.enemies_on_screen.sort_custom(_sort_enemies_by_x)
 	print(enemyroot.enemies_on_screen)
