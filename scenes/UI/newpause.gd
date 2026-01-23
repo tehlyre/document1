@@ -76,7 +76,6 @@ func on_game_paused(is_paused : bool) -> void:
 	if (is_paused):
 		show()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		game.menu_state = game.MenuStates.MENU_PAUSE
 	else:
 		hide()
 		#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
@@ -89,15 +88,11 @@ func on_resume_pressed() -> void:
 	pause_menu_tab = PauseMenuTabs.NONE
 
 func on_save_pressed() -> void:
-	hide()
-	save_menu.show()
 	game.menu_state = game.MenuStates.MENU_SAVE
 
 # Function void on_options_pressed(): Connected to options_button.pressed. Simply hides the pause menu and shows the
 # options menu.
 func on_options_pressed() -> void:
-	hide()
-	options_menu.show()
 	game.menu_state = game.MenuStates.MENU_OPTIONS
 
 # Function void on_quit_pressed(): Connected to quit_button.pressed. Unpauses the tree and switches the main scene from

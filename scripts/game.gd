@@ -75,7 +75,73 @@ var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
 
 
 var d_ : DebugWindow
-@export var menu_state : MenuStates = MenuStates.MENU_NONE
+@export var menu_state : MenuStates = MenuStates.MENU_NONE:
+	get:
+		return menu_state
+	set(new_ms):
+		match new_ms:
+			MenuStates.MENU_PAUSE:
+				print("uwuhpihpoihop[]")
+				pausemenu.show()
+				if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
+					if menu_state == MenuStates.MENU_MAP:
+						sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
+					else:
+						hud_hidden = !hud_hidden
+						get_tree().paused = !get_tree().paused
+					is_game_paused = !is_game_paused
+					sig_toggle_pause.emit(is_game_paused)
+				elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
+					optionsmenu.hide()
+					savemenu.hide()
+			MenuStates.MENU_MAP:
+				hud_hidden = !hud_hidden
+				get_tree().paused = !get_tree().paused
+				if menu_state == MenuStates.MENU_NONE:
+					sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
+			MenuStates.MENU_DIALOGUE:
+				if menu_state == MenuStates.MENU_LOG:
+					dialoguemenu.is_cutscene = true
+					dialoguemenu.show()
+					logmenu.hide()
+					logmenu.get_node("VScrollBar").value = logmenu.get_node("VScrollBar").max_value
+				else:
+					hud_hidden = !hud_hidden
+					player.cutscene_running = true
+					for i in $container/Bullets.get_children():
+						i.queue_free()
+			MenuStates.MENU_LOG:
+				if menu_state == MenuStates.MENU_DIALOGUE:
+					menu_state = MenuStates.MENU_LOG
+					dialoguemenu.is_cutscene = false
+					logmenu.show()
+					logmenu.get_node("VScrollBar").page = 12
+					dialoguemenu.hide()
+			MenuStates.MENU_SAVE:
+				pausemenu.hide()
+				savemenu.show()
+			MenuStates.MENU_OPTIONS:
+				pausemenu.hide()
+				optionsmenu.show()
+			MenuStates.MENU_DEATH:
+				deathmenu.show()
+			MenuStates.MENU_CHEST:
+				chestmenu.show()
+			MenuStates.MENU_ALIGNMENT:
+				alignmentmenu.show()
+		if menu_state == MenuStates.MENU_NONE and new_ms != MenuStates.MENU_NONE:
+			get_tree().paused = true
+		elif menu_state != MenuStates.MENU_NONE and new_ms == MenuStates.MENU_NONE:
+			get_tree().paused = false
+
+		var not_remove_hud = [MenuStates.MENU_NONE, MenuStates.MENU_ALIGNMENT]
+		if menu_state not in not_remove_hud and new_ms in not_remove_hud:
+			hud_hidden = false
+		elif menu_state in not_remove_hud and new_ms not in not_remove_hud:
+			hud_hidden = true
+		
+		menu_state = new_ms
+	
 
 var hud_hidden : bool = false:
 	set(is_hidden):
@@ -144,20 +210,18 @@ func _ready() -> void:
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("cancel"):
 		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
-			if menu_state == MenuStates.MENU_MAP:
-				sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
-				#is_opening_map = !is_opening_map
-			elif menu_state == MenuStates.MENU_ALIGNMENT:
-				_on_alignment_chosen(Aeon.AlignmentTypes.NONE)
-			else:
-				hud_hidden = !hud_hidden
-				get_tree().paused = !get_tree().paused
-			is_game_paused = !is_game_paused
 			sig_toggle_pause.emit(is_game_paused)
+			menu_state = MenuStates.MENU_PAUSE
+			#if menu_state == MenuStates.MENU_MAP:
+				#sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
+				##is_opening_map = !is_opening_map
+			#elif menu_state == MenuStates.MENU_ALIGNMENT:
+				#_on_alignment_chosen(Aeon.AlignmentTypes.NONE)
+			#else:
+				#hud_hidden = !hud_hidden
+				#get_tree().paused = !get_tree().paused
+			#is_game_paused = !is_game_paused
 		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
-			optionsmenu.hide()
-			savemenu.hide()
-			pausemenu.show()
 			menu_state = MenuStates.MENU_PAUSE
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
@@ -257,7 +321,7 @@ func _on_game_resume() -> void:
 
 
 # Fired when the player opens a chest, connected to player.opened_chest. Puts the contents of the 
-# chest into the player's inventory and then deletes it by setting the chest's is_opened to true.
+#  into the player's inventory and then deletes it by setting the chest's is_opened to true.
 func _on_player_open_chest(chest : Chest) -> void:
 	Aeon.player_inventory['keys'] += chest.parsed['keys']
 	Aeon.player_inventory['coins'] += chest.parsed['coins'] if chest.parsed['coins'] != null else 0
