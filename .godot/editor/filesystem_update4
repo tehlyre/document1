@@ -1,3 +1,4 @@
-res://scenes/UI/deathmenu.tscn
+res://scenes/UI/newpause.tscn
 res://scripts/game.gd
+res://scenes/Levels/container.tscn
 res://scenes/UI/newpause.gd

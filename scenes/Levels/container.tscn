@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=32 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bvbmxpvv3q6n2" path="res://assets/textures/dummy_spawn.png" id="16_88tjj"]
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
+[ext_resource type="PackedScene" uid="uid://dm5j1hftae6gs" path="res://scenes/Interactables/cutscene_trigger.tscn" id="19_poti2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -147,6 +148,10 @@ walls = NodePath("../Wall")
 
 [node name="Triggers" type="Node2D" parent="."]
 script = ExtResource("15_wctgd")
+
+[node name="CutsceneTrigger" parent="Triggers" instance=ExtResource("19_poti2")]
+position = Vector2(1310.9999, 1026)
+scale = Vector2(19.277773, 28.20413)
 
 [node name="Bullets" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
 script = ExtResource("18_poti2")

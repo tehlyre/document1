@@ -77,6 +77,8 @@ func ricochet(normal : Vector2):
 		velocity = normal.rotated(PI/4)*SPEED_WHEN_PLAYER
 		rotation = atan2(normal.rotated(PI/4).y, normal.rotated(PI/4).x)
 
+
+# TODO: fix this sh
 # Changes the position of the bullet by the speed of the bullet, thereby moving the bullet. This is done
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.

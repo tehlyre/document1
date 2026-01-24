@@ -74,12 +74,11 @@ func on_toggled(which_one : PauseMenuTabs):
 # else, hide the menu.
 func on_game_paused(is_paused : bool) -> void:
 	if (is_paused):
-		show()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
-		hide()
+		pass
+		# THIS CODE IS LEFT IN because the mouse will eventually be confined, it's just a pia to debug like that.
 		#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
-		game.menu_state = game.MenuStates.MENU_NONE
 
 # Function void on_resume_pressed(): Connected to resume_button.pressed. Simply emits the resume signal for the game
 # manager to unpause the game.

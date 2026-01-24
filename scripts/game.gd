@@ -82,18 +82,16 @@ var d_ : DebugWindow
 		match new_ms:
 			MenuStates.MENU_PAUSE:
 				print("uwuhpihpoihop[]")
-				pausemenu.show()
-				if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
+				if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 					if menu_state == MenuStates.MENU_MAP:
 						sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
 					else:
 						hud_hidden = !hud_hidden
 						get_tree().paused = !get_tree().paused
-					is_game_paused = !is_game_paused
-					sig_toggle_pause.emit(is_game_paused)
 				elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
 					optionsmenu.hide()
 					savemenu.hide()
+				pausemenu.show()
 			MenuStates.MENU_MAP:
 				hud_hidden = !hud_hidden
 				get_tree().paused = !get_tree().paused
@@ -107,16 +105,15 @@ var d_ : DebugWindow
 					logmenu.get_node("VScrollBar").value = logmenu.get_node("VScrollBar").max_value
 				else:
 					hud_hidden = !hud_hidden
-					player.cutscene_running = true
+					player.is_cutscene_running = true
 					for i in $container/Bullets.get_children():
 						i.queue_free()
 			MenuStates.MENU_LOG:
-				if menu_state == MenuStates.MENU_DIALOGUE:
-					menu_state = MenuStates.MENU_LOG
-					dialoguemenu.is_cutscene = false
-					logmenu.show()
-					logmenu.get_node("VScrollBar").page = 12
-					dialoguemenu.hide()
+				menu_state = MenuStates.MENU_LOG
+				dialoguemenu.is_cutscene = false
+				logmenu.show()
+				logmenu.get_node("VScrollBar").page = 12
+				dialoguemenu.hide()
 			MenuStates.MENU_SAVE:
 				pausemenu.hide()
 				savemenu.show()
@@ -129,6 +126,19 @@ var d_ : DebugWindow
 				chestmenu.show()
 			MenuStates.MENU_ALIGNMENT:
 				alignmentmenu.show()
+			MenuStates.MENU_NONE:
+				pausemenu.hide()
+				savemenu.hide()
+				optionsmenu.hide()
+				dialoguemenu.hide()
+				logmenu.hide()
+				alignmentmenu.hide()
+				deathmenu.hide()
+				mapmenu.hide()
+				sig_open_map.emit(false, Vector2(6,7))
+				hud_hidden = false
+				player.is_cutscene_running = false
+				get_tree().paused = false
 		if menu_state == MenuStates.MENU_NONE and new_ms != MenuStates.MENU_NONE:
 			get_tree().paused = true
 		elif menu_state != MenuStates.MENU_NONE and new_ms == MenuStates.MENU_NONE:
@@ -209,51 +219,30 @@ func _ready() -> void:
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("cancel"):
-		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_PAUSE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
+		print(MenuStates.keys()[menu_state])
+		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 			sig_toggle_pause.emit(is_game_paused)
 			menu_state = MenuStates.MENU_PAUSE
-			#if menu_state == MenuStates.MENU_MAP:
-				#sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
-				##is_opening_map = !is_opening_map
-			#elif menu_state == MenuStates.MENU_ALIGNMENT:
-				#_on_alignment_chosen(Aeon.AlignmentTypes.NONE)
-			#else:
-				#hud_hidden = !hud_hidden
-				#get_tree().paused = !get_tree().paused
-			#is_game_paused = !is_game_paused
+		elif (menu_state == MenuStates.MENU_PAUSE):
+			menu_state = MenuStates.MENU_NONE
 		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
 			menu_state = MenuStates.MENU_PAUSE
 		
 	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
-		#is_opening_map = !is_opening_map
-		hud_hidden = !hud_hidden
-		get_tree().paused = !get_tree().paused
 		if menu_state == MenuStates.MENU_NONE:
-			sig_open_map.emit(true, $container/Wall.local_to_map(player.position))
 			menu_state = MenuStates.MENU_MAP
 		else:
-			sig_open_map.emit(false, Vector2(6,7))
 			menu_state = MenuStates.MENU_NONE
 	elif event.is_action_pressed("open_log"):
 		if menu_state == MenuStates.MENU_DIALOGUE:
 			menu_state = MenuStates.MENU_LOG
-			dialoguemenu.is_cutscene = false
-			logmenu.show()
-			logmenu.get_node("VScrollBar").page = 12
-			dialoguemenu.hide()
 		elif menu_state == MenuStates.MENU_LOG:
 			menu_state = MenuStates.MENU_DIALOGUE
-			dialoguemenu.is_cutscene = true
-			dialoguemenu.show()
-			logmenu.hide()
-			logmenu.get_node("VScrollBar").value = logmenu.get_node("VScrollBar").max_value
 	elif (event.is_action_pressed("special_q")) and menu_state == MenuStates.MENU_NONE:
 		match Aeon.equipped_abilities["q"]:
 			Aeon.PlayerAbilities.NONE:
 				pass
 			Aeon.PlayerAbilities.ALIGNMENT:
-				alignmentmenu.show()
-				get_tree().paused = !get_tree().paused
 				menu_state = MenuStates.MENU_ALIGNMENT
 			Aeon.PlayerAbilities.FONT_SIZE:
 				pass
@@ -262,12 +251,8 @@ func _input(event : InputEvent) -> void:
 			Aeon.PlayerAbilities.NONE:
 				pass
 			Aeon.PlayerAbilities.ALIGNMENT:
-				menu_state = MenuStates.MENU_NONE
-				if "q" in disable_release_once:
-					disable_release_once.erase("q")
-					return
-				get_tree().paused = !get_tree().paused
-				alignmentmenu.hide()
+				if menu_state == MenuStates.MENU_ALIGNMENT:
+					menu_state = MenuStates.MENU_NONE
 			Aeon.PlayerAbilities.FONT_SIZE:
 				pass
 
@@ -289,20 +274,14 @@ func _process(_delta : float) -> void:
 
 
 func _on_cutscene_trigger(code : String, trigger):
-	hud_hidden = !hud_hidden
 	dialoguemenu.spawn_dialogue(code)
 	current_cutscene_trigger = trigger
 	menu_state = MenuStates.MENU_DIALOGUE
-	player.cutscene_running = true
-	for i in $container/Bullets.get_children():
-		i.queue_free()
 
 func _on_cutscene_end():
-	hud_hidden = !hud_hidden
 	if is_deleting_cutscene_trigger_on_end:
 		current_cutscene_trigger.queue_free()
 	menu_state = MenuStates.MENU_NONE
-	player.cutscene_running = false
 
 
 
@@ -315,9 +294,7 @@ func _on_cutscene_end():
 # Fired when the game is to resume, connected to the signal pausemenu.resume. Unpauses the game and
 # sends the signal.
 func _on_game_resume() -> void:
-	get_tree().paused = !get_tree().paused
-	is_game_paused = !is_game_paused
-	sig_toggle_pause.emit(false)
+	menu_state = MenuStates.MENU_NONE
 
 
 # Fired when the player opens a chest, connected to player.opened_chest. Puts the contents of the 
@@ -367,7 +344,6 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	alignmentmenu.hide()
 	if alignment == Aeon.AlignmentTypes.NONE: 
 		return
-	disable_release_once.append("q")
 	enemyroot.enemies_on_screen.sort_custom(_sort_enemies_by_x)
 	print(enemyroot.enemies_on_screen)
 	var minimum_enemy_x = (enemyroot.enemies_on_screen[0].global_position.x-camera.position.x)/2
