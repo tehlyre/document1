@@ -25,6 +25,7 @@ class_name Dummy
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var gun : Gun = $neutralSpecial
 @onready var player_raycast = $toPlayer
+@onready var collider = $enemyCollider
 
 
 # CONSTANTS

@@ -2,3 +2,5 @@ res://scenes/UI/newpause.tscn
 res://scripts/game.gd
 res://scenes/Levels/container.tscn
 res://scenes/UI/newpause.gd
+res://scenes/Characters/dummy.tscn
+res://scenes/Characters/dummy.gd

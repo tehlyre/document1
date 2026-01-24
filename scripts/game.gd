@@ -228,11 +228,10 @@ func _input(event : InputEvent) -> void:
 		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
 			menu_state = MenuStates.MENU_PAUSE
 		
-	elif event.is_action_pressed("open_map") and (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP]):
-		if menu_state == MenuStates.MENU_NONE:
-			menu_state = MenuStates.MENU_MAP
-		else:
-			menu_state = MenuStates.MENU_NONE
+	elif event.is_action_pressed("open_map") and menu_state == MenuStates.MENU_NONE:
+		menu_state = MenuStates.MENU_MAP
+	elif event.is_action_released("open_map") and menu_state == MenuStates.MENU_MAP:
+		menu_state = MenuStates.MENU_NONE
 	elif event.is_action_pressed("open_log"):
 		if menu_state == MenuStates.MENU_DIALOGUE:
 			menu_state = MenuStates.MENU_LOG
@@ -338,8 +337,6 @@ func _on_teleportation(pos) -> void:
 		hud_hidden = false
 
 func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
-	
-	
 	get_tree().paused = !get_tree().paused
 	alignmentmenu.hide()
 	if alignment == Aeon.AlignmentTypes.NONE: 
@@ -350,18 +347,23 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	print(minimum_enemy_x)
 	var maximum_enemy_x = (enemyroot.enemies_on_screen[-1].global_position.x-camera.position.x)/2
 	
-	
+	var disabled_hitbox_enemies = []
 	for i in len(enemyroot.enemies_on_screen):
+		enemyroot.enemies_on_screen[i].collider.disabled = true
+		disabled_hitbox_enemies.append(enemyroot.enemies_on_screen[i])
+		var tween_i = create_tween()
+		var new_x : float
 		if i == 0:
-			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*ALIGN_MIN_OFFSETS[alignment]+camera.position.x
+			new_x = CAMERA_SCALE*ALIGN_MIN_OFFSETS[alignment]+camera.position.x
 		elif i == len(enemyroot.enemies_on_screen)-1:
-			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*ALIGN_MAX_OFFSETS[alignment]+camera.position.x
+			new_x = CAMERA_SCALE*ALIGN_MAX_OFFSETS[alignment]+camera.position.x
 		else:
 			var new_enemy_offset = (enemyroot.enemies_on_screen[i].get_global_transform_with_canvas().origin.x-minimum_enemy_x)*(ALIGN_MAX_OFFSETS[alignment]-ALIGN_MIN_OFFSETS[alignment])/(maximum_enemy_x-minimum_enemy_x)
-			#print(enemyroot.enemies_on_screen[i].global_position.x-minimum_enemy_x)
-			#print((LEFT_ALIGN_MAX_OFFSET-LEFT_ALIGN_MIN_OFFSET)/(maximum_enemy_x-minimum_enemy_x), "wwww")
-			enemyroot.enemies_on_screen[i].global_position.x = CAMERA_SCALE*(ALIGN_MIN_OFFSETS[alignment]+new_enemy_offset)+camera.position.x
-			
+			new_x = CAMERA_SCALE*(ALIGN_MIN_OFFSETS[alignment]+new_enemy_offset)+camera.position.x
+		tween_i.tween_property(enemyroot.enemies_on_screen[i], "position:x", new_x, 0.5)
+	await get_tree().create_timer(0.5).timeout
+	for i in disabled_hitbox_enemies:
+		i.collider.disabled = false
 
 func _sort_enemies_by_x(a, b):
 	return a.position.x < b.position.x
