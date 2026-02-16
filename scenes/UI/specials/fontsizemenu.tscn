@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://18uko8k0s500"]
+
+[ext_resource type="Script" uid="uid://dors3lxwlqih8" path="res://scenes/UI/specials/fontsizemenu.gd" id="1_fskst"]
+
+[node name="fontsizeMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fskst")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.223
+anchor_bottom = 0.27800003
+offset_left = 538.0
+offset_top = 276.0
+offset_right = 360.56
+offset_bottom = 98.83998
+text = "Font SIze"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 538.0
+offset_top = 319.0
+offset_right = -632.0
+offset_bottom = -381.0
+selected = 1
+item_count = 4
+popup/item_0/text = "8"
+popup/item_0/id = 0
+popup/item_1/text = "12"
+popup/item_1/id = 1
+popup/item_2/text = "32"
+popup/item_2/id = 2
+popup/item_3/text = "72"
+popup/item_3/id = 3

@@ -29,7 +29,7 @@ var enemy_on_screen : Array = [false, null]:
 		enemy_on_screen = screen_enemy
 		if enemy_on_screen[0]:
 			enemies_on_screen.append(enemy_on_screen[1])
-		elif !miniboss_dead[0]:
+		elif !enemy_on_screen[0]:
 			enemies_on_screen.erase(enemy_on_screen[1])
 	get:
 		return enemy_on_screen

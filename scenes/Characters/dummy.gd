@@ -41,6 +41,7 @@ var THETA : float = 0.8
 
 # is_in_goo: Whether or not the enemy is stuck in goo, slowing it down.
 var is_in_goo : bool = false
+var is_being_forced
 
 # STATUS VARIABLES
 
@@ -55,11 +56,14 @@ var health : float = 100.0
 # Creates and adds the mover and the fire managers.
 func _ready() -> void:
 	$VisibleOnScreenNotifier2D.screen_entered.connect(_xd_lol)
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_lmao_rofl)
 	#print(get_parent())
 
 func _xd_lol():
 	get_parent().enemy_on_screen = [true, self]
 
+func _lmao_rofl():
+	get_parent().enemy_on_screen = [false, self]
 
 # Halves maximum speed if the enemy is in goo.
 func thingy_hazard() -> void:

@@ -51,6 +51,7 @@ func debug(debugger : DebugWindow) -> void:
 @onready var savemenu : Control = $menuLayer/saveMenu
 @onready var dialoguemenu : Control = $menuLayer/dialogueMenu
 @onready var alignmentmenu : AlignmentMenu = $menuLayer/alignmentMenu
+@onready var fontsizemenu : FontSizeMenu = $menuLayer/fontsizeMenu
 @onready var logmenu : Control = $menuLayer/logMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
@@ -60,9 +61,11 @@ func debug(debugger : DebugWindow) -> void:
 var CAMERA_SCALE = 2
 var ALIGN_MIN_OFFSETS = [0, 80, 450, 880]
 var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
+var pscale : Vector2
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
+var escale : Vector2
 
 var disable_release_once : Array
 
@@ -126,6 +129,9 @@ var d_ : DebugWindow
 				chestmenu.show()
 			MenuStates.MENU_ALIGNMENT:
 				alignmentmenu.show()
+			MenuStates.MENU_FONTSIZE:
+				fontsizemenu.show()
+				fontsizemenu.dropdown.show_popup()
 			MenuStates.MENU_NONE:
 				pausemenu.hide()
 				savemenu.hide()
@@ -134,6 +140,7 @@ var d_ : DebugWindow
 				logmenu.hide()
 				alignmentmenu.hide()
 				deathmenu.hide()
+				fontsizemenu.hide()
 				mapmenu.hide()
 				sig_open_map.emit(false, Vector2(6,7))
 				hud_hidden = false
@@ -144,7 +151,7 @@ var d_ : DebugWindow
 		elif menu_state != MenuStates.MENU_NONE and new_ms == MenuStates.MENU_NONE:
 			get_tree().paused = false
 
-		var not_remove_hud = [MenuStates.MENU_NONE, MenuStates.MENU_ALIGNMENT]
+		var not_remove_hud = [MenuStates.MENU_NONE, MenuStates.MENU_ALIGNMENT, MenuStates.MENU_FONTSIZE]
 		if menu_state not in not_remove_hud and new_ms in not_remove_hud:
 			hud_hidden = false
 		elif menu_state in not_remove_hud and new_ms not in not_remove_hud:
@@ -184,7 +191,8 @@ enum MenuStates {
 	MENU_DIALOGUE,
 	MENU_LOG,
 	MENU_SAVE,
-	MENU_ALIGNMENT
+	MENU_ALIGNMENT,
+	MENU_FONTSIZE
 }
 
 
@@ -206,6 +214,9 @@ func _ready() -> void:
 	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
 	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
 	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
+	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
+	pscale = player.scale
+	escale = enemyroot.get_child(0).scale
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -244,7 +255,7 @@ func _input(event : InputEvent) -> void:
 			Aeon.PlayerAbilities.ALIGNMENT:
 				menu_state = MenuStates.MENU_ALIGNMENT
 			Aeon.PlayerAbilities.FONT_SIZE:
-				pass
+				menu_state = MenuStates.MENU_FONTSIZE
 	elif (event.is_action_released("special_q")):
 		match Aeon.equipped_abilities["q"]:
 			Aeon.PlayerAbilities.NONE:
@@ -253,7 +264,26 @@ func _input(event : InputEvent) -> void:
 				if menu_state == MenuStates.MENU_ALIGNMENT:
 					menu_state = MenuStates.MENU_NONE
 			Aeon.PlayerAbilities.FONT_SIZE:
+				if menu_state == MenuStates.MENU_FONTSIZE:
+					menu_state = MenuStates.MENU_NONE
+	elif (event.is_action_pressed("special_e")) and menu_state == MenuStates.MENU_NONE:
+		match Aeon.equipped_abilities["e"]:
+			Aeon.PlayerAbilities.NONE:
 				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				menu_state = MenuStates.MENU_ALIGNMENT
+			Aeon.PlayerAbilities.FONT_SIZE:
+				menu_state = MenuStates.MENU_FONTSIZE
+	elif (event.is_action_released("special_e")):
+		match Aeon.equipped_abilities["e"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				if menu_state == MenuStates.MENU_ALIGNMENT:
+					menu_state = MenuStates.MENU_NONE
+			Aeon.PlayerAbilities.FONT_SIZE:
+				if menu_state == MenuStates.MENU_FONTSIZE:
+					menu_state = MenuStates.MENU_NONE
 
 
 
@@ -308,7 +338,7 @@ func _on_player_open_chest(chest : Chest) -> void:
 # Connected to the signal player.you_died, fired when the player dies. Simply manually empties the 
 # player's healthbar and kills the player.
 func _on_player_death() -> void:
-	$hud/playerHealthBar.value = 0
+	$hud/hudRoot/playerHealthBar.value = 0
 	menu_state = MenuStates.MENU_DEATH
 	Aeon.player_inventory = {'keys':0, 'coins':0}
 	
@@ -325,7 +355,7 @@ func _on_game_restart() -> void:
 
 
 func _on_player_change_health(health : float) -> void:
-	$hud/playerHealthBar.value = health
+	$hud/hudRoot/playerHealthBar.value = health
 
 func _on_teleportation(pos) -> void:
 	if pos is Vector2:
@@ -349,6 +379,7 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	
 	var disabled_hitbox_enemies = []
 	for i in len(enemyroot.enemies_on_screen):
+		enemyroot.enemies_on_screen[i].is_being_forced = true
 		enemyroot.enemies_on_screen[i].collider.disabled = true
 		disabled_hitbox_enemies.append(enemyroot.enemies_on_screen[i])
 		var tween_i = create_tween()
@@ -364,6 +395,21 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	await get_tree().create_timer(0.5).timeout
 	for i in disabled_hitbox_enemies:
 		i.collider.disabled = false
+		i.is_being_forced = false
+
+func _on_fontsize_chosen(fontsize):
+	menu_state = MenuStates.MENU_NONE
+	print(fontsize)
+	if fontsize == "8":
+		player.scale = pscale*Vector2(0.75,0.75)
+	elif fontsize == "12":
+		player.scale = pscale
+	elif fontsize == "32":
+		player.scale = pscale*Vector2(2, 2)
+	elif fontsize == "72":
+		player.scale = pscale*Vector2(6.25,6.25)
+
+
 
 func _sort_enemies_by_x(a, b):
 	return a.position.x < b.position.x

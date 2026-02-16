@@ -27,6 +27,8 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var player_raycast = $toPlayer
 var mover : EnemyMover
 var fire : EnemyFire
+var is_being_forced : bool = false
+@onready var collider = $enemyCollider
 
 # CONSTANTS
 
@@ -58,6 +60,15 @@ func _ready() -> void:
 	add_child(mover)
 	fire = EnemyFire.new(self, gun, mover)
 	add_child(fire)
+	$VisibleOnScreenNotifier2D.screen_entered.connect(_xd_lol)
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_lmao_rofl)
+	#print(get_parent())
+
+func _xd_lol():
+	get_parent().enemy_on_screen = [true, self]
+
+func _lmao_rofl():
+	get_parent().enemy_on_screen = [false, self]
 	#print(get_parent())
 
 
@@ -89,12 +100,12 @@ func thingy_damage(damage : int) -> void:
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta : float) -> void:
-	
-	$toPlayer.target_position = to_local(player.position)
-	thingy_hazard()
-	mover.tick(delta)
-	gun.adjust(player.global_position)
-	move_and_slide()
-	$enemyHealthBar.value = health
-	if is_zero_approx(health):
-		queue_free()
+	if !is_being_forced:
+		$toPlayer.target_position = to_local(player.position)
+		thingy_hazard()
+		mover.tick(delta)
+		gun.adjust(player.global_position)
+		move_and_slide()
+		$enemyHealthBar.value = health
+		if is_zero_approx(health):
+			queue_free()

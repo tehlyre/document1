@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=15 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
@@ -6,14 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dr4ohj1mjxsei" path="res://scenes/UI/dialogue_menu.tscn" id="3_trceg"]
 [ext_resource type="PackedScene" uid="uid://bl1ctofn4ryr6" path="res://scenes/UI/newsave.tscn" id="4_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://uvj7iu2qje8l" path="res://scenes/UI/deathmenu.tscn" id="4_utxhm"]
-[ext_resource type="Script" uid="uid://36akublft1tu" path="res://scripts/UI/deathmenu.gd" id="5_ghli0"]
 [ext_resource type="PackedScene" uid="uid://c2udhxi146lk1" path="res://scenes/UI/chest_pop_up_menu.tscn" id="8_kqed6"]
-[ext_resource type="Script" uid="uid://duwmwk20o36rn" path="res://scripts/UI/chestmenu.gd" id="9_o46kr"]
 [ext_resource type="PackedScene" uid="uid://dh5ivbowm0f1m" path="res://scenes/UI/hud.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://ca7nup0qekyl7" path="res://scenes/UI/map_menu.tscn" id="10_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://cb38y2bvlbksd" path="res://scenes/Universals/background_music_player.tscn" id="12_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://5xky34nuo8gj" path="res://scenes/UI/newoptions.tscn" id="12_trceg"]
 [ext_resource type="PackedScene" uid="uid://d16h21e2xwsh" path="res://scenes/UI/newpause.tscn" id="13_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://18uko8k0s500" path="res://scenes/UI/specials/fontsizemenu.tscn" id="13_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bke4d8w4p3krb" path="res://scenes/UI/specials/alignment_menu.tscn" id="14_jkv2x"]
 
 [node name="gameManager" type="Node2D"]
@@ -38,7 +37,6 @@ game = NodePath("../..")
 dialog_menu = NodePath("../dialogueMenu")
 
 [node name="deathMenu" parent="menuLayer" node_paths=PackedStringArray("container") instance=ExtResource("4_utxhm")]
-script = ExtResource("5_ghli0")
 container = NodePath("../../container")
 
 [node name="chestMenu" parent="menuLayer" node_paths=PackedStringArray("container", "game") instance=ExtResource("8_kqed6")]
@@ -47,7 +45,6 @@ offset_left = 7.0
 offset_top = -7.0
 offset_right = 47.0
 offset_bottom = 33.0
-script = ExtResource("9_o46kr")
 container = NodePath("../../container")
 game = NodePath("../..")
 
@@ -66,6 +63,9 @@ pause_menu = NodePath("../pauseMenu")
 game = NodePath("../..")
 
 [node name="alignmentMenu" parent="menuLayer" instance=ExtResource("14_jkv2x")]
+visible = false
+
+[node name="fontsizeMenu" parent="menuLayer" instance=ExtResource("13_jkv2x")]
 visible = false
 
 [node name="backgroundMusicPlayer" parent="." instance=ExtResource("12_eb6dy")]
