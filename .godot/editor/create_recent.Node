@@ -1,3 +1,8 @@
+Panel
+CollisionShape2D
+Area2D
+Marker2D
+Marker
 OptionButton      - Matches the "dropdown" keyword.
 VisibleOnScreenNotifier2D
 Label
@@ -8,8 +13,3 @@ VBoxContainer
 Control
 ProgressBar
 CanvasLayer
-AnimatableBody2D
-Node2D
-AnimationPlayer
-Timer
-TabPusher

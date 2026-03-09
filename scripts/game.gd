@@ -53,15 +53,18 @@ func debug(debugger : DebugWindow) -> void:
 @onready var alignmentmenu : AlignmentMenu = $menuLayer/alignmentMenu
 @onready var fontsizemenu : FontSizeMenu = $menuLayer/fontsizeMenu
 @onready var logmenu : Control = $menuLayer/logMenu
+@onready var spotselectingmenu : Control = $menuLayer/spotSelectingMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
 @onready var enemyroot : Node2D = $container/Room/enemies
 @onready var camera : Camera2D = $container/Camera
 @export var is_debugging : bool = false
+@export var parentheses : PackedScene
 var CAMERA_SCALE = 2
 var ALIGN_MIN_OFFSETS = [0, 80, 450, 880]
 var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
 var pscale : Vector2
+var spot_select_reason = "none"
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
@@ -132,6 +135,8 @@ var d_ : DebugWindow
 			MenuStates.MENU_FONTSIZE:
 				fontsizemenu.show()
 				fontsizemenu.dropdown.show_popup()
+			MenuStates.MENU_SPOT_SELECTING:
+				spotselectingmenu.show()
 			MenuStates.MENU_NONE:
 				pausemenu.hide()
 				savemenu.hide()
@@ -142,6 +147,7 @@ var d_ : DebugWindow
 				deathmenu.hide()
 				fontsizemenu.hide()
 				mapmenu.hide()
+				spotselectingmenu.hide()
 				sig_open_map.emit(false, Vector2(6,7))
 				hud_hidden = false
 				player.is_cutscene_running = false
@@ -192,7 +198,8 @@ enum MenuStates {
 	MENU_LOG,
 	MENU_SAVE,
 	MENU_ALIGNMENT,
-	MENU_FONTSIZE
+	MENU_FONTSIZE,
+	MENU_SPOT_SELECTING
 }
 
 
@@ -215,6 +222,7 @@ func _ready() -> void:
 	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
 	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
 	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
+	spotselectingmenu.end_spot_select.connect(_on_spot_selected)
 	pscale = player.scale
 	escale = enemyroot.get_child(0).scale
 	if is_debugging:
@@ -266,6 +274,8 @@ func _input(event : InputEvent) -> void:
 			Aeon.PlayerAbilities.FONT_SIZE:
 				if menu_state == MenuStates.MENU_FONTSIZE:
 					menu_state = MenuStates.MENU_NONE
+
+
 	elif (event.is_action_pressed("special_e")) and menu_state == MenuStates.MENU_NONE:
 		match Aeon.equipped_abilities["e"]:
 			Aeon.PlayerAbilities.NONE:
@@ -274,7 +284,32 @@ func _input(event : InputEvent) -> void:
 				menu_state = MenuStates.MENU_ALIGNMENT
 			Aeon.PlayerAbilities.FONT_SIZE:
 				menu_state = MenuStates.MENU_FONTSIZE
+			Aeon.PlayerAbilities.PARENTHESES:
+				menu_state = MenuStates.MENU_SPOT_SELECTING
+				spot_select_reason = "parentheses"
 	elif (event.is_action_released("special_e")):
+		match Aeon.equipped_abilities["e"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				if menu_state == MenuStates.MENU_ALIGNMENT:
+					menu_state = MenuStates.MENU_NONE
+			Aeon.PlayerAbilities.FONT_SIZE:
+				if menu_state == MenuStates.MENU_FONTSIZE:
+					menu_state = MenuStates.MENU_NONE
+
+
+	elif (event.is_action_pressed("special_2")) and menu_state == MenuStates.MENU_NONE:
+		match Aeon.equipped_abilities["e"]:
+			Aeon.PlayerAbilities.NONE:
+				pass
+			Aeon.PlayerAbilities.ALIGNMENT:
+				menu_state = MenuStates.MENU_ALIGNMENT
+			Aeon.PlayerAbilities.FONT_SIZE:
+				menu_state = MenuStates.MENU_FONTSIZE
+			Aeon.PlayerAbilities.PARENTHESES:
+				menu_state = MenuStates.MENU_SPOT_SELECTING
+	elif (event.is_action_released("special_2")):
 		match Aeon.equipped_abilities["e"]:
 			Aeon.PlayerAbilities.NONE:
 				pass
@@ -352,7 +387,16 @@ func _on_game_restart() -> void:
 
 
 
-
+func _on_spot_selected(pos : Vector2) -> void:
+	player.cutscene_firing_buffer = 1
+	if spot_select_reason == "parentheses":
+		var p_ = parentheses.instantiate()
+		p_.owner = $container
+		$container/Bullets.add_child(p_)
+		p_.position = pos
+	spot_select_reason = "none"
+	menu_state = MenuStates.MENU_NONE
+	print(pos)
 
 func _on_player_change_health(health : float) -> void:
 	$hud/hudRoot/playerHealthBar.value = health

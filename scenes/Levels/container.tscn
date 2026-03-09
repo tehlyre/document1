@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=33 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
 [ext_resource type="PackedScene" uid="uid://dm5j1hftae6gs" path="res://scenes/Interactables/cutscene_trigger.tscn" id="19_poti2"]
+[ext_resource type="PackedScene" uid="uid://bpynshe51cu4u" path="res://scenes/Universals/parentheses.tscn" id="22_kvm1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -160,3 +161,6 @@ enemy_root = NodePath("../Room/enemies")
 [node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
 script = ExtResource("16_do0wj")
 wall = NodePath("../Wall")
+
+[node name="Parentheses" parent="." instance=ExtResource("22_kvm1i")]
+position = Vector2(896, 795)

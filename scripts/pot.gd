@@ -20,6 +20,9 @@ func smash():
 	pot_state += 1
 	switch_sprite()
 
+func shatter():
+	pot_state = PotStates.SHATTERED
+
 func switch_sprite():
 	match pot_state:
 		PotStates.PRISTINE:

@@ -26,6 +26,7 @@ class_name Player
 #
 #
 @onready var gun : Gun = $neutralSpecial
+@onready var sword : Melee = $flamingLance
 #
 # CONSTANTS
 #
@@ -285,6 +286,8 @@ func _physics_process(delta) -> void:
 				gun.fire()
 			elif cutscene_firing_buffer > 0:
 				cutscene_firing_buffer -= 1
+		if Input.is_action_just_pressed("melee"):
+			sword.attack()
 		if velocity.length() > current_max_speed: velocity = velocity.normalized()*current_max_speed
 		move_and_slide()
 		previous_rotation = rotation

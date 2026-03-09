@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://6nnkrcpsiyra"]
+
+[ext_resource type="Texture2D" uid="uid://b0dq3ic8u8c4x" path="res://assets/textures/flaming_lance.png" id="1_j3fhx"]
+[ext_resource type="Script" uid="uid://7noip840gev" path="res://scenes/Universals/flaming_lance.gd" id="1_kei8f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kei8f"]
+size = Vector2(148, 1098)
+
+[node name="FlamingLance" type="Node2D"]
+script = ExtResource("1_kei8f")
+
+[node name="el_marcador" type="Marker2D" parent="."]
+rotation = -0.7853982
+
+[node name="FlamingLance" type="Sprite2D" parent="el_marcador"]
+position = Vector2(67.99998, -510.23685)
+rotation = -1.5707964
+scale = Vector2(3.6540277, 1)
+texture = ExtResource("1_j3fhx")
+
+[node name="Area2D" type="Area2D" parent="el_marcador"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="el_marcador/Area2D"]
+position = Vector2(66, -549.00006)
+shape = SubResource("RectangleShape2D_kei8f")

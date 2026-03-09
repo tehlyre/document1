@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=17 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
+[ext_resource type="PackedScene" uid="uid://bpynshe51cu4u" path="res://scenes/Universals/parentheses.tscn" id="2_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dj1ncmi0g0gke" path="res://scenes/UI/log_menu.tscn" id="3_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://dr4ohj1mjxsei" path="res://scenes/UI/dialogue_menu.tscn" id="3_trceg"]
 [ext_resource type="PackedScene" uid="uid://bl1ctofn4ryr6" path="res://scenes/UI/newsave.tscn" id="4_a8y0u"]
@@ -13,12 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://5xky34nuo8gj" path="res://scenes/UI/newoptions.tscn" id="12_trceg"]
 [ext_resource type="PackedScene" uid="uid://d16h21e2xwsh" path="res://scenes/UI/newpause.tscn" id="13_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://18uko8k0s500" path="res://scenes/UI/specials/fontsizemenu.tscn" id="13_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://cv4ywhggc3gxs" path="res://scenes/UI/specials/spotselectingmenu.tscn" id="14_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://bke4d8w4p3krb" path="res://scenes/UI/specials/alignment_menu.tscn" id="14_jkv2x"]
 
 [node name="gameManager" type="Node2D"]
 process_mode = 3
 process_physics_priority = -265
 script = ExtResource("1_cg0fy")
+parentheses = ExtResource("2_jbj1t")
 metadata/_edit_group_ = true
 
 [node name="container" parent="." instance=ExtResource("2_crrdk")]
@@ -66,6 +69,9 @@ game = NodePath("../..")
 visible = false
 
 [node name="fontsizeMenu" parent="menuLayer" instance=ExtResource("13_jkv2x")]
+visible = false
+
+[node name="spotSelectingMenu" parent="menuLayer" instance=ExtResource("14_jbj1t")]
 visible = false
 
 [node name="backgroundMusicPlayer" parent="." instance=ExtResource("12_eb6dy")]

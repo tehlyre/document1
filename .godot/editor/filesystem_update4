@@ -1,5 +1,10 @@
-res://scenes/UI/specials/fontsizemenu.tscn
-res://scenes/UI/specials/fontsizemenu.gd
-res://scripts/game.gd
-res://scenes/main.tscn
+res://scripts/Universals/aeon.gd
+res://scenes/Universals/parentheses.tscn
+res://scenes/Universals/parentheses.gd
 res://scenes/Levels/container.tscn
+res://scenes/Interactables/pot.tscn
+res://scripts/pot.gd
+res://scenes/main.tscn
+res://scripts/game.gd
+res://scenes/UI/specials/spotselectingmenu.tscn
+res://scenes/UI/specials/spotselectingmenu.gd

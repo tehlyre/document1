@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwcfhw8ni6iky"]
+[gd_scene load_steps=7 format=3 uid="uid://bwcfhw8ni6iky"]
 
 [ext_resource type="Script" uid="uid://br74yhnl7m0vp" path="res://scripts/durdan.gd" id="1_bxvgu"]
 [ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="3_qlc2s"]
+[ext_resource type="PackedScene" uid="uid://6nnkrcpsiyra" path="res://scenes/Universals/flaming_lance.tscn" id="4_8w6fj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
 radius = 10.2078
@@ -35,3 +36,6 @@ is_on_player = true
 
 [node name="playerCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4wifr")
+
+[node name="flamingLance" parent="." instance=ExtResource("4_8w6fj")]
+position = Vector2(280, 0)
