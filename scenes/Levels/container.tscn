@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="Script" uid="uid://5ou7lynh5rfx" path="res://scripts/camera.gd" id="4_h4gck"]
+[ext_resource type="PackedScene" uid="uid://wqjjsrh4wimc" path="res://scenes/Universals/brackets.tscn" id="4_kvm1i"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Interactables/chest.tscn" id="6_l41vt"]
 [ext_resource type="Script" uid="uid://j0t8gfgtn0r7" path="res://scenes/Levels/enemy_root.gd" id="7_2xe36"]
@@ -21,7 +22,6 @@
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
 [ext_resource type="PackedScene" uid="uid://dm5j1hftae6gs" path="res://scenes/Interactables/cutscene_trigger.tscn" id="19_poti2"]
-[ext_resource type="PackedScene" uid="uid://bpynshe51cu4u" path="res://scenes/Universals/parentheses.tscn" id="22_kvm1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -96,9 +96,11 @@ wall = NodePath("../Wall")
 enemy_spawn = NodePath("../enemySpawn")
 
 [node name="Durdan" parent="." instance=ExtResource("1_snkv6")]
-position = Vector2(897, 976)
+position = Vector2(893, 1216)
 collision_layer = 1
 collision_mask = 107
+
+[node name="brackets2" parent="Durdan" instance=ExtResource("4_kvm1i")]
 
 [node name="Level" type="Node2D" parent="."]
 
@@ -139,7 +141,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAAHAAoAAgAAAAAAAAAWAAsAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAgAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")
@@ -161,6 +163,3 @@ enemy_root = NodePath("../Room/enemies")
 [node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
 script = ExtResource("16_do0wj")
 wall = NodePath("../Wall")
-
-[node name="Parentheses" parent="." instance=ExtResource("22_kvm1i")]
-position = Vector2(896, 795)

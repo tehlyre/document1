@@ -3,12 +3,15 @@ extends Node2D
 
 @onready var lparen : Area2D = $leftParen
 @onready var rparen : Area2D = $rightParen
+var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var rot_rand = rng.randi_range(0,3)*PI/4
+	rotate(rot_rand)
 	lparen.body_entered.connect(_on_paren_body_connect)
 	rparen.body_entered.connect(_on_paren_body_connect)
-	await get_tree().create_timer(0.5).timeout
+	#await get_tree().create_timer(0.5).timeout
 	close_parentheses()
 
 func close_parentheses():

@@ -1,3 +1,4 @@
+AnimatableBody2D
 Panel
 CollisionShape2D
 Area2D
@@ -11,5 +12,3 @@ HBoxContainer
 Dummy
 VBoxContainer
 Control
-ProgressBar
-CanvasLayer

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://wqjjsrh4wimc"]
+
+[ext_resource type="Script" uid="uid://beccwfm1d5vu0" path="res://scenes/Universals/brackets.gd" id="1_00vss"]
+[ext_resource type="Texture2D" uid="uid://recof3wthp7i" path="res://assets/textures/bracket.png" id="1_6xgia"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxj0a"]
+size = Vector2(206, 1204)
+
+[node name="brackets" type="Node2D"]
+
+[node name="leftBrack" type="AnimatableBody2D" parent="." groups=["breakables"]]
+position = Vector2(-640, 0)
+collision_layer = 512
+collision_mask = 4
+sync_to_physics = false
+script = ExtResource("1_00vss")
+
+[node name="leftBrackSprite" type="Sprite2D" parent="leftBrack"]
+scale = Vector2(5, 5)
+texture = ExtResource("1_6xgia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftBrack"]
+shape = SubResource("RectangleShape2D_kxj0a")
+
+[node name="rightBrack" type="AnimatableBody2D" parent="." groups=["breakables"]]
+position = Vector2(640, 0)
+collision_layer = 512
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_00vss")
+
+[node name="rightBrackSprite" type="Sprite2D" parent="rightBrack"]
+scale = Vector2(5, 5)
+texture = ExtResource("1_6xgia")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="rightBrack"]
+shape = SubResource("RectangleShape2D_kxj0a")

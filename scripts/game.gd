@@ -382,6 +382,7 @@ func _on_player_death() -> void:
 # Fired when the player restarts the game after death. Connected to the signal deathmenu.restart. 
 # Unpauses the game, reloads the scene, and unkills the player.
 func _on_game_restart() -> void:
+	print("eopjqpijfpqoiwjepoiqwjf")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
@@ -393,7 +394,7 @@ func _on_spot_selected(pos : Vector2) -> void:
 		var p_ = parentheses.instantiate()
 		p_.owner = $container
 		$container/Bullets.add_child(p_)
-		p_.position = pos
+		p_.position = CAMERA_SCALE*pos+camera.position
 	spot_select_reason = "none"
 	menu_state = MenuStates.MENU_NONE
 	print(pos)

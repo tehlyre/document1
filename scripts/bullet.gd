@@ -33,6 +33,7 @@ func _ready() -> void:
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
 func on_body_entered(body : Node2D) -> void:
+	print(body)
 	if(body.is_in_group("enemies")):
 		body.thingy_damage(100/body.DAMAGE_SCALE)
 	elif(body.is_in_group("player")):
