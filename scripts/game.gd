@@ -224,7 +224,8 @@ func _ready() -> void:
 	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
 	spotselectingmenu.end_spot_select.connect(_on_spot_selected)
 	pscale = player.scale
-	escale = enemyroot.get_child(0).scale
+	if len(enemyroot.get_children()) > 0:
+		escale = enemyroot.get_child(0).scale
 	if is_debugging:
 		d_ = Debugger.instantiate()
 		add_child(d_)
@@ -264,6 +265,9 @@ func _input(event : InputEvent) -> void:
 				menu_state = MenuStates.MENU_ALIGNMENT
 			Aeon.PlayerAbilities.FONT_SIZE:
 				menu_state = MenuStates.MENU_FONTSIZE
+			Aeon.PlayerAbilities.PARENTHESES:
+				menu_state = MenuStates.MENU_SPOT_SELECTING
+				spotselectingmenu.is_spot_selecting = true
 	elif (event.is_action_released("special_q")):
 		match Aeon.equipped_abilities["q"]:
 			Aeon.PlayerAbilities.NONE:
@@ -287,6 +291,8 @@ func _input(event : InputEvent) -> void:
 			Aeon.PlayerAbilities.PARENTHESES:
 				menu_state = MenuStates.MENU_SPOT_SELECTING
 				spot_select_reason = "parentheses"
+			Aeon.PlayerAbilities.BRACKETS:
+				player.spawn_brackets()
 	elif (event.is_action_released("special_e")):
 		match Aeon.equipped_abilities["e"]:
 			Aeon.PlayerAbilities.NONE:
@@ -296,6 +302,9 @@ func _input(event : InputEvent) -> void:
 					menu_state = MenuStates.MENU_NONE
 			Aeon.PlayerAbilities.FONT_SIZE:
 				if menu_state == MenuStates.MENU_FONTSIZE:
+					menu_state = MenuStates.MENU_NONE
+			Aeon.PlayerAbilities.PARENTHESES:
+				if menu_state == MenuStates.MENU_SPOT_SELECTING:
 					menu_state = MenuStates.MENU_NONE
 
 

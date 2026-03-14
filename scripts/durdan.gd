@@ -36,6 +36,7 @@ class_name Player
 #		gun so that it shoots at the cursor.
 @export var MAX_SPEED : float = 400.0
 @export var ACCELERATION : float = 1500.0
+@export var brackets : PackedScene = preload("res://scenes/Universals/brackets.tscn")
 var THETA : float = 0.9
 
 
@@ -175,7 +176,11 @@ func thingy_large_push(rot : float, flip : bool) -> void:
 		movin_rotation = rot
 		is_push_flipped = false
 
-
+func spawn_brackets():
+	var b_ = brackets.instantiate()
+	b_.owner = self
+	add_child(b_)
+	
 
 # THINGY FUNCTIONS
 # Functions that update every frame or something like that
@@ -293,4 +298,4 @@ func _physics_process(delta) -> void:
 		previous_rotation = rotation
 	else:
 		velocity = Vector2.ZERO
-		cutscene_firing_buffer = 1
+		cutscene_firing_buffer = 0

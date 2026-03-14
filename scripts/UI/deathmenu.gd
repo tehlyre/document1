@@ -45,7 +45,7 @@ func on_player_death():
 # Connected to restart_button.pressed. Emits the restart signal. This signal is used by the game manager to restart 
 # the main scene.
 func on_restart_pressed():
-	emit_signal("restart")
+	restart.emit()
 
 # Function void on_quit_pressed()
 # Connected to quit_button.pressed. Unpauses the tree and switches the main scene to the main menu scene.

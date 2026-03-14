@@ -1,9 +1,8 @@
-[gd_scene load_steps=33 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=32 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="Script" uid="uid://5ou7lynh5rfx" path="res://scripts/camera.gd" id="4_h4gck"]
-[ext_resource type="PackedScene" uid="uid://wqjjsrh4wimc" path="res://scenes/Universals/brackets.tscn" id="4_kvm1i"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_m1f8i"]
 [ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Interactables/chest.tscn" id="6_l41vt"]
 [ext_resource type="Script" uid="uid://j0t8gfgtn0r7" path="res://scenes/Levels/enemy_root.gd" id="7_2xe36"]
@@ -100,8 +99,6 @@ position = Vector2(893, 1216)
 collision_layer = 1
 collision_mask = 107
 
-[node name="brackets2" parent="Durdan" instance=ExtResource("4_kvm1i")]
-
 [node name="Level" type="Node2D" parent="."]
 
 [node name="Goo" parent="Level" instance=ExtResource("4_m1f8i")]
@@ -141,7 +138,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAgAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAAKAAsAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")
