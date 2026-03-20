@@ -36,7 +36,8 @@ class_name Player
 #		gun so that it shoots at the cursor.
 @export var MAX_SPEED : float = 400.0
 @export var ACCELERATION : float = 1500.0
-@export var brackets : PackedScene = preload("res://scenes/Universals/brackets.tscn")
+var brackets = preload("res://scenes/Universals/brackets.tscn")
+var braces = preload("res://scenes/Universals/curly_brace.tscn")
 var THETA : float = 0.9
 
 
@@ -53,6 +54,7 @@ var is_sprinting : bool = false
 var is_movin_over : bool = false
 var is_push_flipped : bool = false
 var is_cutscene_running : bool = false
+var is_bracketed : bool = false
 
 # STATUS VARIABLES
 
@@ -66,6 +68,7 @@ var cutscene_firing_buffer : int = 0
 
 # int health: The health of the player.
 var health : int = 100
+var bracket
 
 # float previous_rotation: Stores the rotation of the player on the last frame in case the mouse
 # is directly on top of the player or another action that would otherwise result in gay behavior.
@@ -112,7 +115,8 @@ func _ready() -> void:
 	$areaInteraction.area_entered.connect(_on_interaction_area_area_entered)
 	$areaInteraction.area_exited.connect(_on_interaction_area_area_exited)
 	sig_set_healthbar.emit(100.0)
-
+	braces = preload("res://scenes/Universals/curly_brace.tscn")
+	brackets = preload("res://scenes/Universals/brackets.tscn")
 
 # Signal Calls
 
@@ -150,7 +154,7 @@ func _input(event : InputEvent) -> void:
 		current_acceleration = ACCELERATION*2
 	elif (event.is_action_released("sprint")) and is_sprinting == true:
 		is_sprinting = false
-		current_max_speed = MAX_SPEED/2
+		current_max_speed = MAX_SPEED
 		print("ooiejpgqiohporeihgqpoweihgpoi")
 		current_acceleration = ACCELERATION/2
 
@@ -177,10 +181,24 @@ func thingy_large_push(rot : float, flip : bool) -> void:
 		is_push_flipped = false
 
 func spawn_brackets():
-	var b_ = brackets.instantiate()
-	b_.owner = self
-	add_child(b_)
+	if !is_bracketed:
+		var b_ = brackets.instantiate()
+		print(b_)
+		b_.owner = self
+		b_.host = self
+		add_child(b_)
+		is_bracketed = true
+		bracket = b_
+		bracket.busted.connect(_on_bracket_busted)
+		print(bracket)
+	else:
+		bracket.switch_brackets()
+
+
 	
+
+func _on_bracket_busted():
+	is_bracketed = false
 
 # THINGY FUNCTIONS
 # Functions that update every frame or something like that
@@ -280,7 +298,6 @@ func _physics_process(delta) -> void:
 				set_rotation(flick_stick_angle())
 		
 	#	}
-
 	#   Thingy Calls (no particular order)
 		#thingy_hazard()
 		thingy_velocity(delta)

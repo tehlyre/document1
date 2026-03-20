@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 var pot_state : PotStates = PotStates.PRISTINE
+var host = "six seven"
 
 enum PotStates {
 	PRISTINE,

@@ -4,6 +4,7 @@ extends Node2D
 @onready var lparen : Area2D = $leftParen
 @onready var rparen : Area2D = $rightParen
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+var firee
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

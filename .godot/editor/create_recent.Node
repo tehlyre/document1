@@ -1,7 +1,8 @@
-AnimatableBody2D
-Panel
 CollisionShape2D
 Area2D
+Node2D
+AnimatableBody2D
+Panel
 Marker2D
 Marker
 OptionButton      - Matches the "dropdown" keyword.
@@ -11,4 +12,3 @@ Button
 HBoxContainer
 Dummy
 VBoxContainer
-Control

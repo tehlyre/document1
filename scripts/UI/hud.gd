@@ -29,3 +29,5 @@ func _process(_delta : float) -> void:
 	$hudRoot/playerInventory/coins.text = "Coins: "+str(int(Aeon.player_inventory['coins']))
 	$hudRoot/playerAbilities/q.text = "Q: "+Aeon.player_abilities_map[Aeon.equipped_abilities["q"]]
 	$hudRoot/playerAbilities/e.text = "E: "+Aeon.player_abilities_map[Aeon.equipped_abilities["e"]]
+	$hudRoot/playerAbilities/s2.text = "2: "+Aeon.player_abilities_map[Aeon.equipped_abilities["2"]]
+	$hudRoot/playerAbilities/s3.text = "3: "+Aeon.player_abilities_map[Aeon.equipped_abilities["3"]]

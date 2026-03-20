@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dtuclth3n2s7"]
+
+[ext_resource type="Script" uid="uid://bthech5310lnf" path="res://scenes/Universals/curly_brace.gd" id="1_1k56o"]
+[ext_resource type="Texture2D" uid="uid://ohr7tsjihi8i" path="res://assets/textures/curly_brace.png" id="1_bd4cf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1k56o"]
+size = Vector2(240, 48)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1k56o"]
+radius = 70.0
+height = 354.0
+
+[node name="CurlyBrace" type="Node2D" groups=["walls"]]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_1k56o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("RectangleShape2D_1k56o")
+
+[node name="CurlyBrace" type="Sprite2D" parent="AnimatableBody2D"]
+rotation = 1.5707964
+texture = ExtResource("1_bd4cf")
+
+[node name="BlastRadius" type="Area2D" parent="AnimatableBody2D"]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/BlastRadius"]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_1k56o")

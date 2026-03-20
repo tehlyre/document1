@@ -26,7 +26,9 @@ var collision : KinematicCollision2D
 
 # Called when bullet is fired/node is instantiated. Connects the body_entered signal to on_body_entered().
 func _ready() -> void:
-	if firee is Player: collision_mask -= 1
+	if firee is Player: 
+		collision_mask -= 1
+		collision_mask -= 512
 	else: collision_mask -= 2
 	global_scale = Aeon.STANDARD_BULLET_SIZE
 
@@ -40,7 +42,7 @@ func on_body_entered(body : Node2D) -> void:
 		body.thingy_damage(10)
 	elif(body.is_in_group("walls")):
 		pass
-	elif(body.is_in_group("breakables")):
+	elif(body.is_in_group("breakables")) and body.host != firee:
 		body.smash()
 	queue_free()
 

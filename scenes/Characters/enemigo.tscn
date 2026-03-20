@@ -10,7 +10,7 @@ radius = 12.0416
 [node name="enemy" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 97
+collision_mask = 225
 script = ExtResource("1_jpdw6")
 
 [node name="enemyHealthBar" type="ProgressBar" parent="."]
@@ -33,6 +33,7 @@ shape = SubResource("CircleShape2D_yki5q")
 position = Vector2(32, 20)
 scale = Vector2(0.0645161, 0.0588235)
 bullet_type = 1
+is_on_enemy = true
 
 [node name="toPlayer" type="RayCast2D" parent="."]
 collision_mask = 65

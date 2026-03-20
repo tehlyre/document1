@@ -57,3 +57,11 @@ text = "Q: "
 [node name="e" type="Label" parent="hudRoot/playerAbilities"]
 layout_mode = 2
 text = "E: "
+
+[node name="s2" type="Label" parent="hudRoot/playerAbilities"]
+layout_mode = 2
+text = "2: "
+
+[node name="s3" type="Label" parent="hudRoot/playerAbilities"]
+layout_mode = 2
+text = "3: "

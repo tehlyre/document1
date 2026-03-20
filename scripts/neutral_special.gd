@@ -12,6 +12,7 @@ var original_rotation : float
 #
 # FLAGS
 @export var is_on_player : bool
+@export var is_on_enemy : bool
 var is_in_illinois : bool = false
 
 var bullet_sprite_map = {Aeon.BulletTypes.NONE: "", Aeon.BulletTypes.BASIC: preload("res://scenes/Universals/bullet.tscn"), Aeon.BulletTypes.RICOCHET: preload("res://scenes/Universals/ricochet_bullet.tscn")}
@@ -20,10 +21,11 @@ func _ready() -> void:
 	bullet = bullet_sprite_map[bullet_type]
 	$noGunZone.body_entered.connect(_on_noGunZone_body_entered)
 	$noGunZone.body_exited.connect(_on_noGunZone_body_exited)
+	if is_on_enemy:
+		$noGunZone.collision_mask += 128
 	original_rotation = rotation
 
 func _on_noGunZone_body_entered(_body : Node2D) -> void:
-	print("currently gooning")
 	is_in_illinois = true
 
 func _on_noGunZone_body_exited(_body : Node2D) -> void:

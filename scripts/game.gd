@@ -65,6 +65,7 @@ var ALIGN_MIN_OFFSETS = [0, 80, 450, 880]
 var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
 var pscale : Vector2
 var spot_select_reason = "none"
+var player_braces_on_field = []
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
@@ -78,7 +79,16 @@ var inventory : Dictionary = {'keys':1, 'coins':0}
 
 # PackedScend debug: This is a pointer to the debug_window I tried to implement at one point.
 var Debugger : PackedScene = preload("res://scenes/debug_window.tscn")
+var braces : PackedScene = preload("res://scenes/Universals/curly_brace.tscn")
 
+var special_buttons = ["special_q", "special_e", "special_2", "special_3"]
+
+var special_map = {
+	"special_q": "q",
+	"special_e": "e",
+	"special_2": "2",
+	"special_3": "3",
+}
 
 var d_ : DebugWindow
 @export var menu_state : MenuStates = MenuStates.MENU_NONE:
@@ -136,6 +146,7 @@ var d_ : DebugWindow
 				fontsizemenu.show()
 				fontsizemenu.dropdown.show_popup()
 			MenuStates.MENU_SPOT_SELECTING:
+				spotselectingmenu.is_spot_selecting = true
 				spotselectingmenu.show()
 			MenuStates.MENU_NONE:
 				pausemenu.hide()
@@ -257,81 +268,113 @@ func _input(event : InputEvent) -> void:
 			menu_state = MenuStates.MENU_LOG
 		elif menu_state == MenuStates.MENU_LOG:
 			menu_state = MenuStates.MENU_DIALOGUE
-	elif (event.is_action_pressed("special_q")) and menu_state == MenuStates.MENU_NONE:
-		match Aeon.equipped_abilities["q"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				menu_state = MenuStates.MENU_ALIGNMENT
-			Aeon.PlayerAbilities.FONT_SIZE:
-				menu_state = MenuStates.MENU_FONTSIZE
-			Aeon.PlayerAbilities.PARENTHESES:
-				menu_state = MenuStates.MENU_SPOT_SELECTING
-				spotselectingmenu.is_spot_selecting = true
-	elif (event.is_action_released("special_q")):
-		match Aeon.equipped_abilities["q"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				if menu_state == MenuStates.MENU_ALIGNMENT:
-					menu_state = MenuStates.MENU_NONE
-			Aeon.PlayerAbilities.FONT_SIZE:
-				if menu_state == MenuStates.MENU_FONTSIZE:
-					menu_state = MenuStates.MENU_NONE
+
+	for i in special_buttons:
+		if (event.is_action_pressed(i)) and menu_state == MenuStates.MENU_NONE:
+			match Aeon.equipped_abilities[special_map[i]]:
+				Aeon.PlayerAbilities.NONE:
+					pass
+				Aeon.PlayerAbilities.ALIGNMENT:
+					menu_state = MenuStates.MENU_ALIGNMENT
+				Aeon.PlayerAbilities.FONT_SIZE:
+					menu_state = MenuStates.MENU_FONTSIZE
+				Aeon.PlayerAbilities.PARENTHESES:
+					menu_state = MenuStates.MENU_SPOT_SELECTING
+					spot_select_reason = "parentheses"
+				Aeon.PlayerAbilities.BRACKETS:
+					player.spawn_brackets()
+				Aeon.PlayerAbilities.BRACES:
+					spawn_player_braces()
+		elif (event.is_action_released(i)):
+			match Aeon.equipped_abilities[special_map[i]]:
+				Aeon.PlayerAbilities.NONE:
+					pass
+				Aeon.PlayerAbilities.ALIGNMENT:
+					if menu_state == MenuStates.MENU_ALIGNMENT:
+						menu_state = MenuStates.MENU_NONE
+				Aeon.PlayerAbilities.FONT_SIZE:
+					if menu_state == MenuStates.MENU_FONTSIZE:
+						menu_state = MenuStates.MENU_NONE
+				Aeon.PlayerAbilities.PARENTHESES:
+					if menu_state == MenuStates.MENU_SPOT_SELECTING:
+						menu_state = MenuStates.MENU_NONE
+						spotselectingmenu.is_spot_selecting = false
 
 
-	elif (event.is_action_pressed("special_e")) and menu_state == MenuStates.MENU_NONE:
-		match Aeon.equipped_abilities["e"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				menu_state = MenuStates.MENU_ALIGNMENT
-			Aeon.PlayerAbilities.FONT_SIZE:
-				menu_state = MenuStates.MENU_FONTSIZE
-			Aeon.PlayerAbilities.PARENTHESES:
-				menu_state = MenuStates.MENU_SPOT_SELECTING
-				spot_select_reason = "parentheses"
-			Aeon.PlayerAbilities.BRACKETS:
-				player.spawn_brackets()
-	elif (event.is_action_released("special_e")):
-		match Aeon.equipped_abilities["e"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				if menu_state == MenuStates.MENU_ALIGNMENT:
-					menu_state = MenuStates.MENU_NONE
-			Aeon.PlayerAbilities.FONT_SIZE:
-				if menu_state == MenuStates.MENU_FONTSIZE:
-					menu_state = MenuStates.MENU_NONE
-			Aeon.PlayerAbilities.PARENTHESES:
-				if menu_state == MenuStates.MENU_SPOT_SELECTING:
-					menu_state = MenuStates.MENU_NONE
+	#elif (event.is_action_pressed("special_e")) and menu_state == MenuStates.MENU_NONE:
+		#match Aeon.equipped_abilities["e"]:
+			#Aeon.PlayerAbilities.NONE:
+				#pass
+			#Aeon.PlayerAbilities.ALIGNMENT:
+				#menu_state = MenuStates.MENU_ALIGNMENT
+			#Aeon.PlayerAbilities.FONT_SIZE:
+				#menu_state = MenuStates.MENU_FONTSIZE
+			#Aeon.PlayerAbilities.PARENTHESES:
+				#menu_state = MenuStates.MENU_SPOT_SELECTING
+				#spot_select_reason = "parentheses"
+			#Aeon.PlayerAbilities.BRACKETS:
+				#player.spawn_brackets()
+			#Aeon.PlayerAbilities.BRACES:
+				#spawn_player_braces()
+	#elif (event.is_action_released("special_e")):
+		#match Aeon.equipped_abilities["e"]:
+			#Aeon.PlayerAbilities.NONE:
+				#pass
+			#Aeon.PlayerAbilities.ALIGNMENT:
+				#if menu_state == MenuStates.MENU_ALIGNMENT:
+					#menu_state = MenuStates.MENU_NONE
+			#Aeon.PlayerAbilities.FONT_SIZE:
+				#if menu_state == MenuStates.MENU_FONTSIZE:
+					#menu_state = MenuStates.MENU_NONE
+			#Aeon.PlayerAbilities.PARENTHESES:
+				#if menu_state == MenuStates.MENU_SPOT_SELECTING:
+					#menu_state = MenuStates.MENU_NONE
+					#spotselectingmenu.is_spot_selecting = false
+#
+#
+	#elif (event.is_action_pressed("special_2")) and menu_state == MenuStates.MENU_NONE:
+		#match Aeon.equipped_abilities["2"]:
+			#Aeon.PlayerAbilities.NONE:
+				#pass
+			#Aeon.PlayerAbilities.ALIGNMENT:
+				#menu_state = MenuStates.MENU_ALIGNMENT
+			#Aeon.PlayerAbilities.FONT_SIZE:
+				#menu_state = MenuStates.MENU_FONTSIZE
+			#Aeon.PlayerAbilities.PARENTHESES:
+				#menu_state = MenuStates.MENU_SPOT_SELECTING
+				#spot_select_reason = "parentheses"
+			#Aeon.PlayerAbilities.BRACKETS:
+				#player.spawn_brackets()
+			#Aeon.PlayerAbilities.BRACES:
+				#spawn_player_braces()
+	#elif (event.is_action_released("special_2")):
+		#match Aeon.equipped_abilities["2"]:
+			#Aeon.PlayerAbilities.NONE:
+				#pass
+			#Aeon.PlayerAbilities.ALIGNMENT:
+				#if menu_state == MenuStates.MENU_ALIGNMENT:
+					#menu_state = MenuStates.MENU_NONE
+			#Aeon.PlayerAbilities.FONT_SIZE:
+				#if menu_state == MenuStates.MENU_FONTSIZE:
+					#menu_state = MenuStates.MENU_NONE
+			#Aeon.PlayerAbilities.PARENTHESES:
+				#if menu_state == MenuStates.MENU_SPOT_SELECTING:
+					#menu_state = MenuStates.MENU_NONE
+					#spotselectingmenu.is_spot_selecting = false
 
 
-	elif (event.is_action_pressed("special_2")) and menu_state == MenuStates.MENU_NONE:
-		match Aeon.equipped_abilities["e"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				menu_state = MenuStates.MENU_ALIGNMENT
-			Aeon.PlayerAbilities.FONT_SIZE:
-				menu_state = MenuStates.MENU_FONTSIZE
-			Aeon.PlayerAbilities.PARENTHESES:
-				menu_state = MenuStates.MENU_SPOT_SELECTING
-	elif (event.is_action_released("special_2")):
-		match Aeon.equipped_abilities["e"]:
-			Aeon.PlayerAbilities.NONE:
-				pass
-			Aeon.PlayerAbilities.ALIGNMENT:
-				if menu_state == MenuStates.MENU_ALIGNMENT:
-					menu_state = MenuStates.MENU_NONE
-			Aeon.PlayerAbilities.FONT_SIZE:
-				if menu_state == MenuStates.MENU_FONTSIZE:
-					menu_state = MenuStates.MENU_NONE
 
-
-
-
+func spawn_player_braces():
+	var b_ = braces.instantiate()
+	var front_of_player = Vector2(100*cos(player.rotation), 100*sin(player.rotation))
+	b_.position = player.position+front_of_player
+	b_.owner = self
+	$container/Bullets.add_child(b_)
+	b_.rotation = player.rotation+PI/2
+	player_braces_on_field.append(b_)
+	if len(player_braces_on_field) > 2:
+		player_braces_on_field[0].queue_free()
+		player_braces_on_field.pop_front()
 
 
 # PROCESS
@@ -402,6 +445,7 @@ func _on_spot_selected(pos : Vector2) -> void:
 	if spot_select_reason == "parentheses":
 		var p_ = parentheses.instantiate()
 		p_.owner = $container
+		p_.firee = player
 		$container/Bullets.add_child(p_)
 		p_.position = CAMERA_SCALE*pos+camera.position
 	spot_select_reason = "none"
@@ -419,6 +463,7 @@ func _on_teleportation(pos) -> void:
 		get_tree().paused = !get_tree().paused
 		menu_state = MenuStates.MENU_NONE
 		hud_hidden = false
+		camera.update_position()
 
 func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	get_tree().paused = !get_tree().paused
@@ -426,6 +471,8 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	if alignment == Aeon.AlignmentTypes.NONE: 
 		return
 	enemyroot.enemies_on_screen.sort_custom(_sort_enemies_by_x)
+	if len(enemyroot.enemies_on_screen) == 0:
+		return
 	print(enemyroot.enemies_on_screen)
 	var minimum_enemy_x = (enemyroot.enemies_on_screen[0].global_position.x-camera.position.x)/2
 	print(minimum_enemy_x)

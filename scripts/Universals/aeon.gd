@@ -25,7 +25,8 @@ enum PlayerAbilities {
 	ALIGNMENT,
 	FONT_SIZE,
 	PARENTHESES,
-	BRACKETS
+	BRACKETS,
+	BRACES
 }
 enum AlignmentTypes {
 	NONE,
@@ -35,14 +36,15 @@ enum AlignmentTypes {
 }
 
 var player_inventory : Dictionary = {'keys':1, 'coins':0}
-var equipped_abilities : Dictionary = {'q': PlayerAbilities.ALIGNMENT, "e" : PlayerAbilities.PARENTHESES}
+var equipped_abilities : Dictionary = {'q': PlayerAbilities.ALIGNMENT, "e" : PlayerAbilities.BRACKETS, "2" : PlayerAbilities.BRACES, "3" : PlayerAbilities.PARENTHESES}
 
 var player_abilities_map : Dictionary = {
 	PlayerAbilities.NONE : "None",
 	PlayerAbilities.ALIGNMENT : "Alignment",
 	PlayerAbilities.FONT_SIZE : "Font Size",
-	PlayerAbilities.PARENTHESES : "Parantheses",
-	PlayerAbilities.BRACKETS : "Brackets"
+	PlayerAbilities.PARENTHESES : "Parentheses",
+	PlayerAbilities.BRACKETS : "Brackets",
+	PlayerAbilities.BRACES : "Curly Braces"
 }
 
 var name_map = {Aeon.Characters.DURDAN: "Durdan", Aeon.Characters.CELIA: "Celia", Aeon.Characters.JOSEPHUS: "Josephus"}

@@ -19,6 +19,7 @@ class_name RicochetBullet
 
 var is_ricocheting : bool = false
 var ricochet_counter : int = 0
+var blacklist = []
 
 # FLAGS
 
@@ -50,8 +51,23 @@ func on_body_entered(body : Node2D, normal : Vector2) -> void:
 		else:
 			is_ricocheting = false
 		return
-	elif(body.is_in_group("breakables")):
-		body.smash()
+	elif(body.is_in_group("breakables")) and body.host != firee:
+		if !is_ricocheting:
+			ricochet_counter += 1
+			print(ricochet_counter)
+			if ricochet_counter > 2:
+				if body.host not in blacklist:
+					body.smash()
+				queue_free()
+				return
+			ricochet(normal)
+			if body.host not in blacklist:
+				body.smash()
+				blacklist.append(body.host)
+			is_ricocheting = true
+		else:
+			is_ricocheting = false
+		return
 	queue_free()
 
 
