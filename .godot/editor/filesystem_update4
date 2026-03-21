@@ -1,12 +1,6 @@
+res://scenes/Characters/durdan.tscn
 res://scripts/game.gd
-res://scenes/Universals/curly_brace.tscn
-res://scenes/Universals/curly_brace.gd
+res://scripts/durdan.gd
 res://scenes/Levels/container.tscn
-res://scenes/Characters/dummy.tscn
-res://scenes/Universals/bullet.tscn
-res://scenes/Characters/enemigo.tscn
 res://scenes/Universals/neutral_special.tscn
-res://scripts/neutral_special.gd
-res://scenes/UI/hud.tscn
-res://scripts/Universals/aeon.gd
-res://scripts/UI/hud.gd
+res://scenes/Universals/bullet.tscn

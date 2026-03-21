@@ -66,6 +66,9 @@ var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
 var pscale : Vector2
 var spot_select_reason = "none"
 var player_braces_on_field = []
+var z_target : Node2D
+var is_first_frame = true
+var current_enemy_target_idx = 0
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
@@ -258,11 +261,12 @@ func _input(event : InputEvent) -> void:
 			menu_state = MenuStates.MENU_NONE
 		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
 			menu_state = MenuStates.MENU_PAUSE
-		
+
 	elif event.is_action_pressed("open_map") and menu_state == MenuStates.MENU_NONE:
 		menu_state = MenuStates.MENU_MAP
 	elif event.is_action_released("open_map") and menu_state == MenuStates.MENU_MAP:
 		menu_state = MenuStates.MENU_NONE
+
 	elif event.is_action_pressed("open_log"):
 		if menu_state == MenuStates.MENU_DIALOGUE:
 			menu_state = MenuStates.MENU_LOG
@@ -300,67 +304,11 @@ func _input(event : InputEvent) -> void:
 						menu_state = MenuStates.MENU_NONE
 						spotselectingmenu.is_spot_selecting = false
 
+	if event.is_action_pressed("z_target"):
+		if len(enemyroot.get_children()) > 1:
+			current_enemy_target_idx += 1
+			z_target = enemyroot.get_child(current_enemy_target_idx)
 
-	#elif (event.is_action_pressed("special_e")) and menu_state == MenuStates.MENU_NONE:
-		#match Aeon.equipped_abilities["e"]:
-			#Aeon.PlayerAbilities.NONE:
-				#pass
-			#Aeon.PlayerAbilities.ALIGNMENT:
-				#menu_state = MenuStates.MENU_ALIGNMENT
-			#Aeon.PlayerAbilities.FONT_SIZE:
-				#menu_state = MenuStates.MENU_FONTSIZE
-			#Aeon.PlayerAbilities.PARENTHESES:
-				#menu_state = MenuStates.MENU_SPOT_SELECTING
-				#spot_select_reason = "parentheses"
-			#Aeon.PlayerAbilities.BRACKETS:
-				#player.spawn_brackets()
-			#Aeon.PlayerAbilities.BRACES:
-				#spawn_player_braces()
-	#elif (event.is_action_released("special_e")):
-		#match Aeon.equipped_abilities["e"]:
-			#Aeon.PlayerAbilities.NONE:
-				#pass
-			#Aeon.PlayerAbilities.ALIGNMENT:
-				#if menu_state == MenuStates.MENU_ALIGNMENT:
-					#menu_state = MenuStates.MENU_NONE
-			#Aeon.PlayerAbilities.FONT_SIZE:
-				#if menu_state == MenuStates.MENU_FONTSIZE:
-					#menu_state = MenuStates.MENU_NONE
-			#Aeon.PlayerAbilities.PARENTHESES:
-				#if menu_state == MenuStates.MENU_SPOT_SELECTING:
-					#menu_state = MenuStates.MENU_NONE
-					#spotselectingmenu.is_spot_selecting = false
-#
-#
-	#elif (event.is_action_pressed("special_2")) and menu_state == MenuStates.MENU_NONE:
-		#match Aeon.equipped_abilities["2"]:
-			#Aeon.PlayerAbilities.NONE:
-				#pass
-			#Aeon.PlayerAbilities.ALIGNMENT:
-				#menu_state = MenuStates.MENU_ALIGNMENT
-			#Aeon.PlayerAbilities.FONT_SIZE:
-				#menu_state = MenuStates.MENU_FONTSIZE
-			#Aeon.PlayerAbilities.PARENTHESES:
-				#menu_state = MenuStates.MENU_SPOT_SELECTING
-				#spot_select_reason = "parentheses"
-			#Aeon.PlayerAbilities.BRACKETS:
-				#player.spawn_brackets()
-			#Aeon.PlayerAbilities.BRACES:
-				#spawn_player_braces()
-	#elif (event.is_action_released("special_2")):
-		#match Aeon.equipped_abilities["2"]:
-			#Aeon.PlayerAbilities.NONE:
-				#pass
-			#Aeon.PlayerAbilities.ALIGNMENT:
-				#if menu_state == MenuStates.MENU_ALIGNMENT:
-					#menu_state = MenuStates.MENU_NONE
-			#Aeon.PlayerAbilities.FONT_SIZE:
-				#if menu_state == MenuStates.MENU_FONTSIZE:
-					#menu_state = MenuStates.MENU_NONE
-			#Aeon.PlayerAbilities.PARENTHESES:
-				#if menu_state == MenuStates.MENU_SPOT_SELECTING:
-					#menu_state = MenuStates.MENU_NONE
-					#spotselectingmenu.is_spot_selecting = false
 
 
 
@@ -376,6 +324,18 @@ func spawn_player_braces():
 		player_braces_on_field[0].queue_free()
 		player_braces_on_field.pop_front()
 
+func lock_in():
+	print(z_target==null)
+	if z_target == null:
+		if len(enemyroot.get_children()) == 0:
+			player.not_locked_in = true
+			return
+		else:
+			current_enemy_target_idx = 0
+			z_target = enemyroot.get_child(current_enemy_target_idx)
+	
+	player.lock_on_location = z_target.global_position
+
 
 # PROCESS
 
@@ -384,7 +344,13 @@ func spawn_player_braces():
 
 # Serves the rudimentary inventory that is a placeholder for things to come.
 func _process(_delta : float) -> void:
+	if is_first_frame:
+		current_enemy_target_idx = 0
+		z_target = enemyroot.get_child(current_enemy_target_idx)
 	if is_debugging: debug(d_)
+	print(z_target)
+	lock_in()
+	is_first_frame = false
 	#print(is_opening_map)
 
 

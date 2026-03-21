@@ -137,7 +137,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAAOAAkAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")

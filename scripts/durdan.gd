@@ -55,6 +55,7 @@ var is_movin_over : bool = false
 var is_push_flipped : bool = false
 var is_cutscene_running : bool = false
 var is_bracketed : bool = false
+var not_locked_in : bool = false
 
 # STATUS VARIABLES
 
@@ -65,6 +66,7 @@ var current_max_speed : float = MAX_SPEED
 var current_acceleration : float = ACCELERATION
 var movin_rotation : float
 var cutscene_firing_buffer : int = 0
+var lock_on_location : Vector2 
 
 # int health: The health of the player.
 var health : int = 100
@@ -289,19 +291,23 @@ func _physics_process(delta) -> void:
 	if !is_cutscene_running:
 		# For facing the mouse {
 		
-		if is_using_mouse:
-			look_at(get_global_mouse_position())
-		elif !is_using_mouse:
-			if (is_nan(flick_stick_angle())):
-				set_rotation(previous_rotation)
-			else:
-				set_rotation(flick_stick_angle())
+		if not_locked_in:
+			if is_using_mouse:
+				look_at(get_global_mouse_position())
+				gun.adjust(get_global_mouse_position())
+			elif !is_using_mouse:
+				if (is_nan(flick_stick_angle())):
+					set_rotation(previous_rotation)
+				else:
+					set_rotation(flick_stick_angle())
+		else:
+			look_at(lock_on_location)
+			gun.adjust(lock_on_location)
 		
 	#	}
 	#   Thingy Calls (no particular order)
 		#thingy_hazard()
 		thingy_velocity(delta)
-		gun.adjust(get_global_mouse_position())
 		
 		if Input.is_action_just_pressed("neutral special"):
 			if cutscene_firing_buffer == 0:
