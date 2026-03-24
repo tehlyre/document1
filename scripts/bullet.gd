@@ -29,6 +29,7 @@ func _ready() -> void:
 	if firee is Player: 
 		collision_mask -= 1
 		collision_mask -= 512
+		collision_mask -= 128
 	else: collision_mask -= 2
 	global_scale = Aeon.STANDARD_BULLET_SIZE
 

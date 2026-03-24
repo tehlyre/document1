@@ -16,6 +16,7 @@ class_name RicochetBullet
 # These can be different for balancing purposes.
 @export var SPEED_WHEN_PLAYER : float = 15
 @export var SPEED_WHEN_ENEMY : float = 5
+var firee_type
 
 var is_ricocheting : bool = false
 var ricochet_counter : int = 0
@@ -30,7 +31,11 @@ var collision : KinematicCollision2D
 
 # Called when bullet is fired/node is instantiated. Connects the body_entered signal to on_body_entered().
 func _ready() -> void:
-	if firee is Player: collision_mask -= 1
+	if firee is Player: 
+		collision_mask -= 1
+		collision_mask -= 128
+		collision_mask -= 512
+
 	else: collision_mask -= 2
 
 
@@ -99,10 +104,17 @@ func ricochet(normal : Vector2):
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float) -> void:
-	if firee is Player:
+	if firee == null:
+		if firee_type == "player":
+			velocity = transform.x*SPEED_WHEN_PLAYER
+		elif firee_type == "enemy":
+			velocity = transform.x * SPEED_WHEN_ENEMY
+	elif firee is Player:
 		velocity = transform.x*SPEED_WHEN_PLAYER
+		firee_type = "player"
 	else:
 		velocity = transform.x * SPEED_WHEN_ENEMY
+		firee_type = "enemy"
 	collision = move_and_collide(velocity)
 	if collision != null:
 		on_body_entered(collision.get_collider(), collision.get_normal())

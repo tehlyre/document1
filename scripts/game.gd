@@ -334,7 +334,8 @@ func lock_in():
 			current_enemy_target_idx = 0
 			z_target = enemyroot.get_child(current_enemy_target_idx)
 	
-	player.lock_on_location = z_target.global_position
+	player.lock_on_location = z_target.target_position
+	$hud.ztargeticon.position = (z_target.target_position-camera.position)/CAMERA_SCALE+Vector2(0,-50)
 
 
 # PROCESS
@@ -350,6 +351,10 @@ func _process(_delta : float) -> void:
 	if is_debugging: debug(d_)
 	print(z_target)
 	lock_in()
+	if player.not_locked_in:
+		$hud.ztargeticon.hide()
+	else:
+		$hud.ztargeticon.show()
 	is_first_frame = false
 	#print(is_opening_map)
 

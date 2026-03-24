@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh5ivbowm0f1m"]
+[gd_scene load_steps=4 format=3 uid="uid://dh5ivbowm0f1m"]
 
 [ext_resource type="Script" uid="uid://brygg006yot8t" path="res://scripts/UI/hud.gd" id="1_c4vmg"]
+[ext_resource type="Texture2D" uid="uid://bn3kyamuskmt" path="res://assets/textures/z_target.png" id="2_rd3kb"]
 
 [sub_resource type="Theme" id="Theme_8jrks"]
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
@@ -65,3 +66,8 @@ text = "2: "
 [node name="s3" type="Label" parent="hudRoot/playerAbilities"]
 layout_mode = 2
 text = "3: "
+
+[node name="ZTarget" type="Sprite2D" parent="hudRoot"]
+position = Vector2(550.5, 355.5)
+scale = Vector2(0.77, 0.59)
+texture = ExtResource("2_rd3kb")

@@ -1,6 +1,4 @@
-res://scenes/Characters/durdan.tscn
+res://scripts/ricochet_bullet.gd
+res://scenes/UI/hud.tscn
+res://scripts/UI/hud.gd
 res://scripts/game.gd
-res://scripts/durdan.gd
-res://scenes/Levels/container.tscn
-res://scenes/Universals/neutral_special.tscn
-res://scenes/Universals/bullet.tscn

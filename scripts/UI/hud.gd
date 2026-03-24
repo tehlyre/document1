@@ -18,10 +18,12 @@ extends CanvasLayer
 
 # @export GameManager game_manager: Pointer to the gameManager root node.
 var game_manager : GameManager
+@onready var ztargeticon = $hudRoot/ZTarget
 
 # Called on startup. Prints the players inventory for debugging purposes.
 func _ready() -> void:
 	game_manager = get_tree().get_root().get_node("gameManager")
+	$hudRoot/ZTarget.hide()
 	$hudRoot/playerHealthBar.value = 100.0
 
 func _process(_delta : float) -> void:

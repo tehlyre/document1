@@ -29,6 +29,7 @@ var mover : EnemyMover
 var fire : EnemyFire
 var is_being_forced : bool = false
 @onready var collider = $enemyCollider
+var target_position
 
 # CONSTANTS
 
@@ -60,16 +61,16 @@ func _ready() -> void:
 	add_child(mover)
 	fire = EnemyFire.new(self, gun, mover)
 	add_child(fire)
-	$VisibleOnScreenNotifier2D.screen_entered.connect(_xd_lol)
-	$VisibleOnScreenNotifier2D.screen_exited.connect(_lmao_rofl)
+	$VisibleOnScreenNotifier2D.screen_entered.connect(_on_enemy_enter_screen)
+	target_position = global_position
+	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_enemy_exit_screen)
 	#print(get_parent())
 
-func _xd_lol():
+func _on_enemy_enter_screen():
 	get_parent().enemy_on_screen = [true, self]
 
-func _lmao_rofl():
+func _on_enemy_exit_screen():
 	get_parent().enemy_on_screen = [false, self]
-	#print(get_parent())
 
 
 
@@ -100,6 +101,7 @@ func thingy_damage(damage : int) -> void:
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(delta : float) -> void:
+	target_position = global_position
 	if !is_being_forced:
 		$toPlayer.target_position = to_local(player.position)
 		thingy_hazard()

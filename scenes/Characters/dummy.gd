@@ -26,6 +26,7 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var gun : Gun = $neutralSpecial
 @onready var player_raycast = $toPlayer
 @onready var collider = $enemyCollider
+var target_position
 
 
 # CONSTANTS
@@ -57,6 +58,8 @@ var health : float = 100.0
 func _ready() -> void:
 	$VisibleOnScreenNotifier2D.screen_entered.connect(_xd_lol)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_lmao_rofl)
+	target_position = global_position
+
 	#print(get_parent())
 
 func _xd_lol():
@@ -92,6 +95,7 @@ func thingy_damage(damage : int) -> void:
 # is called based on the behavior state. The player's movement is initiated, and the enemy's rotation is locked on to the player's. The health bar is updated and the enemy is
 # deleted if its health is zero.
 func _physics_process(_delta : float) -> void:
+	target_position = global_position
 	thingy_hazard()
 	$enemyHealthBar.value = health
 	if is_zero_approx(health):
