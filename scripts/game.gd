@@ -219,7 +219,13 @@ enum MenuStates {
 
 # AUTOMATICS
 
-
+func convert_viewport_coords_to_ingame(pos : Vector2) -> Vector2:
+	var newpos : Vector2 = CAMERA_SCALE*(pos)+camera.position
+	return newpos
+	
+func convert_ingame_coords_to_viewport(pos : Vector2) -> Vector2:
+	var newpos : Vector2 = (pos-camera.position)/CAMERA_SCALE
+	return newpos
 
 # Called when the game starts. Connects all connections to their proper callbacks.
 func _ready() -> void:
@@ -288,7 +294,9 @@ func _input(event : InputEvent) -> void:
 				Aeon.PlayerAbilities.BRACKETS:
 					player.spawn_brackets()
 				Aeon.PlayerAbilities.BRACES:
-					spawn_player_braces()
+					menu_state = MenuStates.MENU_SPOT_SELECTING
+					spot_select_reason = "braces"
+					#spawn_player_braces()
 		elif (event.is_action_released(i)):
 			match Aeon.equipped_abilities[special_map[i]]:
 				Aeon.PlayerAbilities.NONE:
@@ -300,6 +308,10 @@ func _input(event : InputEvent) -> void:
 					if menu_state == MenuStates.MENU_FONTSIZE:
 						menu_state = MenuStates.MENU_NONE
 				Aeon.PlayerAbilities.PARENTHESES:
+					if menu_state == MenuStates.MENU_SPOT_SELECTING:
+						menu_state = MenuStates.MENU_NONE
+						spotselectingmenu.is_spot_selecting = false
+				Aeon.PlayerAbilities.BRACES:
 					if menu_state == MenuStates.MENU_SPOT_SELECTING:
 						menu_state = MenuStates.MENU_NONE
 						spotselectingmenu.is_spot_selecting = false
@@ -419,6 +431,18 @@ func _on_spot_selected(pos : Vector2) -> void:
 		p_.firee = player
 		$container/Bullets.add_child(p_)
 		p_.position = CAMERA_SCALE*pos+camera.position
+	elif spot_select_reason == "braces":
+		var b_ = braces.instantiate()
+		var rot_to_spawn = atan2(convert_viewport_coords_to_ingame(pos).y-player.position.y, convert_viewport_coords_to_ingame(pos).x-player.position.x)
+		var front_of_player = Vector2(100*cos(rot_to_spawn), 100*sin(rot_to_spawn))
+		b_.position = player.position+front_of_player
+		b_.owner = self
+		$container/Bullets.add_child(b_)
+		b_.rotation = rot_to_spawn+PI/2
+		player_braces_on_field.append(b_)
+		if len(player_braces_on_field) > 2:
+			player_braces_on_field[0].queue_free()
+			player_braces_on_field.pop_front()
 	spot_select_reason = "none"
 	menu_state = MenuStates.MENU_NONE
 	print(pos)

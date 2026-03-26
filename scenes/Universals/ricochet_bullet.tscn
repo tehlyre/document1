@@ -8,7 +8,7 @@ size = Vector2(18, 16)
 
 [node name="ricochet_bullet" type="CharacterBody2D" groups=["bullet"]]
 collision_layer = 4
-collision_mask = 579
+collision_mask = 707
 script = ExtResource("1_s7ho3")
 
 [node name="bulletSprite" type="Sprite2D" parent="."]
