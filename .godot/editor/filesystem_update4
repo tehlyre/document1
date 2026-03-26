@@ -1,3 +1,4 @@
 res://scenes/UI/specials/spotselectingmenu.tscn
 res://scripts/game.gd
 res://scenes/Universals/ricochet_bullet.tscn
+res://scenes/Universals/curly_brace.tscn

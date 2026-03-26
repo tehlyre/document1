@@ -12,7 +12,7 @@ height = 354.0
 
 [node name="CurlyBrace" type="Node2D" groups=["walls"]]
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." groups=["walls"]]
 collision_layer = 128
 collision_mask = 0
 sync_to_physics = false
