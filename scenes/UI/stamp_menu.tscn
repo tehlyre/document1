@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3 uid="uid://byislmt7kky1y"]
+
+[ext_resource type="Script" uid="uid://caw3156uawrce" path="res://scenes/UI/stamp_menu.gd" id="1_84asd"]
+
+[sub_resource type="Theme" id="Theme_ek84w"]
+Label/font_sizes/font_size = 40
+OptionButton/font_sizes/font_size = 40
+
+[node name="StampMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ek84w")
+script = ExtResource("1_84asd")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1279.0
+offset_bottom = 720.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 365.0
+offset_right = 271.0
+offset_bottom = 420.0
+text = "Q Ability"
+
+[node name="Label2" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 943.0
+offset_top = 365.0
+offset_right = 1106.0
+offset_bottom = 420.0
+text = "E Ability"
+
+[node name="Label3" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 189.0
+offset_right = 557.0
+offset_bottom = 244.0
+text = "2 Ability"
+
+[node name="Label4" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 677.0
+offset_top = 189.0
+offset_right = 840.0
+offset_bottom = 244.0
+text = "3 Ability"
+
+[node name="Opciones" type="Control" parent="Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Q" type="OptionButton" parent="Panel/Opciones"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 430.0
+offset_right = 321.0
+offset_bottom = 493.0
+
+[node name="E" type="OptionButton" parent="Panel/Opciones"]
+layout_mode = 0
+offset_left = 934.0
+offset_top = 430.0
+offset_right = 1158.0
+offset_bottom = 493.0
+
+[node name="2" type="OptionButton" parent="Panel/Opciones"]
+layout_mode = 0
+offset_left = 383.0
+offset_top = 254.0
+offset_right = 607.0
+offset_bottom = 317.0
+
+[node name="3" type="OptionButton" parent="Panel/Opciones"]
+layout_mode = 0
+offset_left = 666.0
+offset_top = 254.0
+offset_right = 890.0
+offset_bottom = 317.0

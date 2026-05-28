@@ -18,7 +18,7 @@ func _on_blastRadius_area_exited(body):
 func set_timer():
 	var tweeny = create_tween()
 	tweeny.tween_property(self, "position:y", position.y-700, 4)
-	await get_tree().create_timer(5).timeout
+	await $ExplosionTimer.timeout
 	explode()
 	queue_free()
 

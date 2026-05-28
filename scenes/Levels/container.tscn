@@ -1,9 +1,10 @@
-[gd_scene load_steps=31 format=4 uid="uid://b4rpkbb7pbeqj"]
+[gd_scene load_steps=33 format=4 uid="uid://b4rpkbb7pbeqj"]
 
 [ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_imx2c"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="1_snkv6"]
 [ext_resource type="Script" uid="uid://5ou7lynh5rfx" path="res://scripts/camera.gd" id="4_h4gck"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_m1f8i"]
+[ext_resource type="Script" uid="uid://caxctcte2oy13" path="res://scenes/Levels/chests.gd" id="5_poti2"]
 [ext_resource type="PackedScene" uid="uid://ry5we25acm4m" path="res://scenes/Interactables/chest.tscn" id="6_l41vt"]
 [ext_resource type="Script" uid="uid://j0t8gfgtn0r7" path="res://scenes/Levels/enemy_root.gd" id="7_2xe36"]
 [ext_resource type="Script" uid="uid://ljvv1x31b24r" path="res://scripts/room.gd" id="7_cdtvu"]
@@ -20,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bvbmxpvv3q6n2" path="res://assets/textures/dummy_spawn.png" id="16_88tjj"]
 [ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="16_do0wj"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="18_poti2"]
+[ext_resource type="PackedScene" uid="uid://cx63f1woliohq" path="res://scenes/Interactables/dropping.tscn" id="22_kvm1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxx2i"]
 size = Vector2(621.5, 418.5)
@@ -97,17 +99,25 @@ enemy_spawn = NodePath("../enemySpawn")
 position = Vector2(893, 1216)
 collision_layer = 1
 collision_mask = 107
+MAX_SPEED = null
+ACCELERATION = null
 
 [node name="Level" type="Node2D" parent="."]
 
 [node name="Goo" parent="Level" instance=ExtResource("4_m1f8i")]
 z_index = -2
 
-[node name="Chests" type="Node2D" parent="."]
+[node name="Chests" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+script = ExtResource("5_poti2")
+enemy_root = NodePath("../Room/enemies")
 
 [node name="chest" parent="Chests" instance=ExtResource("6_l41vt")]
 position = Vector2(354, 527)
-contents = "{\"keys\": 1, \"coins\": 1}"
+contents = "{\"keys\": 1, \"coins\": 1, \"is_locked\": true}"
+
+[node name="chest2" parent="Chests" instance=ExtResource("6_l41vt")]
+position = Vector2(392, 2005)
+contents = "{\"keys\": 1, \"coins\": 1, \"is_locked\": true}"
 
 [node name="Room" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(0, 1)
@@ -137,7 +147,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAgAAAAAAAAAOAAkAAgAAAAAAAAAKAAgAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAAAAAAAAAAADAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAAhAAoAAAAAAAAAAAAbAP3/AAAAAAAAAAApAAoAAAAAAAAAAAAIAAAAAAAAAAAAAAAjAAQAAAAAAAAAAAATAAIAAAAAAAAAAAAsAAEAAAAAAAAAAAA3AA0AAAAAAAAAAAAZAA0AAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")
@@ -155,3 +165,8 @@ enemy_root = NodePath("../Room/enemies")
 [node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
 script = ExtResource("16_do0wj")
 wall = NodePath("../Wall")
+
+[node name="PowerUps" type="Node2D" parent="."]
+
+[node name="PowerUp" parent="PowerUps" instance=ExtResource("22_kvm1i")]
+position = Vector2(262.6289, 784.9684)

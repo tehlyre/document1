@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene load_steps=18 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://18uko8k0s500" path="res://scenes/UI/specials/fontsizemenu.tscn" id="13_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://cv4ywhggc3gxs" path="res://scenes/UI/specials/spotselectingmenu.tscn" id="14_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://bke4d8w4p3krb" path="res://scenes/UI/specials/alignment_menu.tscn" id="14_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://byislmt7kky1y" path="res://scenes/UI/stamp_menu.tscn" id="16_muem4"]
 
 [node name="gameManager" type="Node2D"]
 process_mode = 3
@@ -73,6 +74,13 @@ visible = false
 
 [node name="spotSelectingMenu" parent="menuLayer" instance=ExtResource("14_jbj1t")]
 visible = false
+
+[node name="stampMenu" parent="menuLayer" instance=ExtResource("16_muem4")]
+visible = false
+offset_left = 1.9505615
+offset_top = 2.61438
+offset_right = 1.9505615
+offset_bottom = 2.61438
 
 [node name="backgroundMusicPlayer" parent="." instance=ExtResource("12_eb6dy")]
 autoplay = false

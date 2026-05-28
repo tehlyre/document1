@@ -109,5 +109,5 @@ func _physics_process(delta : float) -> void:
 		gun.adjust(player.global_position)
 		move_and_slide()
 		$enemyHealthBar.value = health
-		if is_zero_approx(health):
+		if is_zero_approx(health) or health < 0:
 			queue_free()

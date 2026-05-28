@@ -4,27 +4,29 @@
 [ext_resource type="Texture2D" uid="uid://dnh5v1pm7hvba" path="res://assets/textures/parentheses.png" id="1_kswog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrcq8"]
-size = Vector2(40, 242)
+size = Vector2(122, 486)
 
 [node name="Parentheses" type="Node2D"]
 script = ExtResource("1_82tp1")
 
 [node name="leftParen" type="Area2D" parent="."]
-position = Vector2(-128, 0)
+position = Vector2(-252, 0)
 collision_layer = 0
 collision_mask = 3
 
 [node name="leftParenSprite" type="Sprite2D" parent="leftParen"]
+scale = Vector2(3, 2)
 texture = ExtResource("1_kswog")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="leftParen"]
 shape = SubResource("RectangleShape2D_vrcq8")
 
 [node name="rightParen" type="Area2D" parent="."]
-position = Vector2(128, 0)
+position = Vector2(252, 0)
 collision_mask = 3
 
 [node name="rightParenSprite" type="Sprite2D" parent="rightParen"]
+scale = Vector2(3, 2)
 texture = ExtResource("1_kswog")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="rightParen"]

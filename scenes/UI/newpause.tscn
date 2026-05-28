@@ -1,11 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://d16h21e2xwsh"]
+[gd_scene load_steps=11 format=3 uid="uid://d16h21e2xwsh"]
 
 [ext_resource type="Script" uid="uid://45jrh0oot5dh" path="res://scenes/UI/newpause.gd" id="1_my3fk"]
 [ext_resource type="Texture2D" uid="uid://d17jkru7fka46" path="res://assets/textures/slider.png" id="2_bo8yn"]
-
-[sub_resource type="SystemFont" id="SystemFont_wtg4a"]
-font_names = PackedStringArray("Libre Baskerville")
-subpixel_positioning = 0
+[ext_resource type="FontFile" uid="uid://wtua33swpv4g" path="res://assets/fonts/Libre_Baskerville/static/LibreBaskerville-Medium.ttf" id="2_ir3ao"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wtg4a"]
 
@@ -18,10 +15,6 @@ bg_color = Color(1, 1, 1, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37kvf"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_37kvf"]
-font_names = PackedStringArray("Libre Baskerville")
-subpixel_positioning = 0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my3fk"]
 bg_color = Color(1, 1, 1, 1)
 
@@ -31,15 +24,15 @@ Button/colors/font_focus_color = Color(0, 0, 0, 1)
 Button/colors/font_hover_color = Color(0, 0, 0, 1)
 Button/colors/font_pressed_color = Color(1, 1, 1, 1)
 Button/font_sizes/font_size = 50
-Button/fonts/font = SubResource("SystemFont_wtg4a")
+Button/fonts/font = ExtResource("2_ir3ao")
 Button/styles/focus = SubResource("StyleBoxEmpty_wtg4a")
 Button/styles/hover = SubResource("StyleBoxFlat_wtg4a")
 Button/styles/normal = SubResource("StyleBoxFlat_ir3ao")
 Button/styles/pressed = SubResource("StyleBoxFlat_37kvf")
 HSlider/icons/grabber = ExtResource("2_bo8yn")
-Label/colors/font_color = Color(0, 0, 0, 1)
-Label/font_sizes/font_size = 50
-Label/fonts/font = SubResource("SystemFont_37kvf")
+Label/colors/font_color = Color(0.78039217, 0.78039217, 0.78039217, 1)
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("2_ir3ao")
 Panel/styles/panel = SubResource("StyleBoxFlat_my3fk")
 VBoxContainer/constants/separation = 0
 
@@ -83,10 +76,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8rqa4")
 [node name="Paused" type="Label" parent="Whiteness/DocOutline"]
 z_index = 2
 layout_mode = 0
-offset_left = 65.0
-offset_top = 35.0
-offset_right = 540.0
-offset_bottom = 98.0
+offset_left = 281.0
+offset_top = 30.0
+offset_right = 756.0
+offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.78, 0.78, 0.78, 1)
 text = "Paused"
 

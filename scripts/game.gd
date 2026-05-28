@@ -54,6 +54,7 @@ func debug(debugger : DebugWindow) -> void:
 @onready var fontsizemenu : FontSizeMenu = $menuLayer/fontsizeMenu
 @onready var logmenu : Control = $menuLayer/logMenu
 @onready var spotselectingmenu : Control = $menuLayer/spotSelectingMenu
+@onready var stampmenu : Control = $menuLayer/stampMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
 @onready var enemyroot : Node2D = $container/Room/enemies
@@ -151,6 +152,8 @@ var d_ : DebugWindow
 			MenuStates.MENU_SPOT_SELECTING:
 				spotselectingmenu.is_spot_selecting = true
 				spotselectingmenu.show()
+			MenuStates.MENU_STAMP:
+				stampmenu.show()
 			MenuStates.MENU_NONE:
 				pausemenu.hide()
 				savemenu.hide()
@@ -162,6 +165,7 @@ var d_ : DebugWindow
 				fontsizemenu.hide()
 				mapmenu.hide()
 				spotselectingmenu.hide()
+				stampmenu.hide()
 				sig_open_map.emit(false, Vector2(6,7))
 				hud_hidden = false
 				player.is_cutscene_running = false
@@ -213,7 +217,8 @@ enum MenuStates {
 	MENU_SAVE,
 	MENU_ALIGNMENT,
 	MENU_FONTSIZE,
-	MENU_SPOT_SELECTING
+	MENU_SPOT_SELECTING,
+	MENU_STAMP
 }
 
 
@@ -237,12 +242,14 @@ func _ready() -> void:
 	player.sig_you_died.connect(_on_player_death)
 	player.sig_open_chest.connect(_on_player_open_chest)
 	player.sig_set_healthbar.connect(_on_player_change_health)
+	player.sig_open_stamp_menu.connect(_on_player_open_stamp_menu)
 	mapmarkersroot.teleportation.connect(_on_teleportation)
 	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
 	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
 	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
 	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
 	spotselectingmenu.end_spot_select.connect(_on_spot_selected)
+	$container/Camera.sig_change_rooms.connect(_on_player_switch_rooms)
 	pscale = player.scale
 	if len(enemyroot.get_children()) > 0:
 		escale = enemyroot.get_child(0).scale
@@ -263,7 +270,7 @@ func _input(event : InputEvent) -> void:
 		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 			sig_toggle_pause.emit(is_game_paused)
 			menu_state = MenuStates.MENU_PAUSE
-		elif (menu_state == MenuStates.MENU_PAUSE):
+		elif (menu_state in [MenuStates.MENU_PAUSE, MenuStates.MENU_STAMP]):
 			menu_state = MenuStates.MENU_NONE
 		elif (menu_state in [MenuStates.MENU_OPTIONS, MenuStates.MENU_SAVE]):
 			menu_state = MenuStates.MENU_PAUSE
@@ -337,7 +344,7 @@ func spawn_player_braces():
 		player_braces_on_field.pop_front()
 
 func lock_in():
-	print(z_target==null)
+	#print(z_target)
 	if z_target == null:
 		if len(enemyroot.get_children()) == 0:
 			player.not_locked_in = true
@@ -347,8 +354,13 @@ func lock_in():
 			z_target = enemyroot.get_child(current_enemy_target_idx)
 	
 	player.lock_on_location = z_target.target_position
+	#print(player.not_locked_in)
 	$hud.ztargeticon.position = (z_target.target_position-camera.position)/CAMERA_SCALE+Vector2(0,-50)
 
+func _on_player_switch_rooms(_room_dummy):
+	player.not_locked_in = false
+	print(player.not_locked_in)
+	lock_in()
 
 # PROCESS
 
@@ -361,7 +373,7 @@ func _process(_delta : float) -> void:
 		current_enemy_target_idx = 0
 		z_target = enemyroot.get_child(current_enemy_target_idx)
 	if is_debugging: debug(d_)
-	print(z_target)
+	#print(z_target)
 	lock_in()
 	if player.not_locked_in:
 		$hud.ztargeticon.hide()
@@ -370,6 +382,8 @@ func _process(_delta : float) -> void:
 	is_first_frame = false
 	#print(is_opening_map)
 
+func _on_player_open_stamp_menu():
+	menu_state = MenuStates.MENU_STAMP
 
 
 func _on_cutscene_trigger(code : String, trigger):

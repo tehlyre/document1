@@ -13,18 +13,22 @@ var tweeny
 
 signal sig_change_rooms(cell : Vector2i)
 
+# TODO: Make it so that this manual global position change dynamically occurs based on the characters position.
 func _ready() -> void:
+	global_position = Vector2(14,0) #<-----
 	wall.sig_this_room.connect(_on_room_callback)
 	wall._on_player_change_rooms.call_deferred((player.global_position / size).floor())
 	last_cell = (player.global_position/size).floor()
+	print(global_position, " ready")
 
 func update_position() -> void:
 	current_cell = (player.global_position / size).floor()
 	if last_cell != current_cell:
+		print("xijfiwoejfoijwoiejfoij")
 		if not current_cell in current_room:
 			sig_change_rooms.emit(current_cell)
 		last_cell = current_cell
-		global_position = Vector2(current_cell) * size
+		#global_position = Vector2(current_cell) * size
 	else:
 		if global_position.x+1280-player.global_position.x < -400 and player.velocity.x > 0:
 			if global_position.x < limit_right-2560:
@@ -60,6 +64,7 @@ func update_position() -> void:
 func _process(_delta: float) -> void:
 	#prints(limit_left, limit_right, limit_top, limit_bottom)
 	update_position()
+	print(global_position)
 	
 
 

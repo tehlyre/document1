@@ -26,7 +26,7 @@ func close_parentheses():
 
 func _on_paren_body_connect(body):
 	if(body.is_in_group("enemies")):
-		body.thingy_damage(100/body.DAMAGE_SCALE)
+		body.thingy_damage(200/body.DAMAGE_SCALE)
 	elif(body.is_in_group("player")):
 		body.thingy_damage(10)
 	elif(body.is_in_group("walls")):

@@ -1,4 +1,7 @@
-res://scenes/UI/specials/spotselectingmenu.tscn
-res://scripts/game.gd
-res://scenes/Universals/ricochet_bullet.tscn
-res://scenes/Universals/curly_brace.tscn
+res://scenes/Interactables/dropping.gd
+res://scenes/Interactables/dropping.tscn
+res://scripts/Universals/aeon.gd
+res://scenes/UI/map_marker.tscn
+res://scenes/Universals/flaming_lance.tscn
+res://scenes/Levels/container.tscn
+res://scripts/durdan.gd

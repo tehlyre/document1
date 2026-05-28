@@ -14,6 +14,7 @@ var original_rotation : float
 @export var is_on_player : bool
 @export var is_on_enemy : bool
 var is_in_illinois : bool = false
+var end_continuing
 
 var bullet_sprite_map = {Aeon.BulletTypes.NONE: "", Aeon.BulletTypes.BASIC: preload("res://scenes/Universals/bullet.tscn"), Aeon.BulletTypes.RICOCHET: preload("res://scenes/Universals/ricochet_bullet.tscn")}
 
@@ -43,6 +44,18 @@ func fire() -> void:
 			owner.get_parent().owner.find_child("Bullets").add_child(b_)
 		b_.transform = $gunner.global_transform
 		b_.global_scale = Aeon.STANDARD_BULLET_SIZE
+
+func fire_continuously(start=true):
+	if !start:
+		end_continuing = true
+		return
+	end_continuing = false
+	$ContinuityTimer.wait_time = 0.33
+	if !is_in_illinois:
+		while !end_continuing:
+			$ContinuityTimer.start()
+			fire()
+			await $ContinuityTimer.timeout
 
 
 # Called every frame to adjust the (player's) gun so that when fired, the bullets pass through the

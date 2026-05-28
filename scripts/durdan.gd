@@ -83,6 +83,7 @@ var interactables : Array[Interactable] = []
 
 #var ability_callable_map : Dictionary = {Aeon.PlayerAbilities.NONE : "none", Aeon.PlayerAbilities.ALIGNMENT : "alignment", Aeon.PlayerAbilities.FONT_SIZE : "font_size"}
 
+var firing_on = false
 
 
 enum AlignmentStyles {
@@ -106,6 +107,7 @@ signal sig_you_died()
 signal sig_open_chest(chest : Chest)
 signal sig_open_door(doorID : int)
 signal sig_set_healthbar(health : float)
+signal sig_open_stamp_menu()
 
 
 # READY
@@ -127,9 +129,13 @@ func _ready() -> void:
 # current moment to the interactables array. If and only if the player is inside the interactable 
 # area, the player can interact with it.
 func _on_interaction_area_area_entered(area : Area2D) -> void:
-	interactables.append(area.get_parent())
+	if area.get_parent() is Interactable:
+		interactables.append(area.get_parent())
+	elif area is PowerUp:
+		pick_up(area)
 func _on_interaction_area_area_exited(area : Area2D) -> void:
-	interactables.erase(area.get_parent())
+	if area.get_parent() is Interactable:
+		interactables.erase(area.get_parent())
 
 # Called every time an input occurs. Here it is used to detect if the keyboard and mouse or
 # controller is the main input option to be able to switch between mouse aiming and right joystick
@@ -141,15 +147,17 @@ func _input(event : InputEvent) -> void:
 	elif (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		is_using_mouse = false
 	if (event.is_action_pressed("interact") and interactables != []):
-		if interactables[0] is Chest:
+		if interactables[0] is Chest and !interactables[0].is_locked:
 			print("openous intentions")
 			sig_open_chest.emit(interactables[0])
 			interactables[0].is_opened = true
-		elif interactables[0] is Door and Aeon.inventory["keys"] >= 1:
+		elif interactables[0] is Door and Aeon.player_inventory["keys"] >= 1:
 			print("openous intentions")
 			sig_open_door.emit(interactables[0])
 			interactables[0].is_opened = true
-			Aeon.inventory["keys"] -= 1
+			Aeon.player_inventory["keys"] -= 1
+		elif interactables[0] is Stamp:
+			sig_open_stamp_menu.emit()
 	elif (event.is_action_pressed("sprint")) and is_sprinting == false:
 		is_sprinting = true
 		current_max_speed = MAX_SPEED*2
@@ -206,8 +214,14 @@ func _on_bracket_busted():
 # Functions that update every frame or something like that
 
 
+func pick_up(powerup : PowerUp):
+	print(powerup.power_up_type)
+	apply_buff(powerup.power_up_type)
+	powerup.queue_free()
+	
 
-
+func apply_buff(buff_type : Aeon.PowerUpTypes):
+	pass
 
 
 # Called by bullets to deal damage to the player. Simply decreases the health of the player and 
@@ -311,7 +325,13 @@ func _physics_process(delta) -> void:
 		
 		if Input.is_action_just_pressed("neutral special"):
 			if cutscene_firing_buffer == 0:
-				gun.fire()
+				if !firing_on:
+					gun.fire_continuously()
+					firing_on = true
+				else:
+					gun.fire_continuously(false)
+					firing_on = false
+					print("project hail mary")
 			elif cutscene_firing_buffer > 0:
 				cutscene_firing_buffer -= 1
 		if Input.is_action_just_pressed("melee"):

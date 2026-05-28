@@ -6,9 +6,14 @@ signal relay()
 var enemies_on_screen : Array = []
 @export var bullet_root : BulletRoot
 @export var cam : Camera2D
+var is_there_enemies
+
+signal no_more_enemies()
 
 func _ready():
 	bullet_root.done_deleting_bullets.connect(_on_ddb)
+	if len(get_children()) > 0:
+		is_there_enemies = true
 
 func _on_ddb():
 	relay.emit()
@@ -34,7 +39,9 @@ var enemy_on_screen : Array = [false, null]:
 	get:
 		return enemy_on_screen
 
-#func _process(_delta):
-	#if len(enemies_on_screen) > 0:
-		#print((enemies_on_screen[0].global_position-cam.position)/2)
-		#print(enemies_on_screen[0].get_global_transform_with_canvas().origin)
+func _process(_delta):
+	if len(get_children()) > 0:
+		is_there_enemies = true
+	elif len(get_children()) == 0:
+		is_there_enemies = false
+		no_more_enemies.emit()
