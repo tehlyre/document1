@@ -23,6 +23,7 @@ class_name Bullet
 var firee : Node2D
 var firee_type : String
 var collision : KinematicCollision2D
+var atk_power : int
 
 
 # Called when bullet is fired/node is instantiated. Connects the body_entered signal to on_body_entered().
@@ -41,9 +42,9 @@ func _ready() -> void:
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
 func on_body_entered(body : Node2D) -> void:
 	if(body.is_in_group("enemies")):
-		body.thingy_damage(100/body.DAMAGE_SCALE)
+		body.thingy_damage(atk_power)
 	elif(body.is_in_group("player")):
-		body.thingy_damage(10)
+		body.thingy_damage(atk_power)
 	elif(body.is_in_group("walls")):
 		pass
 	elif(body.is_in_group("breakables")) and body.host != firee:

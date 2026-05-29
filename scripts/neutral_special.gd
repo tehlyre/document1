@@ -15,6 +15,7 @@ var original_rotation : float
 @export var is_on_enemy : bool
 var is_in_illinois : bool = false
 var end_continuing
+var atk_power : int
 
 var bullet_sprite_map = {Aeon.BulletTypes.NONE: "", Aeon.BulletTypes.BASIC: preload("res://scenes/Universals/bullet.tscn"), Aeon.BulletTypes.RICOCHET: preload("res://scenes/Universals/ricochet_bullet.tscn")}
 
@@ -38,6 +39,7 @@ func fire() -> void:
 	if !is_in_illinois:
 		var b_ = bullet.instantiate()
 		b_.firee = owner
+		b_.atk_power = atk_power
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
 		else:

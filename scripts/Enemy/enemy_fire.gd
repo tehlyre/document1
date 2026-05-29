@@ -14,6 +14,7 @@ var enemy : Enemy
 var gun : Gun
 var mover : EnemyMover
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+var atk : int = 20
 
 # STATUS VARIABLES
 
@@ -29,6 +30,7 @@ func _init(e_ : Enemy, g_ : Gun, m_ : EnemyMover) -> void:
 	enemy = e_
 	gun = g_
 	mover = m_
+	gun.atk_power = atk
 
 # Just onreadying the function, connecting signals and initially starting the timer.
 func _ready() -> void:

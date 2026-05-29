@@ -29,6 +29,7 @@ var mover : EnemyMover
 var fire : EnemyFire
 var is_being_forced : bool = false
 @onready var collider = $enemyCollider
+@onready var on_screen_notif = $VisibleOnScreenNotifier2D
 var target_position
 
 # CONSTANTS
@@ -52,7 +53,8 @@ var is_in_goo : bool = false
 var current_max_speed : float = MAX_SPEED
 
 # float health: The current health of the enemy, in percent.
-var health : float = 100.0
+var max_hp : float = 200.0
+var health : float
 
 
 # Creates and adds the mover and the fire managers.
@@ -61,9 +63,10 @@ func _ready() -> void:
 	add_child(mover)
 	fire = EnemyFire.new(self, gun, mover)
 	add_child(fire)
-	$VisibleOnScreenNotifier2D.screen_entered.connect(_on_enemy_enter_screen)
+	on_screen_notif.screen_entered.connect(_on_enemy_enter_screen)
 	target_position = global_position
-	$VisibleOnScreenNotifier2D.screen_exited.connect(_on_enemy_exit_screen)
+	on_screen_notif.screen_exited.connect(_on_enemy_exit_screen)
+	health = max_hp
 	#print(get_parent())
 
 func _on_enemy_enter_screen():
@@ -83,7 +86,7 @@ func thingy_hazard() -> void:
 
 # Damages the enemy when hit with a bullet. Called by bullet.gd
 func thingy_damage(damage : int) -> void:
-	health -= damage
+	health -= Aeon.calculate_damage(damage, 0)
 
 
 
@@ -108,6 +111,6 @@ func _physics_process(delta : float) -> void:
 		mover.tick(delta)
 		gun.adjust(player.global_position)
 		move_and_slide()
-		$enemyHealthBar.value = health
+		$enemyHealthBar.value = health*100/max_hp
 		if is_zero_approx(health) or health < 0:
 			queue_free()

@@ -74,4 +74,7 @@ func is_it_in_my_room(global_coords : Vector2):
 		return a.x < b.x
 	)
 	return bounded_by_rectangle(global_coords, Vector2(roomies[0].x*2560, roomies[0].y*1440), Vector2(roomies[-1].x*2560+2560, roomies[-1].y*1440+1440))
-# Called when the node enters the scene tree for the first time.
+
+func calculate_damage(raw_damage : float, def : int):
+	var defense_adjusted_damage = raw_damage*500/(500+def)
+	return defense_adjusted_damage

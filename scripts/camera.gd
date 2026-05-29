@@ -19,7 +19,6 @@ func _ready() -> void:
 	wall.sig_this_room.connect(_on_room_callback)
 	wall._on_player_change_rooms.call_deferred((player.global_position / size).floor())
 	last_cell = (player.global_position/size).floor()
-	print(global_position, " ready")
 
 func update_position() -> void:
 	current_cell = (player.global_position / size).floor()
@@ -64,7 +63,6 @@ func update_position() -> void:
 func _process(_delta: float) -> void:
 	#prints(limit_left, limit_right, limit_top, limit_bottom)
 	update_position()
-	print(global_position)
 	
 
 

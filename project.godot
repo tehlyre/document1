@@ -178,6 +178,7 @@ z_target={
 2d_physics/layer_8="player_braces"
 2d_physics/layer_9="train_on_side"
 2d_physics/layer_10="player_brackets"
+2d_physics/layer_11="power_ups"
 
 [rendering]
 

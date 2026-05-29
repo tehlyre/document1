@@ -5,3 +5,9 @@ res://scenes/UI/map_marker.tscn
 res://scenes/Universals/flaming_lance.tscn
 res://scenes/Levels/container.tscn
 res://scripts/durdan.gd
+res://scripts/bullet.gd
+res://scripts/neutral_special.gd
+res://scripts/Enemy/enemy_fire.gd
+res://scripts/Enemy/enemy.gd
+res://scenes/Characters/durdan.tscn
+res://scripts/camera.gd

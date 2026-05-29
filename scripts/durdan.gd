@@ -69,7 +69,16 @@ var cutscene_firing_buffer : int = 0
 var lock_on_location : Vector2 
 
 # int health: The health of the player.
-var health : int = 100
+var health : float:
+	get:
+		return health
+	set(new_health):
+		health = new_health
+		sig_set_healthbar.emit(health*100/max_hp)
+
+var max_hp : float = 500
+var atk : int = 50
+var def : int = 50
 var bracket
 
 # float previous_rotation: Stores the rotation of the player on the last frame in case the mouse
@@ -118,9 +127,10 @@ signal sig_open_stamp_menu()
 func _ready() -> void:
 	$areaInteraction.area_entered.connect(_on_interaction_area_area_entered)
 	$areaInteraction.area_exited.connect(_on_interaction_area_area_exited)
-	sig_set_healthbar.emit(100.0)
+	gun.atk_power = atk
 	braces = preload("res://scenes/Universals/curly_brace.tscn")
 	brackets = preload("res://scenes/Universals/brackets.tscn")
+	health = max_hp
 
 # Signal Calls
 
@@ -221,14 +231,20 @@ func pick_up(powerup : PowerUp):
 	
 
 func apply_buff(buff_type : Aeon.PowerUpTypes):
-	pass
+	match buff_type:
+		Aeon.PowerUpTypes.DMG_UP:
+			atk += 30
+		Aeon.PowerUpTypes.DEF_UP:
+			def += 30
+		Aeon.PowerUpTypes.HEAL:
+			health += 50
 
 
 # Called by bullets to deal damage to the player. Simply decreases the health of the player and 
 # emits theyou_died signal if the health drops at or below zero, which functionally kills the player.
 func thingy_damage(damage) -> void:
-	health -= damage
-	sig_set_healthbar.emit(health)
+	health -= Aeon.calculate_damage(damage, def)
+	sig_set_healthbar.emit(health*100/max_hp)
 	if health <= 0:
 		health = 0
 		sig_you_died.emit()

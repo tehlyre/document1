@@ -99,8 +99,6 @@ enemy_spawn = NodePath("../enemySpawn")
 position = Vector2(893, 1216)
 collision_layer = 1
 collision_mask = 107
-MAX_SPEED = null
-ACCELERATION = null
 
 [node name="Level" type="Node2D" parent="."]
 
@@ -147,7 +145,7 @@ cam = NodePath("../Camera")
 
 [node name="enemySpawn" type="TileMapLayer" parent="." node_paths=PackedStringArray("cam", "enemy_root", "player", "walls")]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAAAAAAAAAAADAAwAAAAAAAAAAAAOAAwAAAAAAAAAAAAhAAoAAAAAAAAAAAAbAP3/AAAAAAAAAAApAAoAAAAAAAAAAAAIAAAAAAAAAAAAAAAjAAQAAAAAAAAAAAATAAIAAAAAAAAAAAAsAAEAAAAAAAAAAAA3AA0AAAAAAAAAAAAZAA0AAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAQAB0AAQAAAAAAAAALAAoAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 script = ExtResource("11_n5cux")
 cam = NodePath("../Camera")
