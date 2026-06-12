@@ -53,9 +53,11 @@ func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
 			e_.spawn_coords = i
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
+	print(get_used_cells_by_id(2))
 	for i in get_used_cells_by_id(2):
 		if bounded_by_rectangle(i, tleft_bound, bright_bound):
 			var e_ : Dummy = dummy.instantiate()
 			e_.player = player
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
+			print("67")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=18 format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
-[ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="2_crrdk"]
 [ext_resource type="PackedScene" uid="uid://bpynshe51cu4u" path="res://scenes/Universals/parentheses.tscn" id="2_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dj1ncmi0g0gke" path="res://scenes/UI/log_menu.tscn" id="3_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://cfq7r3g5b7br4" path="res://scenes/Levels/overworld.tscn" id="3_muem4"]
 [ext_resource type="PackedScene" uid="uid://dr4ohj1mjxsei" path="res://scenes/UI/dialogue_menu.tscn" id="3_trceg"]
 [ext_resource type="PackedScene" uid="uid://bl1ctofn4ryr6" path="res://scenes/UI/newsave.tscn" id="4_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://uvj7iu2qje8l" path="res://scenes/UI/deathmenu.tscn" id="4_utxhm"]
@@ -25,11 +25,12 @@ script = ExtResource("1_cg0fy")
 parentheses = ExtResource("2_jbj1t")
 metadata/_edit_group_ = true
 
-[node name="container" parent="." instance=ExtResource("2_crrdk")]
+[node name="overworld" parent="." instance=ExtResource("3_muem4")]
 
 [node name="hud" parent="." instance=ExtResource("10_choun")]
 
 [node name="menuLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="saveMenu" parent="menuLayer" node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("4_a8y0u")]
 pause_menu = NodePath("../pauseMenu")
@@ -41,7 +42,7 @@ game = NodePath("../..")
 dialog_menu = NodePath("../dialogueMenu")
 
 [node name="deathMenu" parent="menuLayer" node_paths=PackedStringArray("container") instance=ExtResource("4_utxhm")]
-container = NodePath("../../container")
+container = NodePath("")
 
 [node name="chestMenu" parent="menuLayer" node_paths=PackedStringArray("container", "game") instance=ExtResource("8_kqed6")]
 process_mode = 3
@@ -49,7 +50,7 @@ offset_left = 7.0
 offset_top = -7.0
 offset_right = 47.0
 offset_bottom = 33.0
-container = NodePath("../../container")
+container = NodePath("")
 game = NodePath("../..")
 
 [node name="mapMenu" parent="menuLayer" node_paths=PackedStringArray("game") instance=ExtResource("10_eb6dy")]
@@ -57,7 +58,7 @@ game = NodePath("../..")
 
 [node name="pauseMenu" parent="menuLayer" node_paths=PackedStringArray("game", "level", "options_menu", "save_menu") instance=ExtResource("13_a8y0u")]
 game = NodePath("../..")
-level = NodePath("../../container")
+level = NodePath("")
 options_menu = NodePath("../optionsMenu")
 save_menu = NodePath("../saveMenu")
 
@@ -84,3 +85,15 @@ offset_bottom = 2.61438
 
 [node name="backgroundMusicPlayer" parent="." instance=ExtResource("12_eb6dy")]
 autoplay = false
+
+[node name="timers" type="Node" parent="."]
+
+[node name="q_timer" type="Timer" parent="timers"]
+
+[node name="e_timer" type="Timer" parent="timers"]
+
+[node name="2_timer" type="Timer" parent="timers"]
+
+[node name="3_timer" type="Timer" parent="timers"]
+
+[node name="z_target_series_timer" type="Timer" parent="timers"]

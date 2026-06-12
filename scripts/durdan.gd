@@ -39,6 +39,7 @@ class_name Player
 var brackets = preload("res://scenes/Universals/brackets.tscn")
 var braces = preload("res://scenes/Universals/curly_brace.tscn")
 var THETA : float = 0.9
+var no_creating_brackets = false
 
 
 # FLAGS
@@ -201,7 +202,8 @@ func thingy_large_push(rot : float, flip : bool) -> void:
 		is_push_flipped = false
 
 func spawn_brackets():
-	if !is_bracketed:
+	if !is_bracketed and !no_creating_brackets:
+		no_creating_brackets = true
 		var b_ = brackets.instantiate()
 		print(b_)
 		b_.owner = self
@@ -211,7 +213,7 @@ func spawn_brackets():
 		bracket = b_
 		bracket.busted.connect(_on_bracket_busted)
 		print(bracket)
-	else:
+	elif bracket != null:
 		bracket.switch_brackets()
 
 

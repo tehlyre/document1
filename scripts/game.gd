@@ -57,10 +57,11 @@ func debug(debugger : DebugWindow) -> void:
 @onready var stampmenu : Control = $menuLayer/stampMenu
 @onready var mapmarkersroot : Control = $menuLayer/mapMenu/Panel/map/markers
 @onready var triggerroot : Node2D = $container/Triggers
-@onready var enemyroot : Node2D = $container/Room/enemies
-@onready var camera : Camera2D = $container/Camera
+@onready var enemyroot : Node2D = level.find_child("enemies")
+@onready var camera : Camera2D = level.find_child("Camera")
 @export var is_debugging : bool = false
 @export var parentheses : PackedScene
+@export var level : Node2D
 var CAMERA_SCALE = 2
 var ALIGN_MIN_OFFSETS = [0, 80, 450, 880]
 var ALIGN_MAX_OFFSETS = [0, 400, 770, 1200]
@@ -70,6 +71,19 @@ var player_braces_on_field = []
 var z_target : Node2D
 var is_first_frame = true
 var current_enemy_target_idx = 0
+var special_cooldowns = {
+	"special_q": 10,
+	"special_e": 10,
+	"special_2": 10,
+	"special_3": 10
+}
+var can_use_special = {
+	"special_q": true,
+	"special_e": true,
+	"special_2": true,
+	"special_3": true
+}
+var recently_encountered_special : String
 
 # @onready CharacterBody2D player: This is a pointer to the root player node in the container.
 @onready var player : Player = $container/Durdan
@@ -91,8 +105,19 @@ var special_map = {
 	"special_q": "q",
 	"special_e": "e",
 	"special_2": "2",
-	"special_3": "3",
+	"special_3": "3"
 }
+
+@onready var special_timer_map = {
+	"special_q": $timers/q_timer,
+	"special_e": $timers/e_timer,
+	"special_2": $"timers/2_timer",
+	"special_3": $"timers/3_timer"
+}
+
+@onready var z_target_timer : Timer = $timers/z_target_series_timer
+
+var enemy_array : Array[Node] = []
 
 var d_ : DebugWindow
 @export var menu_state : MenuStates = MenuStates.MENU_NONE:
@@ -204,6 +229,8 @@ signal sig_open_map(is_opening : bool, player_position : Vector2)
 
 var current_cutscene_trigger
 var is_deleting_cutscene_trigger_on_end = true
+var is_ztarget_series = false
+var ztarget_pos_init : Vector2
 
 enum MenuStates {
 	MENU_NONE,
@@ -249,8 +276,11 @@ func _ready() -> void:
 	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
 	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
 	spotselectingmenu.end_spot_select.connect(_on_spot_selected)
-	$container/Camera.sig_change_rooms.connect(_on_player_switch_rooms)
+	camera.sig_change_rooms.connect(_on_player_switch_rooms)
+	z_target_timer.timeout.connect(_on_ztarget_timer_timeout)
+	deathmenu.container = level
 	pscale = player.scale
+	z_target_timer.wait_time = 2
 	if len(enemyroot.get_children()) > 0:
 		escale = enemyroot.get_child(0).scale
 	if is_debugging:
@@ -288,24 +318,35 @@ func _input(event : InputEvent) -> void:
 
 	for i in special_buttons:
 		if (event.is_action_pressed(i)) and menu_state == MenuStates.MENU_NONE:
-			match Aeon.equipped_abilities[special_map[i]]:
+			match Aeon.equipped_abilities[i]:
 				Aeon.PlayerAbilities.NONE:
 					pass
 				Aeon.PlayerAbilities.ALIGNMENT:
+					if !can_use_special[i]: continue
 					menu_state = MenuStates.MENU_ALIGNMENT
+					recently_encountered_special = i
 				Aeon.PlayerAbilities.FONT_SIZE:
-					menu_state = MenuStates.MENU_FONTSIZE
+					if !can_use_special[i]: continue
+					if menu_state not in [MenuStates.MENU_ALIGNMENT,MenuStates.MENU_SPOT_SELECTING, MenuStates.MENU_FONTSIZE]:
+						menu_state = MenuStates.MENU_FONTSIZE
+						recently_encountered_special = i
 				Aeon.PlayerAbilities.PARENTHESES:
-					menu_state = MenuStates.MENU_SPOT_SELECTING
-					spot_select_reason = "parentheses"
+					if !can_use_special[i]: continue
+					if menu_state not in [MenuStates.MENU_ALIGNMENT,MenuStates.MENU_SPOT_SELECTING, MenuStates.MENU_FONTSIZE]:
+						menu_state = MenuStates.MENU_SPOT_SELECTING
+						spot_select_reason = "parentheses"
+					recently_encountered_special = i
 				Aeon.PlayerAbilities.BRACKETS:
+					trigger_cooldown(i)
 					player.spawn_brackets()
 				Aeon.PlayerAbilities.BRACES:
-					menu_state = MenuStates.MENU_SPOT_SELECTING
-					spot_select_reason = "braces"
-					#spawn_player_braces()
+					if !can_use_special[i]: continue
+					if menu_state not in [MenuStates.MENU_ALIGNMENT,MenuStates.MENU_SPOT_SELECTING, MenuStates.MENU_FONTSIZE]:
+						menu_state = MenuStates.MENU_SPOT_SELECTING
+						spot_select_reason = "braces"
+						recently_encountered_special = i
 		elif (event.is_action_released(i)):
-			match Aeon.equipped_abilities[special_map[i]]:
+			match Aeon.equipped_abilities[i]:
 				Aeon.PlayerAbilities.NONE:
 					pass
 				Aeon.PlayerAbilities.ALIGNMENT:
@@ -324,11 +365,42 @@ func _input(event : InputEvent) -> void:
 						spotselectingmenu.is_spot_selecting = false
 
 	if event.is_action_pressed("z_target"):
-		if len(enemyroot.get_children()) > 1:
-			current_enemy_target_idx += 1
-			z_target = enemyroot.get_child(current_enemy_target_idx)
+		if len(enemy_array) > 1:
+			if current_enemy_target_idx < len(enemy_array) - 1:
+				current_enemy_target_idx += 1
+			elif current_enemy_target_idx >= len(enemy_array) - 1:
+				current_enemy_target_idx = 0
+			if enemy_array[current_enemy_target_idx] == null:
+				current_enemy_target_idx += 1
+				if current_enemy_target_idx >= len(enemy_array)-1:
+					order_enemies_by_proximity()
+			if enemy_array[current_enemy_target_idx] == z_target:
+				current_enemy_target_idx += 1
+			z_target = enemy_array[current_enemy_target_idx]
+		
+		z_target_timer.stop()
+		z_target_timer.start()
+		if !is_ztarget_series:
+			is_ztarget_series = true
+			ztarget_pos_init = player.global_position
+		print(current_enemy_target_idx)
 
+func trigger_cooldown(special : String):
+	var sptimer : Timer = special_timer_map[special]
+	print(special_timer_map)
+	sptimer.wait_time = special_cooldowns[special]
+	sptimer.start()
+	print(special)
+	can_use_special[special] = false
+	await sptimer.timeout
+	if Aeon.equipped_abilities[special] == Aeon.PlayerAbilities.BRACKETS:
+		player.no_creating_brackets = false
+	sptimer.stop()
+	can_use_special[special] = true
 
+func _on_ztarget_timer_timeout():
+	order_enemies_by_proximity()
+	is_ztarget_series = false
 
 
 func spawn_player_braces():
@@ -344,14 +416,16 @@ func spawn_player_braces():
 		player_braces_on_field.pop_front()
 
 func lock_in():
-	#print(z_target)
+	print(z_target)
 	if z_target == null:
-		if len(enemyroot.get_children()) == 0:
+		order_enemies_by_proximity()
+		if len(enemy_array) == 0:
 			player.not_locked_in = true
 			return
 		else:
+			print(enemy_array)
 			current_enemy_target_idx = 0
-			z_target = enemyroot.get_child(current_enemy_target_idx)
+			z_target = enemy_array[current_enemy_target_idx]
 	
 	player.lock_on_location = z_target.target_position
 	#print(player.not_locked_in)
@@ -361,6 +435,17 @@ func _on_player_switch_rooms(_room_dummy):
 	player.not_locked_in = false
 	print(player.not_locked_in)
 	lock_in()
+
+func order_enemies_by_proximity():
+	enemy_array = enemyroot.get_children()
+	enemy_array.sort_custom(sort_by_proximity)
+	current_enemy_target_idx = -1
+
+func sort_by_proximity(a : Node, b : Node):
+	var distance_to_a = (a.global_position-player.global_position).length_squared()
+	var distance_to_b = (b.global_position-player.global_position).length_squared()
+	if distance_to_a < distance_to_b: return true
+	else: return false
 
 # PROCESS
 
@@ -373,13 +458,18 @@ func _process(_delta : float) -> void:
 		current_enemy_target_idx = 0
 		z_target = enemyroot.get_child(current_enemy_target_idx)
 	if is_debugging: debug(d_)
-	#print(z_target)
 	lock_in()
 	if player.not_locked_in:
 		$hud.ztargeticon.hide()
 	else:
 		$hud.ztargeticon.show()
+	if (player.global_position-ztarget_pos_init).length() > 500:
+		order_enemies_by_proximity()
 	is_first_frame = false
+	for sp in special_buttons:
+		if !special_timer_map[sp].is_stopped():
+			$hud.special_progress_map[sp].value = 100-(special_timer_map[sp].time_left/special_timer_map[sp].wait_time)*100
+		print(special_timer_map[sp].time_left/special_timer_map[sp].wait_time)
 	#print(is_opening_map)
 
 func _on_player_open_stamp_menu():
@@ -445,6 +535,7 @@ func _on_spot_selected(pos : Vector2) -> void:
 		p_.firee = player
 		$container/Bullets.add_child(p_)
 		p_.position = CAMERA_SCALE*pos+camera.position
+		trigger_cooldown(recently_encountered_special)
 	elif spot_select_reason == "braces":
 		var b_ = braces.instantiate()
 		var rot_to_spawn = atan2(convert_viewport_coords_to_ingame(pos).y-player.position.y, convert_viewport_coords_to_ingame(pos).x-player.position.x)
@@ -457,6 +548,7 @@ func _on_spot_selected(pos : Vector2) -> void:
 		if len(player_braces_on_field) > 2:
 			player_braces_on_field[0].queue_free()
 			player_braces_on_field.pop_front()
+		trigger_cooldown(recently_encountered_special)
 	spot_select_reason = "none"
 	menu_state = MenuStates.MENU_NONE
 	print(pos)
@@ -506,6 +598,7 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	for i in disabled_hitbox_enemies:
 		i.collider.disabled = false
 		i.is_being_forced = false
+	trigger_cooldown(recently_encountered_special)
 
 func _on_fontsize_chosen(fontsize):
 	menu_state = MenuStates.MENU_NONE
@@ -518,6 +611,7 @@ func _on_fontsize_chosen(fontsize):
 		player.scale = pscale*Vector2(2, 2)
 	elif fontsize == "72":
 		player.scale = pscale*Vector2(6.25,6.25)
+	trigger_cooldown(recently_encountered_special)
 
 
 

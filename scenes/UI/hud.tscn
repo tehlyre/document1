@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh5ivbowm0f1m"]
+[gd_scene load_steps=6 format=3 uid="uid://dh5ivbowm0f1m"]
 
 [ext_resource type="Script" uid="uid://brygg006yot8t" path="res://scripts/UI/hud.gd" id="1_c4vmg"]
 [ext_resource type="Texture2D" uid="uid://bn3kyamuskmt" path="res://assets/textures/z_target.png" id="2_rd3kb"]
@@ -6,6 +6,15 @@
 [sub_resource type="Theme" id="Theme_8jrks"]
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rd3kb"]
+bg_color = Color(0.82, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_y5tme"]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 0, 0, 1)
+ProgressBar/styles/background = null
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_rd3kb")
 
 [node name="hud" type="CanvasLayer"]
 script = ExtResource("1_c4vmg")
@@ -40,32 +49,91 @@ text = "Keys: x"
 layout_mode = 2
 text = "Coins:"
 
-[node name="playerAbilities" type="VBoxContainer" parent="hudRoot"]
-layout_mode = 0
-offset_left = 1052.0
-offset_top = 529.0
-offset_right = 1114.0
-offset_bottom = 606.0
+[node name="playerAbilities" type="Control" parent="hudRoot"]
+anchors_preset = 0
+offset_left = -33.0
+offset_top = -35.0
+offset_right = -33.0
+offset_bottom = -35.0
+theme = SubResource("Theme_y5tme")
 
 [node name="abilities" type="Label" parent="hudRoot/playerAbilities"]
-layout_mode = 2
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 23.0
 text = "Specials"
 
 [node name="q" type="Label" parent="hudRoot/playerAbilities"]
-layout_mode = 2
+layout_mode = 0
+offset_left = 115.0
+offset_top = 594.0
+offset_right = 177.0
+offset_bottom = 617.0
 text = "Q: "
 
+[node name="cooldown" type="ProgressBar" parent="hudRoot/playerAbilities/q"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -9.339722
+offset_right = 33.66028
+offset_bottom = 17.660278
+rotation = -1.5707964
+value = 100.0
+show_percentage = false
+
 [node name="e" type="Label" parent="hudRoot/playerAbilities"]
-layout_mode = 2
+layout_mode = 0
+offset_left = 1183.0
+offset_top = 606.0
+offset_right = 1245.0
+offset_bottom = 629.0
 text = "E: "
 
+[node name="cooldown" type="ProgressBar" parent="hudRoot/playerAbilities/e"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -7.6794434
+offset_right = 32.66028
+offset_bottom = 19.320557
+rotation = -1.5707964
+value = 100.0
+show_percentage = false
+
 [node name="s2" type="Label" parent="hudRoot/playerAbilities"]
-layout_mode = 2
+layout_mode = 0
+offset_left = 230.0
+offset_top = 596.0
+offset_right = 292.0
+offset_bottom = 619.0
 text = "2: "
 
+[node name="cooldown" type="ProgressBar" parent="hudRoot/playerAbilities/s2"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -9.679443
+offset_right = 26.660278
+offset_bottom = 17.320557
+rotation = -1.5707964
+value = 100.0
+show_percentage = false
+
 [node name="s3" type="Label" parent="hudRoot/playerAbilities"]
-layout_mode = 2
+layout_mode = 0
+offset_left = 1055.0
+offset_top = 609.0
+offset_right = 1117.0
+offset_bottom = 632.0
 text = "3: "
+
+[node name="cooldown" type="ProgressBar" parent="hudRoot/playerAbilities/s3"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -8.679443
+offset_right = 33.66028
+offset_bottom = 18.320557
+rotation = -1.5707964
+value = 100.0
+show_percentage = false
 
 [node name="ZTarget" type="Sprite2D" parent="hudRoot"]
 position = Vector2(550.5, 355.5)

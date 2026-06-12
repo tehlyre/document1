@@ -1,0 +1,126 @@
+[gd_scene load_steps=26 format=3 uid="uid://cfq7r3g5b7br4"]
+
+[ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_4lvs6"]
+[ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="3_ki2io"]
+[ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_4y8qi"]
+[ext_resource type="Script" uid="uid://caxctcte2oy13" path="res://scenes/Levels/chests.gd" id="5_5y166"]
+[ext_resource type="Script" uid="uid://j0t8gfgtn0r7" path="res://scenes/Levels/enemy_root.gd" id="7_f4xch"]
+[ext_resource type="Texture2D" uid="uid://4se753nw0uvs" path="res://assets/textures/Wall.png" id="8_plwpd"]
+[ext_resource type="PackedScene" uid="uid://jyymc6g4n643" path="res://scenes/Interactables/door.tscn" id="9_v0f1w"]
+[ext_resource type="PackedScene" uid="uid://qv0hmxcgsqlj" path="res://scenes/Interactables/door_rotated.tscn" id="10_hsd7u"]
+[ext_resource type="PackedScene" uid="uid://cw3q6imsosios" path="res://scenes/Interactables/pot.tscn" id="11_y8jmk"]
+[ext_resource type="PackedScene" uid="uid://dgejbcjs0l80s" path="res://scenes/Interactables/stamp.tscn" id="12_iqghp"]
+[ext_resource type="Texture2D" uid="uid://dlxv0v0psypes" path="res://assets/textures/enemy_spawn.png" id="14_dbi8c"]
+[ext_resource type="Texture2D" uid="uid://btoqtg3sxs4jh" path="res://assets/textures/hboss_spawn.png" id="15_kjymd"]
+[ext_resource type="Texture2D" uid="uid://bvbmxpvv3q6n2" path="res://assets/textures/dummy_spawn.png" id="16_y6u0e"]
+[ext_resource type="Script" uid="uid://d0r8wop71ad5q" path="res://scripts/triggers.gd" id="18_ictju"]
+[ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="19_carqp"]
+[ext_resource type="Script" uid="uid://bbw5jfgk428ne" path="res://scripts/trainens.gd" id="20_mxe62"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_imx2c"]
+texture = ExtResource("8_plwpd")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-40, -40, 40, -40, 40, 40, -40, 40)
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_l6q4n"]
+scenes/1/scene = ExtResource("9_v0f1w")
+scenes/2/scene = ExtResource("10_hsd7u")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n5cux"]
+scenes/2/scene = ExtResource("11_y8jmk")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_n3v2s"]
+scenes/1/scene = ExtResource("12_iqghp")
+
+[sub_resource type="TileSet" id="TileSet_l41vt"]
+tile_size = Vector2i(80, 80)
+physics_layer_0/collision_layer = 64
+physics_layer_0/collision_mask = 3
+custom_data_layer_0/name = "ID"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_imx2c")
+sources/1 = SubResource("TileSetScenesCollectionSource_l6q4n")
+sources/2 = SubResource("TileSetScenesCollectionSource_n5cux")
+sources/3 = SubResource("TileSetScenesCollectionSource_n3v2s")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n5cux"]
+texture = ExtResource("14_dbi8c")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_poti2"]
+texture = ExtResource("15_kjymd")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_88tjj"]
+texture = ExtResource("16_y6u0e")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qiya0"]
+tile_size = Vector2i(80, 80)
+sources/0 = SubResource("TileSetAtlasSource_n5cux")
+sources/1 = SubResource("TileSetAtlasSource_poti2")
+sources/2 = SubResource("TileSetAtlasSource_88tjj")
+
+[node name="overworld" type="Node2D" node_paths=PackedStringArray("player")]
+process_mode = 1
+script = ExtResource("1_4lvs6")
+player = NodePath("Durdan")
+metadata/_edit_group_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(14, 1402)
+anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
+position_smoothing_speed = 3.96
+drag_horizontal_offset = 0.3
+drag_left_margin = 0.5
+drag_top_margin = 0.5
+drag_right_margin = 0.5
+drag_bottom_margin = 0.5
+
+[node name="Durdan" parent="." instance=ExtResource("3_ki2io")]
+position = Vector2(893, 1216)
+collision_layer = 1
+collision_mask = 107
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Goo" parent="Level" instance=ExtResource("4_4y8qi")]
+z_index = -2
+
+[node name="Chests" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+script = ExtResource("5_5y166")
+enemy_root = NodePath("../enemies")
+
+[node name="enemies" type="Node2D" parent="." node_paths=PackedStringArray("bullet_root", "cam")]
+position = Vector2(0, 1)
+script = ExtResource("7_f4xch")
+bullet_root = NodePath("../Bullets")
+cam = NodePath("../Camera")
+
+[node name="Wall" type="TileMapLayer" parent="." groups=["walls"]]
+z_index = 10
+position = Vector2(1, 0)
+tile_set = SubResource("TileSet_l41vt")
+
+[node name="enemySpawn" type="TileMapLayer" parent="."]
+position = Vector2(1, 1)
+tile_map_data = PackedByteArray(0, 0, 14, 0, 11, 0, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_qiya0")
+
+[node name="Triggers" type="Node2D" parent="."]
+script = ExtResource("18_ictju")
+
+[node name="Bullets" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+script = ExtResource("19_carqp")
+enemy_root = NodePath("../enemies")
+
+[node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
+script = ExtResource("20_mxe62")
+wall = NodePath("../Wall")
+
+[node name="PowerUps" type="Node2D" parent="."]

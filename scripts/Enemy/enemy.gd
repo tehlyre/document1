@@ -21,7 +21,7 @@ class_name Enemy
 # CharacterBody2D player: Pointer to the player.
 # PackedScene Bullet: The packaged scene for the bullet that is to be fired.
 # RandomNumberGenerator rng: A random number generator to make this thing more deterministic.
-@export var player : CharacterBody2D
+@export var player : Player
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var gun : Gun = $neutralSpecial
 @onready var player_raycast = $toPlayer
@@ -31,6 +31,7 @@ var is_being_forced : bool = false
 @onready var collider = $enemyCollider
 @onready var on_screen_notif = $VisibleOnScreenNotifier2D
 var target_position
+var droppings : PackedScene = preload("res://scenes/Interactables/dropping.tscn")
 
 # CONSTANTS
 
@@ -90,7 +91,17 @@ func thingy_damage(damage : int) -> void:
 
 
 
-
+func die():
+	if randf_range(0,100) < 20:
+		var d_ = droppings.instantiate()
+		match randi_range(1,3):
+			1: d_.power_up_type = Aeon.PowerUpTypes.DMG_UP
+			2: d_.power_up_type = Aeon.PowerUpTypes.DMG_UP
+			3: d_.power_up_type = Aeon.PowerUpTypes.HEAL
+		get_parent().get_parent().get_parent().get_node("PowerUps").add_child(d_)
+		d_.global_position = global_position
+		
+	queue_free()
 
 
 
@@ -113,4 +124,4 @@ func _physics_process(delta : float) -> void:
 		move_and_slide()
 		$enemyHealthBar.value = health*100/max_hp
 		if is_zero_approx(health) or health < 0:
-			queue_free()
+			die()

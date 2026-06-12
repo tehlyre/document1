@@ -21,7 +21,7 @@ enum EditorState {
 }
 var obj : Object
 
-var button_connections : Array[Callable] = [_on_map_button_pressed, _on_train_button_pressed]
+var button_connections : Array[Callable] = [_on_map_button_pressed, _on_train_button_pressed, _on_dummies_button_pressed]
 
 func _enter_tree() -> void:
 	toolbar = preload("res://addons/drag/drag.tscn").instantiate()
@@ -86,6 +86,17 @@ func _on_train_button_pressed():
 	train.global_position = obj.get_node("origin_marker").global_position
 	train.rotation = obj.rotation
 	train.scale.y = obj.scale.y
+
+func _on_dummies_button_pressed():
+	print("SWITCHING TO ENEMIES")
+	if len(obj.get_used_cells_by_id(2)) < len(obj.get_used_cells_by_id(0)):
+		for cell in obj.get_used_cells_by_id(0):
+			obj.set_cell(cell, 2, Vector2.ZERO)
+	else:
+		print("what the sigma")
+		for cell in obj.get_used_cells_by_id(2):
+			obj.set_cell(cell, 0, Vector2.ZERO)
+	
 	
 
 #func do_make_enemy(event : InputEventMouseButton) -> void:
@@ -142,7 +153,7 @@ func _on_train_button_pressed():
 
 func _handles(object: Object) -> bool:
 	obj = object
-	return object is Level or object is WordTracks
+	return object is Level or object is WordTracks or object is EnemySpawn
 
 #func _change_editor_state(state : int):
 	#editor_state = state

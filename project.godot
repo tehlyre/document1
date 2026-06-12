@@ -185,3 +185,4 @@ z_target={
 textures/canvas_textures/default_texture_filter=0
 textures/decals/filter=1
 textures/light_projectors/filter=1
+environment/defaults/default_clear_color=Color(1, 1, 1, 1)

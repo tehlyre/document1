@@ -47,7 +47,7 @@ enum PowerUpTypes {
 }
 
 var player_inventory : Dictionary = {'keys':1, 'coins':0}
-var equipped_abilities : Dictionary = {'q': PlayerAbilities.ALIGNMENT, "e" : PlayerAbilities.BRACKETS, "2" : PlayerAbilities.BRACES, "3" : PlayerAbilities.PARENTHESES}
+var equipped_abilities : Dictionary = {"special_q": PlayerAbilities.ALIGNMENT, "special_e" : PlayerAbilities.BRACKETS, "special_2" : PlayerAbilities.BRACES, "special_3" : PlayerAbilities.PARENTHESES}
 
 var player_abilities_map : Dictionary = {
 	PlayerAbilities.NONE : "None",

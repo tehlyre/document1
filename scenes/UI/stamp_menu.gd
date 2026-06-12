@@ -15,10 +15,10 @@ func _ready() -> void:
 	opciones_root.get_children()[3].item_selected.connect(_on_3_item_selected)
 
 func _on_q_item_selected(index : int):
-	Aeon.equipped_abilities['q'] = index
+	Aeon.equipped_abilities['special_q'] = index
 func _on_e_item_selected(index : int):
-	Aeon.equipped_abilities['e'] = index
+	Aeon.equipped_abilities['special_e'] = index
 func _on_2_item_selected(index : int):
-	Aeon.equipped_abilities['2'] = index
+	Aeon.equipped_abilities['special_2'] = index
 func _on_3_item_selected(index : int):
-	Aeon.equipped_abilities['3'] = index
+	Aeon.equipped_abilities['special_3'] = index
