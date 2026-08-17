@@ -17,7 +17,8 @@ enum MapMarkerTypes {
 enum BulletTypes {
 	NONE,
 	BASIC,
-	RICOCHET
+	RICOCHET,
+	HOMING
 }
 
 enum PlayerAbilities {

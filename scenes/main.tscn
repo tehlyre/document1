@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://up1n3nybh4y0"]
+[gd_scene format=3 uid="uid://up1n3nybh4y0"]
 
 [ext_resource type="Script" uid="uid://bwrg4wxune0y3" path="res://scripts/game.gd" id="1_cg0fy"]
 [ext_resource type="PackedScene" uid="uid://bpynshe51cu4u" path="res://scenes/Universals/parentheses.tscn" id="2_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dj1ncmi0g0gke" path="res://scenes/UI/log_menu.tscn" id="3_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://cfq7r3g5b7br4" path="res://scenes/Levels/overworld.tscn" id="3_muem4"]
+[ext_resource type="PackedScene" uid="uid://b4rpkbb7pbeqj" path="res://scenes/Levels/container.tscn" id="3_muem4"]
 [ext_resource type="PackedScene" uid="uid://dr4ohj1mjxsei" path="res://scenes/UI/dialogue_menu.tscn" id="3_trceg"]
 [ext_resource type="PackedScene" uid="uid://bl1ctofn4ryr6" path="res://scenes/UI/newsave.tscn" id="4_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://uvj7iu2qje8l" path="res://scenes/UI/deathmenu.tscn" id="4_utxhm"]
@@ -18,82 +18,79 @@
 [ext_resource type="PackedScene" uid="uid://bke4d8w4p3krb" path="res://scenes/UI/specials/alignment_menu.tscn" id="14_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://byislmt7kky1y" path="res://scenes/UI/stamp_menu.tscn" id="16_muem4"]
 
-[node name="gameManager" type="Node2D"]
+[node name="gameManager" type="Node2D" unique_id=861031596 node_paths=PackedStringArray("level")]
 process_mode = 3
 process_physics_priority = -265
 script = ExtResource("1_cg0fy")
 parentheses = ExtResource("2_jbj1t")
+level = NodePath("container")
 metadata/_edit_group_ = true
 
-[node name="overworld" parent="." instance=ExtResource("3_muem4")]
+[node name="container" parent="." unique_id=1047003612 instance=ExtResource("3_muem4")]
 
-[node name="hud" parent="." instance=ExtResource("10_choun")]
+[node name="hud" parent="." unique_id=1757702560 instance=ExtResource("10_choun")]
 
-[node name="menuLayer" type="CanvasLayer" parent="."]
-visible = false
+[node name="menuLayer" type="CanvasLayer" parent="." unique_id=1586281764]
 
-[node name="saveMenu" parent="menuLayer" node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("4_a8y0u")]
+[node name="saveMenu" parent="menuLayer" unique_id=1976570890 node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("4_a8y0u")]
 pause_menu = NodePath("../pauseMenu")
 game = NodePath("../..")
 
-[node name="dialogueMenu" parent="menuLayer" instance=ExtResource("3_trceg")]
+[node name="dialogueMenu" parent="menuLayer" unique_id=1462093063 instance=ExtResource("3_trceg")]
 
-[node name="logMenu" parent="menuLayer" node_paths=PackedStringArray("dialog_menu") instance=ExtResource("3_a8y0u")]
+[node name="logMenu" parent="menuLayer" unique_id=1311604392 node_paths=PackedStringArray("dialog_menu") instance=ExtResource("3_a8y0u")]
 dialog_menu = NodePath("../dialogueMenu")
 
-[node name="deathMenu" parent="menuLayer" node_paths=PackedStringArray("container") instance=ExtResource("4_utxhm")]
-container = NodePath("")
+[node name="deathMenu" parent="menuLayer" unique_id=894757881 instance=ExtResource("4_utxhm")]
 
-[node name="chestMenu" parent="menuLayer" node_paths=PackedStringArray("container", "game") instance=ExtResource("8_kqed6")]
+[node name="chestMenu" parent="menuLayer" unique_id=2077248764 node_paths=PackedStringArray("game") instance=ExtResource("8_kqed6")]
 process_mode = 3
 offset_left = 7.0
 offset_top = -7.0
 offset_right = 47.0
 offset_bottom = 33.0
-container = NodePath("")
 game = NodePath("../..")
 
-[node name="mapMenu" parent="menuLayer" node_paths=PackedStringArray("game") instance=ExtResource("10_eb6dy")]
+[node name="mapMenu" parent="menuLayer" unique_id=136610001 node_paths=PackedStringArray("game") instance=ExtResource("10_eb6dy")]
 game = NodePath("../..")
 
-[node name="pauseMenu" parent="menuLayer" node_paths=PackedStringArray("game", "level", "options_menu", "save_menu") instance=ExtResource("13_a8y0u")]
+[node name="pauseMenu" parent="menuLayer" unique_id=1391123241 node_paths=PackedStringArray("game", "options_menu", "save_menu") instance=ExtResource("13_a8y0u")]
 game = NodePath("../..")
-level = NodePath("")
 options_menu = NodePath("../optionsMenu")
 save_menu = NodePath("../saveMenu")
 
-[node name="optionsMenu" parent="menuLayer" node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("12_trceg")]
+[node name="optionsMenu" parent="menuLayer" unique_id=1195020368 node_paths=PackedStringArray("pause_menu", "game") instance=ExtResource("12_trceg")]
 visible = false
 pause_menu = NodePath("../pauseMenu")
 game = NodePath("../..")
 
-[node name="alignmentMenu" parent="menuLayer" instance=ExtResource("14_jkv2x")]
+[node name="alignmentMenu" parent="menuLayer" unique_id=28409131 instance=ExtResource("14_jkv2x")]
 visible = false
 
-[node name="fontsizeMenu" parent="menuLayer" instance=ExtResource("13_jkv2x")]
+[node name="fontsizeMenu" parent="menuLayer" unique_id=1346256360 instance=ExtResource("13_jkv2x")]
 visible = false
 
-[node name="spotSelectingMenu" parent="menuLayer" instance=ExtResource("14_jbj1t")]
+[node name="spotSelectingMenu" parent="menuLayer" unique_id=1362838694 instance=ExtResource("14_jbj1t")]
 visible = false
 
-[node name="stampMenu" parent="menuLayer" instance=ExtResource("16_muem4")]
+[node name="stampMenu" parent="menuLayer" unique_id=1625785703 instance=ExtResource("16_muem4")]
 visible = false
 offset_left = 1.9505615
 offset_top = 2.61438
 offset_right = 1.9505615
 offset_bottom = 2.61438
 
-[node name="backgroundMusicPlayer" parent="." instance=ExtResource("12_eb6dy")]
+[node name="backgroundMusicPlayer" parent="." unique_id=48543435 instance=ExtResource("12_eb6dy")]
 autoplay = false
 
-[node name="timers" type="Node" parent="."]
+[node name="timers" type="Node" parent="." unique_id=1051203210]
 
-[node name="q_timer" type="Timer" parent="timers"]
+[node name="q_timer" type="Timer" parent="timers" unique_id=363550794]
 
-[node name="e_timer" type="Timer" parent="timers"]
+[node name="e_timer" type="Timer" parent="timers" unique_id=1485120940]
 
-[node name="2_timer" type="Timer" parent="timers"]
+[node name="2_timer" type="Timer" parent="timers" unique_id=2126720665]
 
-[node name="3_timer" type="Timer" parent="timers"]
+[node name="3_timer" type="Timer" parent="timers" unique_id=136895981]
 
-[node name="z_target_series_timer" type="Timer" parent="timers"]
+[node name="z_target_series_timer" type="Timer" parent="timers" unique_id=684230404]

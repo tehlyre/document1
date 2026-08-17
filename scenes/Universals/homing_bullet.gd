@@ -16,6 +16,7 @@ class_name Bullet
 # These can be different for balancing purposes.
 @export var SPEED_WHEN_PLAYER : float = 15
 @export var SPEED_WHEN_ENEMY : float = 5
+@export var target : Vector2
 
 # FLAGS
 
@@ -41,6 +42,7 @@ func _ready() -> void:
 
 # Connected to self.body_entered. Can damage enemies and players differently, and unalives itself afterwords.
 func on_body_entered(body : Node2D) -> void:
+	print_debug(atk_power)
 	if(body.is_in_group("enemies")):
 		body.thingy_damage(atk_power)
 	elif(body.is_in_group("player")):
@@ -61,10 +63,14 @@ func thingy_damage(anything):
 # by referencing the bullet's transform.x, or the basis vector in the x-direction. Basically the direction
 # the bullet is facing, and then going in that direction by the appropriate speed.
 func _physics_process(_delta : float) -> void:
-	if firee_type == "player":
-		velocity = transform.x*SPEED_WHEN_PLAYER
-	else:
-		velocity = transform.x * SPEED_WHEN_ENEMY
+	var desired_velocity = (position-target).normalized()*SPEED_WHEN_PLAYER
+	var steering_force = desired_velocity - velocity
+	velocity -= steering_force
+	velocity = velocity.normalized()*SPEED_WHEN_PLAYER
+	#if firee_type == "player":
+		#velocity = transform.x*SPEED_WHEN_PLAYER
+	#else:
+		#velocity = transform.x * SPEED_WHEN_ENEMY
 	collision = move_and_collide(velocity)
 	if collision != null:
 		on_body_entered(collision.get_collider())

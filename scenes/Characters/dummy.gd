@@ -60,7 +60,7 @@ func _ready() -> void:
 	$VisibleOnScreenNotifier2D.screen_exited.connect(_lmao_rofl)
 	target_position = global_position
 
-	#print(get_parent())
+	#print_debug(get_parent())
 
 func _xd_lol():
 	get_parent().enemy_on_screen = [true, self]

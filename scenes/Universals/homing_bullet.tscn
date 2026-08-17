@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://twkgu00t23vo"]
+
+[ext_resource type="Script" uid="uid://68imcxulqg7l" path="res://scenes/Universals/homing_bullet.gd" id="1_uaged"]
+[ext_resource type="Texture2D" uid="uid://gmlmhx2tod4d" path="res://assets/textures/bullet.png" id="2_iqb1g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pidge"]
+size = Vector2(18, 16)
+
+[node name="homingbullet" type="CharacterBody2D" unique_id=1353676258 groups=["bullet"]]
+collision_layer = 4
+collision_mask = 707
+script = ExtResource("1_uaged")
+
+[node name="bulletSprite" type="Sprite2D" parent="." unique_id=1357401308]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("2_iqb1g")
+
+[node name="bulletCollider" type="CollisionShape2D" parent="." unique_id=1850440433]
+shape = SubResource("RectangleShape2D_pidge")

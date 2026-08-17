@@ -23,7 +23,7 @@ func _ready() -> void:
 func update_position() -> void:
 	current_cell = (player.global_position / size).floor()
 	if last_cell != current_cell:
-		print("xijfiwoejfoijwoiejfoij")
+		print_debug("xijfiwoejfoijwoiejfoij")
 		if not current_cell in current_room:
 			sig_change_rooms.emit(current_cell)
 		last_cell = current_cell
@@ -66,11 +66,12 @@ func _process(_delta: float) -> void:
 	
 
 
-		
 
 func _on_room_callback(rooms : Array[Vector2i], _coords : Vector2i) -> void:
-	#print(rooms)
+	#print_debug(rooms)
 	current_room = rooms
+	var snapped_player = Vector2(floor(player.position.x/2560), floor(player.position.y/1440))
+	global_position = snapped_player*Vector2(2560,1440)
 	var cool_arrayx : Array[int] = []
 	var cool_arrayy : Array[int] = []
 	for i in rooms: 

@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6s6grxio50hr"]
+[gd_scene format=3 uid="uid://c6s6grxio50hr"]
 
 [ext_resource type="Texture2D" uid="uid://gmlmhx2tod4d" path="res://assets/textures/bullet.png" id="1_kl5yt"]
-[ext_resource type="Script" uid="uid://cqwr1janno75u" path="res://scripts/bullet.gd" id="1_rhlw0"]
+[ext_resource type="Script" uid="uid://cqwr1janno75u" path="res://scenes/Universals/bullet.gd" id="1_rhlw0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pidge"]
 size = Vector2(18, 16)

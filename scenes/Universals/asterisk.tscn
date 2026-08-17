@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dvkgddw7ksn3x"]
+
+[ext_resource type="Script" uid="uid://b6bunhpacdbea" path="res://scenes/Universals/asterisk.gd" id="1_d3cwn"]
+[ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="1_f783t"]
+
+[node name="asterisk" type="Node2D" unique_id=1397015924]
+script = ExtResource("1_d3cwn")
+
+[node name="NeutralSpecial" parent="." unique_id=115373117 instance=ExtResource("1_f783t")]
+position = Vector2(400, 0)
+bullet_type = 3
+
+[node name="NeutralSpecial2" parent="." unique_id=196933880 instance=ExtResource("1_f783t")]
+position = Vector2(199.99998, 346.4102)
+rotation = 1.0471976
+bullet_type = 3
+
+[node name="NeutralSpecial3" parent="." unique_id=389957090 instance=ExtResource("1_f783t")]
+position = Vector2(-200.00002, 346.41016)
+rotation = 2.0943952
+bullet_type = 3
+
+[node name="NeutralSpecial4" parent="." unique_id=176542359 instance=ExtResource("1_f783t")]
+position = Vector2(-400, -3.496911e-05)
+rotation = -3.1415925
+bullet_type = 3
+
+[node name="NeutralSpecial5" parent="." unique_id=1243594186 instance=ExtResource("1_f783t")]
+position = Vector2(199.99998, -346.4102)
+rotation = -1.0471976
+bullet_type = 3
+
+[node name="NeutralSpecial6" parent="." unique_id=2079064129 instance=ExtResource("1_f783t")]
+position = Vector2(-200.00002, -346.41016)
+rotation = -2.0943952
+bullet_type = 3

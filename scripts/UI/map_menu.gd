@@ -17,7 +17,7 @@ var is_button_pressed_once = false
 var is_open = false
 
 func _ready() -> void:
-	#print($Panel/map.get_rect().position, " aosidjpfgaoihjsdpfj")
+	#print_debug($Panel/map.get_rect().position, " aosidjpfgaoihjsdpfj")
 	hide()
 	game.sig_open_map.connect(_on_open_map)
 	markers.selection.connect(_on_marker_select)
@@ -30,7 +30,8 @@ func _input(event : InputEvent) -> void:
 		is_first = false
 
 func _on_open_map(is_opening : bool, player_position : Vector2) -> void:
-	if is_opening: 
+	if is_opening:
+		print_debug("::P")
 		is_open = true
 		show()
 		mapSprite.position = initial_map_position
@@ -62,7 +63,7 @@ func _on_marker_select(selection) -> void:
 		4: auxtext.text = "Stamp"
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and is_open:
 		if !is_button_pressed_once:
-			print(selection.marker_type)
+			print_debug(selection.marker_type)
 			selection.on_click()
 			is_button_pressed_once = true
 	else:

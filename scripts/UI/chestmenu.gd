@@ -9,8 +9,10 @@ var delete_nodes = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
-	container.get_node("Durdan").connect("sig_open_chest", on_player_open_chest)
 	b_quit.pressed.connect(on_quit_button_pressed)
+
+func initiate():
+	container.get_node("Durdan").connect("sig_open_chest", on_player_open_chest)
 
 func on_player_open_chest(chest : Chest):
 	var stuff = chest.parsed

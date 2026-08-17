@@ -84,7 +84,7 @@ func homing() -> void:
 		guns_to_fire.append(top_left_gun)
 		guns_to_fire.append(top_right_gun)
 	elif mover.front_side == mover.FrontSides.BUTT:
-		print("sigma")
+		print_debug("sigma")
 		mover.gorp_to_player(butt_right_gun)
 		mover.gorp_to_player(butt_left_gun)
 		await mover.sig_done_gorping
@@ -99,7 +99,7 @@ func homing() -> void:
 
 func _on_did_move(_number):
 	for i in gun_root.get_children():
-		print("q")
+		print_debug("q")
 		i.fire()
 
 

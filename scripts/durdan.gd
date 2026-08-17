@@ -27,6 +27,7 @@ class_name Player
 #
 @onready var gun : Gun = $neutralSpecial
 @onready var sword : Melee = $flamingLance
+@onready var asterisk : Asterisk = $asterisk
 #
 # CONSTANTS
 #
@@ -57,6 +58,7 @@ var is_push_flipped : bool = false
 var is_cutscene_running : bool = false
 var is_bracketed : bool = false
 var not_locked_in : bool = false
+var is_using_asterisk : bool = true
 
 # STATUS VARIABLES
 
@@ -129,6 +131,8 @@ func _ready() -> void:
 	$areaInteraction.area_entered.connect(_on_interaction_area_area_entered)
 	$areaInteraction.area_exited.connect(_on_interaction_area_area_exited)
 	gun.atk_power = atk
+	asterisk.atk_power = 0.4*atk
+	asterisk.init_guns()
 	braces = preload("res://scenes/Universals/curly_brace.tscn")
 	brackets = preload("res://scenes/Universals/brackets.tscn")
 	health = max_hp
@@ -159,11 +163,11 @@ func _input(event : InputEvent) -> void:
 		is_using_mouse = false
 	if (event.is_action_pressed("interact") and interactables != []):
 		if interactables[0] is Chest and !interactables[0].is_locked:
-			print("openous intentions")
+			print_debug("openous intentions")
 			sig_open_chest.emit(interactables[0])
 			interactables[0].is_opened = true
 		elif interactables[0] is Door and Aeon.player_inventory["keys"] >= 1:
-			print("openous intentions")
+			print_debug("openous intentions")
 			sig_open_door.emit(interactables[0])
 			interactables[0].is_opened = true
 			Aeon.player_inventory["keys"] -= 1
@@ -176,7 +180,7 @@ func _input(event : InputEvent) -> void:
 	elif (event.is_action_released("sprint")) and is_sprinting == true:
 		is_sprinting = false
 		current_max_speed = MAX_SPEED
-		print("ooiejpgqiohporeihgqpoweihgpoi")
+		print_debug("ooiejpgqiohporeihgqpoweihgpoi")
 		current_acceleration = ACCELERATION/2
 
 
@@ -205,14 +209,14 @@ func spawn_brackets():
 	if !is_bracketed and !no_creating_brackets:
 		no_creating_brackets = true
 		var b_ = brackets.instantiate()
-		print(b_)
+		print_debug(b_)
 		b_.owner = self
 		b_.host = self
 		add_child(b_)
 		is_bracketed = true
 		bracket = b_
 		bracket.busted.connect(_on_bracket_busted)
-		print(bracket)
+		print_debug(bracket)
 	elif bracket != null:
 		bracket.switch_brackets()
 
@@ -227,7 +231,7 @@ func _on_bracket_busted():
 
 
 func pick_up(powerup : PowerUp):
-	print(powerup.power_up_type)
+	print_debug(powerup.power_up_type)
 	apply_buff(powerup.power_up_type)
 	powerup.queue_free()
 	
@@ -288,7 +292,7 @@ func thingy_velocity(delta) -> void:
 # SPECIALS
 
 func alignment(direction : AlignmentStyles):
-	print("aligning fufufufu")
+	print_debug("aligning fufufufu")
 	match direction:
 		AlignmentStyles.ALIGN_LEFT:
 			pass
@@ -300,7 +304,7 @@ func alignment(direction : AlignmentStyles):
 			pass
 
 func font_size(size : int):
-	print("sizing xdxdxdxd: ", size)
+	print_debug("sizing xdxdxdxd: ", size)
 	pass
 
 
@@ -320,6 +324,12 @@ func font_size(size : int):
 # or else facing a reasonable controller direction (TODO). Then, it detects hazards, sets velocity, adjust the gun,
 # and fires it if applicable, then moves the player.
 func _physics_process(delta) -> void:
+	if is_using_asterisk:
+		gun.hide()
+		gun.disable()
+	else:
+		gun.show()
+		gun.enable()
 	if !is_cutscene_running:
 		# For facing the mouse {
 		
@@ -343,13 +353,15 @@ func _physics_process(delta) -> void:
 		
 		if Input.is_action_just_pressed("neutral special"):
 			if cutscene_firing_buffer == 0:
-				if !firing_on:
-					gun.fire_continuously()
-					firing_on = true
+				if !is_using_asterisk:
+					if !firing_on:
+						gun.fire_continuously()
+						firing_on = true
+					else:
+						gun.fire_continuously(false)
+						firing_on = false
 				else:
-					gun.fire_continuously(false)
-					firing_on = false
-					print("project hail mary")
+					asterisk.fire(lock_on_location)
 			elif cutscene_firing_buffer > 0:
 				cutscene_firing_buffer -= 1
 		if Input.is_action_just_pressed("melee"):

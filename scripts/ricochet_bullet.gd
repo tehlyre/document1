@@ -59,7 +59,7 @@ func on_body_entered(body : Node2D, normal : Vector2) -> void:
 	elif(body.is_in_group("breakables")) and body.host != firee:
 		if !is_ricocheting:
 			ricochet_counter += 1
-			print(ricochet_counter)
+			print_debug(ricochet_counter)
 			if ricochet_counter > 2:
 				if body.host not in blacklist:
 					body.smash()

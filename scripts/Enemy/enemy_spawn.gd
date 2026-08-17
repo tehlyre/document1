@@ -46,18 +46,18 @@ func _on_player_change_rooms(rooms : Array[Vector2i], _coords : Vector2i):
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
 	for i in get_used_cells_by_id(1):
-		print(dnr, "uwu")
+		print_debug(dnr, "uwu")
 		if bounded_by_rectangle(i, tleft_bound, bright_bound) and i not in dnr:
 			var e_ : HBoss = hboss.instantiate()
 			e_.player = player
 			e_.spawn_coords = i
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
-	print(get_used_cells_by_id(2))
+	print_debug(get_used_cells_by_id(2))
 	for i in get_used_cells_by_id(2):
 		if bounded_by_rectangle(i, tleft_bound, bright_bound):
 			var e_ : Dummy = dummy.instantiate()
 			e_.player = player
 			e_.position = map_to_local(i)
 			enemy_root.add_child(e_)
-			print("67")
+			print_debug("67")

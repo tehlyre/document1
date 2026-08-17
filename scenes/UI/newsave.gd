@@ -51,7 +51,7 @@ func _on_back_pressed():
 	game.menu_state = game.MenuStates.MENU_PAUSE
 
 func spawn_save(save_idx : int):
-	print(save_idx)
+	print_debug(save_idx)
 	save_file = FileAccess.open(save_file_res_root+str(save_idx)+".txt", FileAccess.READ)
 	if save_file == null:
 		name_lbl.text = "Empty"
@@ -68,9 +68,9 @@ func spawn_save(save_idx : int):
 			"H":
 				hours_lbl.text = codee.substr(1,-1)
 			_: pass
-		print(codee)
+		print_debug(codee)
 		codee = save_file.get_line()
-	print("owo")
+	print_debug("owo")
 
 func on_right_pressed():
 	left.disabled = false
@@ -96,4 +96,4 @@ func set_sms(sms : SaveMenuState):
 
 func _process(delta: float) -> void:
 	pass
-	#print(save_menu_state)
+	#print_debug(save_menu_state)

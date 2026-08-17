@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://btxviiqk8plha"]
+
+[ext_resource type="Script" uid="uid://codqpco5epxi8" path="res://scenes/Interactables/otdtrigger.gd" id="1_l0wnb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16aay"]
+
+[node name="OvertoDungeonTrigger" type="Area2D" unique_id=1115506690]
+script = ExtResource("1_l0wnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=415383057]
+shape = SubResource("RectangleShape2D_16aay")

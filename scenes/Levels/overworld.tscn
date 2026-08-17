@@ -1,6 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://cfq7r3g5b7br4"]
+[gd_scene format=4 uid="uid://cfq7r3g5b7br4"]
 
-[ext_resource type="Script" uid="uid://bq1ho8f3lnyi4" path="res://scripts/level.gd" id="1_4lvs6"]
+[ext_resource type="Script" uid="uid://ckciiyh51wf0b" path="res://scenes/Levels/overworld.gd" id="1_em54q"]
 [ext_resource type="PackedScene" uid="uid://bwcfhw8ni6iky" path="res://scenes/Characters/durdan.tscn" id="3_ki2io"]
 [ext_resource type="PackedScene" uid="uid://bm6h10gtdvvdf" path="res://scenes/Hazards/goo.tscn" id="4_4y8qi"]
 [ext_resource type="Script" uid="uid://caxctcte2oy13" path="res://scenes/Levels/chests.gd" id="5_5y166"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dgejbcjs0l80s" path="res://scenes/Interactables/stamp.tscn" id="12_iqghp"]
 [ext_resource type="Texture2D" uid="uid://dlxv0v0psypes" path="res://assets/textures/enemy_spawn.png" id="14_dbi8c"]
 [ext_resource type="Texture2D" uid="uid://btoqtg3sxs4jh" path="res://assets/textures/hboss_spawn.png" id="15_kjymd"]
+[ext_resource type="Script" uid="uid://bmyeftfhqxlht" path="res://scenes/Interactables/dtotrigger.gd" id="15_mfaxk"]
 [ext_resource type="Texture2D" uid="uid://bvbmxpvv3q6n2" path="res://assets/textures/dummy_spawn.png" id="16_y6u0e"]
 [ext_resource type="Script" uid="uid://d0r8wop71ad5q" path="res://scripts/triggers.gd" id="18_ictju"]
 [ext_resource type="Script" uid="uid://uly5iiygyxfc" path="res://scenes/Levels/bullet_root.gd" id="19_carqp"]
@@ -65,62 +66,83 @@ sources/0 = SubResource("TileSetAtlasSource_n5cux")
 sources/1 = SubResource("TileSetAtlasSource_poti2")
 sources/2 = SubResource("TileSetAtlasSource_88tjj")
 
-[node name="overworld" type="Node2D" node_paths=PackedStringArray("player")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(426, 840)
+
+[node name="overworld" type="Node2D" unique_id=1897706817 node_paths=PackedStringArray("player", "triggerroot", "camera", "enemyroot")]
 process_mode = 1
-script = ExtResource("1_4lvs6")
+script = ExtResource("1_em54q")
 player = NodePath("Durdan")
+triggerroot = NodePath("Triggers")
+camera = NodePath("Durdan/Camera")
+enemyroot = NodePath("enemies")
 metadata/_edit_group_ = true
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2(14, 1402)
-anchor_mode = 0
-zoom = Vector2(0.5, 0.5)
-position_smoothing_speed = 3.96
-drag_horizontal_offset = 0.3
-drag_left_margin = 0.5
-drag_top_margin = 0.5
-drag_right_margin = 0.5
-drag_bottom_margin = 0.5
-
-[node name="Durdan" parent="." instance=ExtResource("3_ki2io")]
-position = Vector2(893, 1216)
+[node name="Durdan" parent="." unique_id=1809506032 instance=ExtResource("3_ki2io")]
+position = Vector2(853, 1324)
 collision_layer = 1
 collision_mask = 107
 
-[node name="Level" type="Node2D" parent="."]
+[node name="Camera" type="Camera2D" parent="Durdan" unique_id=671826575]
+position = Vector2(24, -176)
+scale = Vector2(8, 8)
+zoom = Vector2(0.5, 0.5)
+limit_enabled = false
+position_smoothing_speed = 3.96
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = 0.3
+drag_vertical_offset = 0.3
 
-[node name="Goo" parent="Level" instance=ExtResource("4_4y8qi")]
+[node name="Level" type="Node2D" parent="." unique_id=23884570]
+
+[node name="Goo" parent="Level" unique_id=1932290827 instance=ExtResource("4_4y8qi")]
 z_index = -2
 
-[node name="Chests" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+[node name="Chests" type="Node2D" parent="." unique_id=592352801 node_paths=PackedStringArray("enemy_root")]
 script = ExtResource("5_5y166")
 enemy_root = NodePath("../enemies")
 
-[node name="enemies" type="Node2D" parent="." node_paths=PackedStringArray("bullet_root", "cam")]
+[node name="enemies" type="Node2D" parent="." unique_id=1769003891 node_paths=PackedStringArray("bullet_root", "cam")]
 position = Vector2(0, 1)
 script = ExtResource("7_f4xch")
 bullet_root = NodePath("../Bullets")
-cam = NodePath("../Camera")
+cam = NodePath("../Durdan/Camera")
 
-[node name="Wall" type="TileMapLayer" parent="." groups=["walls"]]
+[node name="Wall" type="TileMapLayer" parent="." unique_id=575891850 groups=["walls"]]
 z_index = 10
 position = Vector2(1, 0)
+tile_map_data = PackedByteArray("AAD+/wsAAAAAAAAAAAD+/wwAAAAAAAAAAAD+/w0AAAAAAAAAAAD+/w4AAAAAAAAAAAD+/w8AAAAAAAAAAAD+/xAAAAAAAAAAAAD+/xEAAAAAAAAAAAD+/xIAAAAAAAAAAAD+/xMAAAAAAAAAAAD+/xQAAAAAAAAAAAD+/xUAAAAAAAAAAAD//xUAAAAAAAAAAAD//xYAAAAAAAAAAAD//xcAAAAAAAAAAAAAABgAAAAAAAAAAAAAABkAAAAAAAAAAAABABkAAAAAAAAAAAABABoAAAAAAAAAAAACABoAAAAAAAAAAAACABsAAAAAAAAAAAADABsAAAAAAAAAAAAEABwAAAAAAAAAAAAFABwAAAAAAAAAAAAGAB0AAAAAAAAAAAAHAB0AAAAAAAAAAAAIAB4AAAAAAAAAAAAJAB4AAAAAAAAAAAAKAB8AAAAAAAAAAAALAB8AAAAAAAAAAAAMAB8AAAAAAAAAAAANAB8AAAAAAAAAAAAOACAAAAAAAAAAAAAPACAAAAAAAAAAAAAQACEAAAAAAAAAAAARACEAAAAAAAAAAAASACEAAAAAAAAAAAATACEAAAAAAAAAAAAUACEAAAAAAAAAAAAVACEAAAAAAAAAAAAWACEAAAAAAAAAAAAXACEAAAAAAAAAAAAYACEAAAAAAAAAAAAZACAAAAAAAAAAAAAaACAAAAAAAAAAAAAbACAAAAAAAAAAAAAcAB8AAAAAAAAAAAAdAB8AAAAAAAAAAAAeAB4AAAAAAAAAAAAfAB0AAAAAAAAAAAAgAB0AAAAAAAAAAAAgABwAAAAAAAAAAAAhABsAAAAAAAAAAAAhABoAAAAAAAAAAAAiABkAAAAAAAAAAAAiABgAAAAAAAAAAAAiABcAAAAAAAAAAAAjABYAAAAAAAAAAAAjABUAAAAAAAAAAAAjABQAAAAAAAAAAAAjABMAAAAAAAAAAAAjABIAAAAAAAAAAAAjABEAAAAAAAAAAAAjABAAAAAAAAAAAAAjAA8AAAAAAAAAAAAiAA4AAAAAAAAAAAAiAA0AAAAAAAAAAAAiAAwAAAAAAAAAAAAhAAsAAAAAAAAAAAAgAAoAAAAAAAAAAAAfAAoAAAAAAAAAAAAfAAkAAAAAAAAAAAAeAAkAAAAAAAAAAAAdAAgAAAAAAAAAAAAcAAgAAAAAAAAAAAAbAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAZAAYAAAAAAAAAAAAYAAYAAAAAAAAAAAAXAAUAAAAAAAAAAAAWAAUAAAAAAAAAAAAVAAUAAAAAAAAAAAAUAAUAAAAAAAAAAAATAAQAAAAAAAAAAAASAAQAAAAAAAAAAAARAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAALAAQAAAAAAAAAAAAKAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAIAAUAAAAAAAAAAAAHAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAADAAYAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAAAAcAAAAAAAAAAAD//wcAAAAAAAAAAAD+/wcAAAAAAAAAAAD9/wcAAAAAAAAAAAD9/wgAAAAAAAAAAAD9/wkAAAAAAAAAAAD9/woAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_l41vt")
 
-[node name="enemySpawn" type="TileMapLayer" parent="."]
+[node name="enemySpawn" type="TileMapLayer" parent="." unique_id=1868210404]
 position = Vector2(1, 1)
-tile_map_data = PackedByteArray(0, 0, 14, 0, 11, 0, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_map_data = PackedByteArray("AAAOAAsAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_qiya0")
 
-[node name="Triggers" type="Node2D" parent="."]
+[node name="Triggers" type="Node2D" parent="." unique_id=208635322]
 script = ExtResource("18_ictju")
 
-[node name="Bullets" type="Node2D" parent="." node_paths=PackedStringArray("enemy_root")]
+[node name="DungeonToOverTrigger" type="Area2D" parent="Triggers" unique_id=1264953562]
+position = Vector2(175, 895)
+script = ExtResource("15_mfaxk")
+metadata/_custom_type_script = "uid://bmyeftfhqxlht"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/DungeonToOverTrigger" unique_id=500297925]
+position = Vector2(203, 430)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="Bullets" type="Node2D" parent="." unique_id=1903284021 node_paths=PackedStringArray("enemy_root")]
 script = ExtResource("19_carqp")
 enemy_root = NodePath("../enemies")
 
-[node name="Trainens" type="Node2D" parent="." node_paths=PackedStringArray("wall")]
+[node name="Trainens" type="Node2D" parent="." unique_id=1530440796 node_paths=PackedStringArray("wall")]
 script = ExtResource("20_mxe62")
 wall = NodePath("../Wall")
 
-[node name="PowerUps" type="Node2D" parent="."]
+[node name="PowerUps" type="Node2D" parent="." unique_id=2055607744]
+
+[node name="EntrancePoints" type="Node2D" parent="." unique_id=400587089]
+
+[node name="FromDungeon" type="Marker2D" parent="EntrancePoints" unique_id=880365685]
+position = Vector2(850, 1324)

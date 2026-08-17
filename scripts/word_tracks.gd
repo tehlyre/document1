@@ -19,7 +19,7 @@ func _ready() -> void:
 	$TrainTimer.timeout.connect(train_across_tracks)
 
 func _on_change_rooms(room_coords, _coords):
-	print(room_coords)
+	print_debug(room_coords)
 	if correct_room in room_coords:
 		show()
 		train.show()

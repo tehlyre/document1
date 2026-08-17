@@ -27,7 +27,7 @@ func spawn_dialogue(code : String):
 	dialogue_file = FileAccess.open(dialogue_file_res, FileAccess.READ)
 	var codee = dialogue_file.get_line()
 	while codee != "{" + code + "}":
-		print(codee)
+		print_debug(codee)
 		codee = dialogue_file.get_line()
 	is_cutscene = true
 	show()
@@ -93,7 +93,7 @@ func _input(event: InputEvent) -> void:
 			if not at_max:
 				dialogue.visible_characters = len(dialogue.text)
 				at_max = true
-				print("six seven")
+				print_debug("six seven")
 			elif at_max:    # To move on to the next line
 				parse_dialogue()
 

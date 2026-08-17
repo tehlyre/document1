@@ -28,7 +28,7 @@ func which_side(tile_coords : Vector2i, _current_cell : Vector2i, cell_screen_si
 
 func _ready() -> void:
 	cam.sig_change_rooms.connect(_on_player_change_rooms)
-	#print(JSON.stringify(get_used_cells()))
+	#print_debug(JSON.stringify(get_used_cells()))
 	#OS.execute("python", ["C:\\Users\\718983\\Desktop\\yay.py", get_used_cells_by_id(0)], output)
 
 func _on_player_change_rooms(coords : Vector2i):
@@ -36,7 +36,7 @@ func _on_player_change_rooms(coords : Vector2i):
 	load_section(coords, coords)
 	Aeon.room = room
 	sig_this_room.emit(room, coords)
-			#print(edge)
+			#print_debug(edge)
 			#cam.set_limit(which_side(i, coords), )
 
 func load_section(this_load : Vector2i, last_load : Vector2i):

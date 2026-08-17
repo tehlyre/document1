@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwcfhw8ni6iky"]
+[gd_scene format=3 uid="uid://bwcfhw8ni6iky"]
 
 [ext_resource type="Script" uid="uid://br74yhnl7m0vp" path="res://scripts/durdan.gd" id="1_bxvgu"]
 [ext_resource type="Texture2D" uid="uid://du7oqvxms11k3" path="res://assets/textures/duuuururrurrdan.png" id="2_ovms2"]
 [ext_resource type="PackedScene" uid="uid://evch3f3ad4o3" path="res://scenes/Universals/neutral_special.tscn" id="3_qlc2s"]
 [ext_resource type="PackedScene" uid="uid://6nnkrcpsiyra" path="res://scenes/Universals/flaming_lance.tscn" id="4_8w6fj"]
+[ext_resource type="PackedScene" uid="uid://dvkgddw7ksn3x" path="res://scenes/Universals/asterisk.tscn" id="5_wqnr1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_glppu"]
 radius = 10.2078
@@ -11,31 +12,34 @@ radius = 10.2078
 [sub_resource type="CircleShape2D" id="CircleShape2D_4wifr"]
 radius = 186.762
 
-[node name="player" type="CharacterBody2D" groups=["player"]]
+[node name="player" type="CharacterBody2D" unique_id=1649797106 groups=["player"]]
 scale = Vector2(0.125, 0.125)
 collision_layer = 33
 collision_mask = 66
 script = ExtResource("1_bxvgu")
 
-[node name="areaInteraction" type="Area2D" parent="."]
+[node name="areaInteraction" type="Area2D" parent="." unique_id=428916800]
 collision_layer = 0
 collision_mask = 8
 monitorable = false
 
-[node name="areaInteractionCollider" type="CollisionShape2D" parent="areaInteraction"]
+[node name="areaInteractionCollider" type="CollisionShape2D" parent="areaInteraction" unique_id=1208916737]
 scale = Vector2(40, 40)
 shape = SubResource("CircleShape2D_glppu")
 
-[node name="durdanSprite" type="Sprite2D" parent="."]
+[node name="durdanSprite" type="Sprite2D" parent="." unique_id=1347476232]
 texture = ExtResource("2_ovms2")
 
-[node name="neutralSpecial" parent="." instance=ExtResource("3_qlc2s")]
+[node name="neutralSpecial" parent="." unique_id=1189308224 instance=ExtResource("3_qlc2s")]
 position = Vector2(432.587, 342.758)
 bullet_type = 1
 is_on_player = true
 
-[node name="playerCollider" type="CollisionShape2D" parent="."]
+[node name="playerCollider" type="CollisionShape2D" parent="." unique_id=1628278782]
 shape = SubResource("CircleShape2D_4wifr")
 
-[node name="flamingLance" parent="." instance=ExtResource("4_8w6fj")]
+[node name="flamingLance" parent="." unique_id=227642522 instance=ExtResource("4_8w6fj")]
 position = Vector2(280, 0)
+
+[node name="asterisk" parent="." unique_id=1397015924 instance=ExtResource("5_wqnr1")]
+position = Vector2(0, 8)

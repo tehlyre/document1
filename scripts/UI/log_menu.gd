@@ -58,7 +58,7 @@ func _process(_delta: float) -> void:
 		add_character_label(current_character, current_label)
 		is_hiding = false
 	if $VBoxContainer.get_children()[-1].global_position.y > get_viewport_rect().size.y-60 and is_adding_dialogue:
-		print("global crisis avengers level threat neutralize irontomb")
+		print_debug("global crisis avengers level threat neutralize irontomb")
 		$VScrollBar.max_value += $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
 		$chars.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60
 		$VBoxContainer.global_position.y -= $VBoxContainer.get_children()[-1].global_position.y - get_viewport_rect().size.y+60

@@ -36,7 +36,7 @@ func _ready() -> void:
 	init("chest")
 	parsed = JSON.parse_string(contents) if contents else {"keys": 0, "coins": 0, "is_locked": true}
 	is_locked = parsed["is_locked"]
-	print(parsed)
+	print_debug(parsed)
 
 # Called every frame. Detects if the chest is opened or not. If so, it promptly deletes itself.
 func _process(_delta : float) -> void:

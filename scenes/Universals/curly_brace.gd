@@ -28,4 +28,4 @@ func explode():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print(in_blastRadius)
+	print_debug(in_blastRadius)

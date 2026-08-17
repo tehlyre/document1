@@ -108,10 +108,10 @@ func thingy_gorp(gun : Dictionary, delta : float):
 	var weightperframe : float = delta*(gun["ending_gorp"]/gun["time_to_gorp"])/gun["ending_gorp"]
 	gorpees.erase(gun)
 	gun["gorp_weight"] += weightperframe
-	#print(gun_lerp_weight)
-	#print(gun)
+	#print_debug(gun_lerp_weight)
+	#print_debug(gun)
 	gun["gun"].rotation = lerp_angle(fmod(gun["starting_gorp"],2*PI), fmod(gun["starting_gorp"]+gun["ending_gorp"],2*PI), gun["gorp_weight"])
-	#print(gun.rotation)
+	#print_debug(gun.rotation)
 	gorpees.append(gun)
 	if gun["gorp_weight"] > 1.0 or is_equal_approx(gun["gorp_weight"], 1.0) or is_nan(gun["gorp_weight"]):
 		gun_lerp_weight = 0.0

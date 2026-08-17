@@ -15,8 +15,8 @@ var put_sprite_dictionary : Dictionary = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(power_up_type, "qi-jpaijpijfpoiqj")
-	print(get_children())
+	print_debug(power_up_type, "qi-jpaijpijfpoiqj")
+	print_debug(get_children())
 	set_sprite()
 	body_entered.connect(_on_body_entered)
 
@@ -32,6 +32,6 @@ func set_sprite():
 	
 
 func _on_body_entered(body):
-	print("iejfe")
+	print_debug("iejfe")
 	if body is Player:
 		body.pick_up(self)

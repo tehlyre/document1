@@ -126,7 +126,7 @@ var d_ : DebugWindow
 	set(new_ms):
 		match new_ms:
 			MenuStates.MENU_PAUSE:
-				print("uwuhpihpoihop[]")
+				print_debug("uwuhpihpoihop[]")
 				if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 					if menu_state == MenuStates.MENU_MAP:
 						sig_open_map.emit(false, $container/Wall.local_to_map(player.position))
@@ -138,6 +138,7 @@ var d_ : DebugWindow
 					savemenu.hide()
 				pausemenu.show()
 			MenuStates.MENU_MAP:
+				print_debug(":P")
 				hud_hidden = !hud_hidden
 				get_tree().paused = !get_tree().paused
 				if menu_state == MenuStates.MENU_NONE:
@@ -232,6 +233,11 @@ var is_deleting_cutscene_trigger_on_end = true
 var is_ztarget_series = false
 var ztarget_pos_init : Vector2
 
+var domains = {
+	"overworld": preload("res://scenes/Levels/overworld.tscn"),
+	"dungeon": preload("res://scenes/Levels/container.tscn")
+}
+
 enum MenuStates {
 	MENU_NONE,
 	MENU_PAUSE,
@@ -263,22 +269,15 @@ func convert_ingame_coords_to_viewport(pos : Vector2) -> Vector2:
 func _ready() -> void:
 	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	get_viewport().set_embedding_subwindows(false)
-	mapmenu.player = player
+	initiate_level()
 	pausemenu.resume.connect(_on_game_resume)
 	deathmenu.restart.connect(_on_game_restart)
-	player.sig_you_died.connect(_on_player_death)
-	player.sig_open_chest.connect(_on_player_open_chest)
-	player.sig_set_healthbar.connect(_on_player_change_health)
-	player.sig_open_stamp_menu.connect(_on_player_open_stamp_menu)
 	mapmarkersroot.teleportation.connect(_on_teleportation)
-	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
 	dialoguemenu.cutscene_ended.connect(_on_cutscene_end)
 	alignmentmenu.alignment_chosen.connect(_on_alignment_chosen)
 	fontsizemenu.fontsize_chosen.connect(_on_fontsize_chosen)
 	spotselectingmenu.end_spot_select.connect(_on_spot_selected)
-	camera.sig_change_rooms.connect(_on_player_switch_rooms)
 	z_target_timer.timeout.connect(_on_ztarget_timer_timeout)
-	deathmenu.container = level
 	pscale = player.scale
 	z_target_timer.wait_time = 2
 	if len(enemyroot.get_children()) > 0:
@@ -288,6 +287,26 @@ func _ready() -> void:
 		add_child(d_)
 		d_.position = Vector2(20,100)
 		d_.ready_labels(2)
+
+func initiate_level():
+	player = level.player
+	print_debug(player, "jjjjj")
+	triggerroot = level.triggerroot
+	camera = level.camera
+	mapmenu.player = player
+	enemyroot = level.enemyroot
+	player.sig_you_died.connect(_on_player_death)
+	player.sig_open_chest.connect(_on_player_open_chest)
+	player.sig_set_healthbar.connect(_on_player_change_health)
+	player.sig_open_stamp_menu.connect(_on_player_open_stamp_menu)
+	triggerroot.cutscene_triggered.connect(_on_cutscene_trigger)
+	triggerroot.switch_level.connect(_on_level_switch)
+	if level is Dungeon:
+		camera.sig_change_rooms.connect(_on_player_switch_rooms)
+	deathmenu.container = level
+	chestmenu.container = level
+	deathmenu.initiate()
+	chestmenu.initiate()
 	
 
 
@@ -296,7 +315,7 @@ func _ready() -> void:
 # itself and also sends the signal.
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("cancel"):
-		print(MenuStates.keys()[menu_state])
+		print_debug(MenuStates.keys()[menu_state])
 		if (menu_state in [MenuStates.MENU_NONE, MenuStates.MENU_MAP, MenuStates.MENU_ALIGNMENT]):
 			sig_toggle_pause.emit(is_game_paused)
 			menu_state = MenuStates.MENU_PAUSE
@@ -383,14 +402,14 @@ func _input(event : InputEvent) -> void:
 		if !is_ztarget_series:
 			is_ztarget_series = true
 			ztarget_pos_init = player.global_position
-		print(current_enemy_target_idx)
+		print_debug(current_enemy_target_idx)
 
 func trigger_cooldown(special : String):
 	var sptimer : Timer = special_timer_map[special]
-	print(special_timer_map)
+	print_debug(special_timer_map)
 	sptimer.wait_time = special_cooldowns[special]
 	sptimer.start()
-	print(special)
+	print_debug(special)
 	can_use_special[special] = false
 	await sptimer.timeout
 	if Aeon.equipped_abilities[special] == Aeon.PlayerAbilities.BRACKETS:
@@ -416,24 +435,23 @@ func spawn_player_braces():
 		player_braces_on_field.pop_front()
 
 func lock_in():
-	print(z_target)
 	if z_target == null:
 		order_enemies_by_proximity()
 		if len(enemy_array) == 0:
 			player.not_locked_in = true
 			return
 		else:
-			print(enemy_array)
+			print_debug(enemy_array)
 			current_enemy_target_idx = 0
 			z_target = enemy_array[current_enemy_target_idx]
 	
 	player.lock_on_location = z_target.target_position
-	#print(player.not_locked_in)
+	#print_debug(player.not_locked_in)
 	$hud.ztargeticon.position = (z_target.target_position-camera.position)/CAMERA_SCALE+Vector2(0,-50)
 
 func _on_player_switch_rooms(_room_dummy):
 	player.not_locked_in = false
-	print(player.not_locked_in)
+	print_debug(player.not_locked_in)
 	lock_in()
 
 func order_enemies_by_proximity():
@@ -469,8 +487,8 @@ func _process(_delta : float) -> void:
 	for sp in special_buttons:
 		if !special_timer_map[sp].is_stopped():
 			$hud.special_progress_map[sp].value = 100-(special_timer_map[sp].time_left/special_timer_map[sp].wait_time)*100
-		print(special_timer_map[sp].time_left/special_timer_map[sp].wait_time)
-	#print(is_opening_map)
+		#print_debug(special_timer_map[sp].time_left/special_timer_map[sp].wait_time)
+	#print_debug(is_opening_map)
 
 func _on_player_open_stamp_menu():
 	menu_state = MenuStates.MENU_STAMP
@@ -521,7 +539,7 @@ func _on_player_death() -> void:
 # Fired when the player restarts the game after death. Connected to the signal deathmenu.restart. 
 # Unpauses the game, reloads the scene, and unkills the player.
 func _on_game_restart() -> void:
-	print("eopjqpijfpqoiwjepoiqwjf")
+	print_debug("eopjqpijfpqoiwjepoiqwjf")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
@@ -551,7 +569,7 @@ func _on_spot_selected(pos : Vector2) -> void:
 		trigger_cooldown(recently_encountered_special)
 	spot_select_reason = "none"
 	menu_state = MenuStates.MENU_NONE
-	print(pos)
+	print_debug(pos)
 
 func _on_player_change_health(health : float) -> void:
 	$hud/hudRoot/playerHealthBar.value = health
@@ -574,9 +592,9 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 	enemyroot.enemies_on_screen.sort_custom(_sort_enemies_by_x)
 	if len(enemyroot.enemies_on_screen) == 0:
 		return
-	print(enemyroot.enemies_on_screen)
+	print_debug(enemyroot.enemies_on_screen)
 	var minimum_enemy_x = (enemyroot.enemies_on_screen[0].global_position.x-camera.position.x)/2
-	print(minimum_enemy_x)
+	print_debug(minimum_enemy_x)
 	var maximum_enemy_x = (enemyroot.enemies_on_screen[-1].global_position.x-camera.position.x)/2
 	
 	var disabled_hitbox_enemies = []
@@ -602,7 +620,7 @@ func _on_alignment_chosen(alignment : Aeon.AlignmentTypes):
 
 func _on_fontsize_chosen(fontsize):
 	menu_state = MenuStates.MENU_NONE
-	print(fontsize)
+	print_debug(fontsize)
 	if fontsize == "8":
 		player.scale = pscale*Vector2(0.75,0.75)
 	elif fontsize == "12":
@@ -613,7 +631,18 @@ func _on_fontsize_chosen(fontsize):
 		player.scale = pscale*Vector2(6.25,6.25)
 	trigger_cooldown(recently_encountered_special)
 
-
+func _on_level_switch(code, domain):
+	var l_
+	level.queue_free()
+	l_ = domains[domain].instantiate()
+	add_child(l_)
+	l_.owner = self
+	level = l_
+	print_debug(level, "lamos")
+	initiate_level()
+	print_debug(level.entrypoints)
+	player.position = level.entrypoints[code].position
+	
 
 func _sort_enemies_by_x(a, b):
 	return a.position.x < b.position.x

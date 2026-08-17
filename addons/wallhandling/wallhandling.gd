@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 func _handles(object: Object) -> bool:
 	wall = object
 	wall_rect = wall.get_node("wallSprite").get_rect()
-	print(object is Wall)
+	print_debug(object is Wall)
 	return object is Wall
 
 func do_commit_resize() -> void:
@@ -62,28 +62,28 @@ func _forward_canvas_gui_input(event: InputEvent) -> bool:
 		starting_mouse_pos = mouse_pos
 		starting_wall_pos = wall.position
 		starting_wall_scale = wall.scale
-		print('oapiehrpfoih')
+		print_debug('oapiehrpfoih')
 		return true
 	elif abs((wall_rect.position.x+wall_rect.size.x)-local_mouse_pos.x) < 10:
 		is_resizing_x_from_right = true
 		starting_mouse_pos = mouse_pos
 		starting_wall_pos = wall.position
 		starting_wall_scale = wall.scale
-		print("you are gae")
+		print_debug("you are gae")
 		return true
 	elif abs((wall_rect.position.y+wall_rect.size.y)-local_mouse_pos.y) < 10:
 		is_resizing_y_from_bottom = true
 		starting_mouse_pos = mouse_pos
 		starting_wall_pos = wall.position
 		starting_wall_scale = wall.scale
-		print("is_resizing_y")
+		print_debug("is_resizing_y")
 		return true
 	elif abs(wall_rect.position.y-local_mouse_pos.y) < 10:
 		is_resizing_y_from_top = true
 		starting_mouse_pos = mouse_pos
 		starting_wall_pos = wall.position
 		starting_wall_scale = wall.scale
-		print("ioejhrgpoqiherpgoqiuhergpoiqhergpoiqherpgoiqherg")
+		print_debug("ioejhrgpoqiherpgoqiuhergpoiqhergpoiqherpgoiqherg")
 		return true
 	return false
 

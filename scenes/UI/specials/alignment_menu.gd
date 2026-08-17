@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _on_left_connect():
 	alignment = "left"
-	print("uwuwijqpoiejfpoqiwjepfoiqjpeiojqpowiejfpowqijef")
+	print_debug("uwuwijqpoiejfpoqiwjepfoiqjpeiojqpowiejfpowqijef")
 	alignment_chosen.emit(Aeon.AlignmentTypes.LEFT)
 
 func _on_right_connect():

@@ -68,7 +68,7 @@ func _ready() -> void:
 	target_position = global_position
 	on_screen_notif.screen_exited.connect(_on_enemy_exit_screen)
 	health = max_hp
-	#print(get_parent())
+	#print_debug(get_parent())
 
 func _on_enemy_enter_screen():
 	get_parent().enemy_on_screen = [true, self]

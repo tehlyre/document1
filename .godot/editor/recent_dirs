@@ -1,15 +1,14 @@
-res://scenes/Interactables
-res://scenes/UI
 res://
-res://assets/fonts/Libre_Baskerville
-res://scenes/Universals
-res://scenes/UI/specials
-res://assets/textures
-res://scripts/UI
-C:/Users/718983/Desktop/just a joke lol/saves
-res://scripts/Enemy
-res://scripts
-res://scenes/Characters
-res://scenes/Hazards
-res://scenes
-res://scripts/supplemental tools
+res://scenes/Interactables/
+res://scenes/UI/
+res://assets/fonts/Libre_Baskerville/
+res://scenes/Universals/
+res://scenes/UI/specials/
+res://assets/textures/
+res://scripts/UI/
+res://scripts/Enemy/
+res://scripts/
+res://scenes/Characters/
+res://scenes/Hazards/
+res://scenes/
+res://scripts/supplemental tools/

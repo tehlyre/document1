@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://5et6ibf2avl0"]
+[gd_scene format=3 uid="uid://5et6ibf2avl0"]
 
 [ext_resource type="Script" uid="uid://ceh4edtv3tb2r" path="res://scenes/Characters/dummy.gd" id="1_v45uo"]
 [ext_resource type="Texture2D" uid="uid://bc72o7r0pj7fx" path="res://assets/textures/enemy.png" id="2_pi0br"]
@@ -7,13 +7,13 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yki5q"]
 radius = 12.0416
 
-[node name="dummy" type="CharacterBody2D" groups=["enemies"]]
+[node name="dummy" type="CharacterBody2D" unique_id=171969679 groups=["enemies"]]
 scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 225
 script = ExtResource("1_v45uo")
 
-[node name="enemyHealthBar" type="ProgressBar" parent="."]
+[node name="enemyHealthBar" type="ProgressBar" parent="." unique_id=819069463]
 modulate = Color(0.929412, 0, 0.121569, 1)
 offset_left = -9.0
 offset_top = 17.0
@@ -22,22 +22,22 @@ offset_bottom = 22.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="enemySprite" type="Sprite2D" parent="."]
+[node name="enemySprite" type="Sprite2D" parent="." unique_id=1905843452]
 scale = Vector2(0.063, 0.063)
 texture = ExtResource("2_pi0br")
 
-[node name="enemyCollider" type="CollisionShape2D" parent="."]
+[node name="enemyCollider" type="CollisionShape2D" parent="." unique_id=701039434]
 shape = SubResource("CircleShape2D_yki5q")
 
-[node name="neutralSpecial" parent="." instance=ExtResource("3_eliol")]
+[node name="neutralSpecial" parent="." unique_id=2113051133 instance=ExtResource("3_eliol")]
 position = Vector2(32, 20)
 scale = Vector2(0.0645161, 0.0588235)
 bullet_type = 1
 
-[node name="toPlayer" type="RayCast2D" parent="."]
+[node name="toPlayer" type="RayCast2D" parent="." unique_id=1671833970]
 collision_mask = 65
 
-[node name="enemyGunTimer" type="Timer" parent="."]
+[node name="enemyGunTimer" type="Timer" parent="." unique_id=132768963]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1211577956]
 rect = Rect2(-11.5, -11.5, 23.5, 23)

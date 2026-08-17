@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 		get_parent().current_marker = [false, 0, 0]
 		was_recently_selected = false
 	if is_printing_coords:
-		print(position)
+		print_debug(position)
 
 func switch_sprite():
 	match marker_type:
@@ -44,6 +44,6 @@ func switch_sprite():
 			$lockSprite.texture = preload("res://assets/textures/marker_stamp.png")
 
 func on_click():
-	print("im in danger")
+	print_debug("im in danger")
 	if marker_type == Aeon.MapMarkerTypes.STAMP:
 		get_parent().to_move_player = [true, extra_info]

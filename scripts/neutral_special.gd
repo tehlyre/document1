@@ -14,10 +14,16 @@ var original_rotation : float
 @export var is_on_player : bool
 @export var is_on_enemy : bool
 var is_in_illinois : bool = false
-var end_continuing
+var end_continuing : bool
 var atk_power : int
+var is_disabled : bool = false
 
-var bullet_sprite_map = {Aeon.BulletTypes.NONE: "", Aeon.BulletTypes.BASIC: preload("res://scenes/Universals/bullet.tscn"), Aeon.BulletTypes.RICOCHET: preload("res://scenes/Universals/ricochet_bullet.tscn")}
+var bullet_sprite_map = {
+	Aeon.BulletTypes.NONE: "", 
+	Aeon.BulletTypes.BASIC: preload("res://scenes/Universals/bullet.tscn"), 
+	Aeon.BulletTypes.RICOCHET: preload("res://scenes/Universals/ricochet_bullet.tscn"), 
+	Aeon.BulletTypes.HOMING: preload("res://scenes/Universals/homing_bullet.tscn")
+}
 
 func _ready() -> void:
 	bullet = bullet_sprite_map[bullet_type]
@@ -35,10 +41,13 @@ func _on_noGunZone_body_exited(_body : Node2D) -> void:
 
 # This function instantiates a bullet scene from the firing point every time the entity desires to 
 # fire and directs it in the direction the marker is facing. It has no adjustment function
-func fire() -> void:
-	if !is_in_illinois:
+func fire(target : Vector2 = Vector2.ZERO) -> void:
+	if !is_in_illinois and !is_disabled:
 		var b_ = bullet.instantiate()
 		b_.firee = owner
+		if bullet_type == Aeon.BulletTypes.HOMING:
+			b_.target = target
+			b_.firee = owner.get_parent()
 		b_.atk_power = atk_power
 		if is_on_player:
 			owner.get_parent().find_child("Bullets").add_child(b_)
@@ -48,16 +57,17 @@ func fire() -> void:
 		b_.global_scale = Aeon.STANDARD_BULLET_SIZE
 
 func fire_continuously(start=true):
-	if !start:
-		end_continuing = true
-		return
-	end_continuing = false
-	$ContinuityTimer.wait_time = 0.33
-	if !is_in_illinois:
-		while !end_continuing:
-			$ContinuityTimer.start()
-			fire()
-			await $ContinuityTimer.timeout
+	if !is_disabled:
+		if !start:
+			end_continuing = true
+			return
+		end_continuing = false
+		$ContinuityTimer.wait_time = 0.33
+		if !is_in_illinois:
+			while !end_continuing:
+				$ContinuityTimer.start()
+				fire()
+				await $ContinuityTimer.timeout
 
 
 # Called every frame to adjust the (player's) gun so that when fired, the bullets pass through the
@@ -75,3 +85,9 @@ func reset_adjustment() -> void:
 
 func get_proper_adjustment(point : Vector2) -> float:
 	return get_angle_to(point)
+
+func disable() -> void:
+	is_disabled = true
+
+func enable() -> void:
+	is_disabled = false

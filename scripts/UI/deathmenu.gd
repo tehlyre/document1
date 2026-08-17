@@ -30,10 +30,13 @@ signal restart()
 func _ready():
 	hide()
 	
-	container.get_node("Durdan").connect("sig_you_died", on_player_death)
+	
 	
 	restart_button.connect("pressed", on_restart_pressed)
 	quit_button.connect("pressed", on_quit_pressed)
+
+func initiate():
+	container.get_node("Durdan").connect("sig_you_died", on_player_death)
 
 # Function void on_player_death(bool died)
 # Connected to player.you_died. Pauses the tree and shows the death menu if the player is dead.

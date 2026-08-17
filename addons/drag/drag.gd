@@ -63,37 +63,37 @@ func _on_map_button_pressed():
 		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
 		m_.marker_type = 2
 	for stamp in wall_node.get_used_cells_by_id(3):
-		print(wall_node.get_used_cells_by_id(3))
+		print_debug(wall_node.get_used_cells_by_id(3))
 		var m_ = marker.instantiate()
 		get_tree().edited_scene_root.get_node("Panel/map/markers").add_child(m_)
 		m_.owner = get_tree().edited_scene_root
 		m_.position = Vector2((stamp.x-w_x.min())*2,(stamp.y-w_y.min())*2)
 		m_.cursor = get_tree().edited_scene_root.get_node("Panel/cursor")
 		m_.marker_type = 4
-		print(wall_node.map_to_local(stamp))
+		print_debug(wall_node.map_to_local(stamp))
 		m_.extra_info = wall_node.map_to_local(stamp)
-		#print(stamp)
-	print("lmao")
+		#print_debug(stamp)
+	print_debug("lmao")
 	for door in wall_node.get_used_cells_by_id(3):
-		print("ooooh")
+		print_debug("ooooh")
 
 func _on_train_button_pressed():
-	print(obj)
+	print_debug(obj)
 	if obj is not WordTracks:
 		return
 	var train = obj.train
-	print(train.global_position)
+	print_debug(train.global_position)
 	train.global_position = obj.get_node("origin_marker").global_position
 	train.rotation = obj.rotation
 	train.scale.y = obj.scale.y
 
 func _on_dummies_button_pressed():
-	print("SWITCHING TO ENEMIES")
+	print_debug("SWITCHING TO ENEMIES")
 	if len(obj.get_used_cells_by_id(2)) < len(obj.get_used_cells_by_id(0)):
 		for cell in obj.get_used_cells_by_id(0):
 			obj.set_cell(cell, 2, Vector2.ZERO)
 	else:
-		print("what the sigma")
+		print_debug("what the sigma")
 		for cell in obj.get_used_cells_by_id(2):
 			obj.set_cell(cell, 0, Vector2.ZERO)
 	
